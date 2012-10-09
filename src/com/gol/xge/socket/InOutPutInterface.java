@@ -2,6 +2,11 @@ package com.gol.xge.socket;
 
 import java.io.InputStream;
 
+/*
+ * 实现这个接口用于跟服务器进行通讯
+ * 引擎会提供几个通用的接口实现 比如
+ *  MessageHandlerA
+ */
 
 public interface InOutPutInterface {
     /*

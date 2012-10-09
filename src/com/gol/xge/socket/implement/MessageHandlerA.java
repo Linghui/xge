@@ -9,7 +9,10 @@ import java.util.List;
 
 import com.gol.xge.socket.InOutPutInterface;
 import com.gol.xge.socket.SendInterface;
-
+/*
+ * 一个实现的InOutPutInterface ，按行读取数据
+ * 
+ */
 public class MessageHandlerA implements InOutPutInterface {
     
     List<byte[]> messageQueue = new ArrayList<byte[]>();
