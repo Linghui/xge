@@ -28,6 +28,22 @@ my $IMAGE_BUTTONS_KEY   =   'image_buttons';
 my $IMAGE_BUTTONS_DOWN_REGION_KEY   =   'down_region';
 my $IMAGE_BUTTONS_UP_REGION_KEY     =   'up_region';
 
+my $LOADING_BACKGROUND_KEY  =   'loading_backgroud';
+
+my $LADING_BAR_KEY  =   'loading_bar';
+my $BAR_TOP =   'bar_top';
+my $BAR_BOTTOM =   'bar_bottom';
+my $BAR_WIDTH =   'bar_width';
+my $BAR_HEIGHT =   'bar_height';
+my $BAR_X   =   'bar_x';
+my $BAR_Y   =   'bar_y';
+my $BAR_SOURCE_COUNT   =   'bar_source_count';
+
+my $INIT_NPCS   =   'init_npcs';
+my $NPCS_KEY =   'npcs';
+my $NPC_NAME    =   'npc_name';
+my $NPC_SRC     =   'npc_src';
+
 sub new(){
     my $class = shift;
     my $self = {};
@@ -53,6 +69,13 @@ sub generate_java(){
     my $vars = {
         $CLASS_NAME  => $config->{$SCENE_NAME_KEY},
         $BACKGROUND_IMG_KEY  => $config->{$BACKGROUND_IMG_KEY},
+        $LOADING_BACKGROUND_KEY  => $config->{$LOADING_BACKGROUND_KEY},
+        $BAR_TOP  => $config->{$LADING_BAR_KEY}->{$BAR_TOP},
+        $BAR_BOTTOM  => $config->{$LADING_BAR_KEY}->{$BAR_BOTTOM},
+        $BAR_WIDTH  => $config->{$LADING_BAR_KEY}->{$BAR_WIDTH},
+        $BAR_HEIGHT  => $config->{$LADING_BAR_KEY}->{$BAR_HEIGHT},
+        $BAR_X  => $config->{$LADING_BAR_KEY}->{$BAR_X},
+        $BAR_Y  => $config->{$LADING_BAR_KEY}->{$BAR_Y},
         $SKIN_KEY  => $config->{$SKIN_KEY},
     };
     
@@ -68,17 +91,23 @@ sub generate_java(){
     my $source_loading_list = $self->get_loading_list($config);
     my $all_src_load = "";
     my $all_src_unload = "";
+    my $all_source_count = 0;
     for my $one (@$source_loading_list){
         my $load_line = $self->get_load_line($one);
         $all_src_load .= $load_line;
         my $unload_line = $self->get_unload_line($one);
         $all_src_unload .= $unload_line;
+        $all_source_count++;
     }
     $vars->{$SOURCE_LOADING} = $all_src_load;
     $vars->{$SOURCE_UNLOADING} = $all_src_unload;
+    $vars->{$BAR_SOURCE_COUNT}  = $all_source_count;
     
     my $init_buttons_value = $self->get_init_buttons_value($config);
     $vars->{$INIT_BUTTONS} = $init_buttons_value;
+    
+    my $init_npcs_value =   $self->get_init_npcs_value($config);
+    $vars->{$INIT_NPCS} = $init_npcs_value;
     
     # process input template, substituting variables
     $template->process($input, $vars)
@@ -121,9 +150,15 @@ sub get_loading_list(){
     my $self = shift;
     my $config = shift;
     my @list = ();
-    
-    push @list, $config->{$BACKGROUND_IMG_KEY};
+
     push @list, $config->{$SKIN_KEY};
+    push @list, $config->{$BACKGROUND_IMG_KEY};
+    
+    
+    my $npcs = $config->{$NPCS_KEY};
+    for my $one_npc (keys %$npcs){
+        push @list, $npcs->{$one_npc}->{$NPC_SRC}.'/pack';
+    }
     
     return \@list;
 }
@@ -199,6 +234,51 @@ sub get_init_buttons_value(){
     return $all_button_lines;
 }
 
+sub get_init_npcs_value(){
+    my $self    =   shift;
+    my $config  =   shift;
+    
+    my $all_npc_lines = "";
+    
+    
+    my $NPC_JSON = 'npc_json';
+    my $NPC_PACK = 'npc_pack';
+    my $NPC_X = 'npc_x';
+    my $NPC_Y = 'npc_y';
+    
+    my $t_config = {
+        INTERPOLATE  => 1,               # expand "$var" in plain text
+    };
+    
+    my $template = Template->new($t_config);
+    
+    my $input = 'templates/npc.t';
+    
+    my $npcs = $config->{$NPCS_KEY};
+    for my $one_npc (keys %$npcs){
+        
+        my ($src_id)  =   $npcs->{$one_npc}->{$NPC_SRC} =~ /(\d+)$/;
+        print "src_id ====== $src_id\n";
+        my $vars = {
+            $NPC_NAME   =>   $one_npc.'NpcActor',
+            $NPC_JSON   => $npcs->{$one_npc}->{$NPC_SRC}.'/'.$src_id.'.json',
+            $NPC_PACK   => $npcs->{$one_npc}->{$NPC_SRC}.'/pack',
+            $NPC_X   =>   $npcs->{$one_npc}->{$X_KEY},
+            $NPC_Y   =>   $npcs->{$one_npc}->{$Y_KEY},
+            
+        };
+        
+        
+        my $output;
+        
+        $template->process($input, $vars, \$output)
+        || die $template->error();
+        $all_npc_lines .= $output;
+        
+    }
+    
+    return $all_npc_lines;
+}
 
 1
 
