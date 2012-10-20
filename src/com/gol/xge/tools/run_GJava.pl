@@ -47,7 +47,7 @@ my $scene_config = {
         
     },
     
-    $BACKGROUND_IMG_KEY =>'data/libgdx.png',
+    $BACKGROUND_IMG_KEY =>'data/pack1.png',
     $SKIN_KEY   =>  'data/uiskin.json',
     $TEXT_BUTTONS_KEY   =>  {
         'btn1'  =>  {

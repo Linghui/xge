@@ -58,7 +58,7 @@ $source_loading
     
     private void init(){
     
-        this.setBackGround(new TextureRegion(manager.get("$background", Texture.class)));
+        this.setBackGround(new TextureRegion(manager.get("$background", Texture.class)), false);
 
 $init
     }
