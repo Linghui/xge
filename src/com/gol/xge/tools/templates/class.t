@@ -50,6 +50,7 @@ $source_loading
             loadingBackgroundTexture.dispose();
             this.srcLoadDone = true;
             init();
+            initLabels();
             initButtons();
             initNpcs();
         }
@@ -72,7 +73,12 @@ $source_loading
 
 $init
     }
-    
+
+    private void initLabels(){
+
+$init_labels
+
+    }
     private void initButtons(){
 
 $init_buttons

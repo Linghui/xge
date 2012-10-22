@@ -24,6 +24,10 @@ my $TEXT_KEY    =   'text';
 my $X_KEY   =   'x';
 my $Y_KEY   =   'y';
 
+my $INIT_LABELS =   'init_labels';
+my $LABELS_KEY  =   'labels';
+my $STYLE_KEY   =   'style';
+
 my $IMAGE_BUTTONS_KEY   =   'image_buttons';
 my $IMAGE_BUTTONS_DOWN_REGION_KEY   =   'down_region';
 my $IMAGE_BUTTONS_UP_REGION_KEY     =   'up_region';
@@ -108,6 +112,9 @@ sub generate_java(){
     $vars->{$SOURCE_UNLOADING} = $all_src_unload;
     $vars->{$BAR_SOURCE_COUNT}  = $all_source_count;
     
+    my $init_labels_value  = $self->get_init_labels_value($config);
+    $vars->{$INIT_LABELS} = $init_labels_value;
+    
     my $init_buttons_value = $self->get_init_buttons_value($config);
     $vars->{$INIT_BUTTONS} = $init_buttons_value;
 
@@ -173,6 +180,51 @@ sub get_loading_list(){
     
     
     return \@list;
+}
+
+sub get_init_labels_value(){
+    
+    my $self = shift;
+    my $config = shift;
+    my $all_label_lines = "";
+    
+    my $LABEL_NAME  =   'label_name';
+    my $LABEL_TEXT  =   'label_text';
+    my $LABEL_STYLE =   'label_style';
+    my $LABEL_X     =   'label_x';
+    my $LABEL_Y     =   'label_y';
+    
+    
+    my $t_config = {
+        INTERPOLATE  => 1,               # expand "$var" in plain text
+    };
+    
+    my $template = Template->new($t_config);
+    
+    my $input = 'templates/label.t';
+    
+    
+    my $labels = $config->{$LABELS_KEY};
+    for my $one_label (keys %$labels){
+        
+        my $vars = {
+            $LABEL_NAME    =>   $one_label,
+            $LABEL_TEXT    =>   $labels->{$one_label}->{$TEXT_KEY},
+            $LABEL_STYLE    =>   $labels->{$one_label}->{$STYLE_KEY},
+            $LABEL_X    =>   $labels->{$one_label}->{$X_KEY},
+            $LABEL_Y    =>   $labels->{$one_label}->{$Y_KEY},
+        };
+        
+        
+        my $output;
+        
+        $template->process($input, $vars, \$output)
+        || die $template->error();
+        $all_label_lines .= $output;
+        
+    }
+    
+    return $all_label_lines;
 }
 
 sub get_init_buttons_value(){

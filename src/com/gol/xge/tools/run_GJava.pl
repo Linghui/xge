@@ -14,22 +14,25 @@ my $TEXT_KEY    =   'text';
 my $X_KEY   =   'x';
 my $Y_KEY   =   'y';
 
+my $LABELS_KEY  =   'labels';
+my $STYLE_KEY   =   'style';
+
 my $IMAGE_BUTTONS_KEY   =   'image_buttons';
 my $IMAGE_BUTTONS_DOWN_REGION_KEY   =   'down_region';
 my $IMAGE_BUTTONS_UP_REGION_KEY     =   'up_region';
 
 my $LOADING_BACKGROUND_KEY  =   'loading_backgroud';
 my $LADING_BAR_KEY  =   'loading_bar';
-my $BAR_TOP =   'bar_top';
-my $BAR_BOTTOM =   'bar_bottom';
-my $BAR_WIDTH =   'bar_width';
-my $BAR_HEIGHT =   'bar_height';
+my $BAR_TOP     =   'bar_top';
+my $BAR_BOTTOM  =   'bar_bottom';
+my $BAR_WIDTH   =   'bar_width';
+my $BAR_HEIGHT  =   'bar_height';
 my $BAR_X   =   'bar_x';
 my $BAR_Y   =   'bar_y';
 
 my $LEADING_ROLE_SRC    =   'leading_role_src';
 
-my $NPCS_KEY =   'npcs';
+my $NPCS_KEY    =   'npcs';
 my $NPC_NAME    =   'npc_name';
 my $NPC_SRC     =   'npc_src';
 
@@ -51,6 +54,16 @@ my $scene_config = {
     
     $BACKGROUND_IMG_KEY =>'data/pack1.png',
     $SKIN_KEY   =>  'data/uiskin.json',
+    
+    $LABELS_KEY =>  {
+        'l1'  =>{
+            $TEXT_KEY     =>  'success',
+            $STYLE_KEY    =>  'default',
+            $X_KEY        =>  600,
+            $Y_KEY        =>  200,
+        }
+    },
+    
     $TEXT_BUTTONS_KEY   =>  {
         'btn1'  =>  {
             $TEXT_KEY   =>  'success',
