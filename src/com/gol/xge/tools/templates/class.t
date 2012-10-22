@@ -59,6 +59,16 @@ $source_loading
     private void init(){
     
         this.setBackGround(new TextureRegion(manager.get("$background", Texture.class)), false);
+        
+        AnimationActor playerAnimation = new AnimationActor( new AnimationGroup(Resources.getInstance().readAnimationResource("$leading_role_json", false, false, manager.get("$leading_role_pack", TextureAtlas.class))));
+        playerAnimation.y = 480/8;
+        Group leadingRole = new Group();
+        leadingRole.addActor(playerAnimation);
+        leadingRole.width = playerAnimation.width;
+        leadingRole.height = playerAnimation.height;
+
+
+        initLeadingRole(leadingRole);
 
 $init
     }
@@ -79,7 +89,6 @@ $init_npcs
     @Override
     public void dispose() {
 $source_unloading
-//        backgroundTexture.dispose();
 
     }
 }

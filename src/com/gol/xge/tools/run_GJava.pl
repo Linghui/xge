@@ -27,6 +27,8 @@ my $BAR_HEIGHT =   'bar_height';
 my $BAR_X   =   'bar_x';
 my $BAR_Y   =   'bar_y';
 
+my $LEADING_ROLE_SRC    =   'leading_role_src';
+
 my $NPCS_KEY =   'npcs';
 my $NPC_NAME    =   'npc_name';
 my $NPC_SRC     =   'npc_src';
@@ -73,6 +75,8 @@ my $scene_config = {
         },
     },
     
+    $LEADING_ROLE_SRC   =>  'data/30100001',
+    
     $NPCS_KEY    =>  {
         'cuihua'  =>  {
             $NPC_NAME   =>  '翠花',
@@ -104,8 +108,8 @@ my $scene_config = {
             $X_KEY      =>  '100',
             $Y_KEY      =>  '300',
         },
-        'cuihua'  =>  {
-            $NPC_NAME   =>  '翠花',
+        'dana'  =>  {
+            $NPC_NAME   =>  '大拿',
             $NPC_SRC    =>  'data/30100006',
             $X_KEY      =>  '600',
             $Y_KEY      =>  '300',

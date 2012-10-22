@@ -39,6 +39,10 @@ my $BAR_X   =   'bar_x';
 my $BAR_Y   =   'bar_y';
 my $BAR_SOURCE_COUNT   =   'bar_source_count';
 
+my $LEADING_ROLE_SRC    =   'leading_role_src';
+my $LEADING_ROLE_JSON   =   'leading_role_json';
+my $LEADING_ROLE_PACK   =   'leading_role_pack';
+
 my $INIT_NPCS   =   'init_npcs';
 my $NPCS_KEY =   'npcs';
 my $NPC_NAME    =   'npc_name';
@@ -99,12 +103,18 @@ sub generate_java(){
         $all_src_unload .= $unload_line;
         $all_source_count++;
     }
+    
     $vars->{$SOURCE_LOADING} = $all_src_load;
     $vars->{$SOURCE_UNLOADING} = $all_src_unload;
     $vars->{$BAR_SOURCE_COUNT}  = $all_source_count;
     
     my $init_buttons_value = $self->get_init_buttons_value($config);
     $vars->{$INIT_BUTTONS} = $init_buttons_value;
+
+    my ($leading_role_src_id)  =   $config->{$LEADING_ROLE_SRC} =~ /(\d+)$/;
+    
+    $vars->{$LEADING_ROLE_JSON}   = $config->{$LEADING_ROLE_SRC} .'/'.$leading_role_src_id.'.json',
+    $vars->{$LEADING_ROLE_PACK}   = $config->{$LEADING_ROLE_SRC} .'/pack',
     
     my $init_npcs_value =   $self->get_init_npcs_value($config);
     $vars->{$INIT_NPCS} = $init_npcs_value;
@@ -153,12 +163,14 @@ sub get_loading_list(){
 
     push @list, $config->{$SKIN_KEY};
     push @list, $config->{$BACKGROUND_IMG_KEY};
+    push @list, $config->{$LEADING_ROLE_SRC}.'/pack';
     
     
     my $npcs = $config->{$NPCS_KEY};
     for my $one_npc (keys %$npcs){
         push @list, $npcs->{$one_npc}->{$NPC_SRC}.'/pack';
     }
+    
     
     return \@list;
 }
@@ -281,4 +293,6 @@ sub get_init_npcs_value(){
 }
 
 1
+
+
 
