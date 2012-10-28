@@ -15,6 +15,11 @@ public class $class_name extends RPGScreen $implements{
 
     public $class_name(Game game){
         super(game);
+    }
+    
+    @Override
+    public void show(){
+        super.show();
         loadingBackgroundTexture = new Texture(Gdx.files.internal("$loading_backgroud"));
         this.setBackGround(new TextureRegion(loadingBackgroundTexture));
 $source_loading
