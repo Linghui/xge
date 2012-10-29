@@ -7,6 +7,9 @@ use GCTXC;
 use GJava;
 
 my $SCENE_NAME_KEY  = 'scene_name';
+my $SCREEN_WIDHT    = 'screen_width';
+my $SCREEN_HEIGHT   = 'screen_height';
+
 my $BACKGROUND_IMG_KEY  = 'background';
 my $SKIN_KEY    =   'skin';
 my $TEXT_BUTTONS_KEY    =   'text_buttons';
@@ -41,6 +44,8 @@ my $GCTXC = GCTXC->new();
 
 my $scene_config = {
     $SCENE_NAME_KEY => 'TestScreen',
+    $SCREEN_WIDHT   => 800,
+    $SCREEN_HEIGHT  => 480,
     $LOADING_BACKGROUND_KEY =>  'data/40009002_pack1.png',
     $LADING_BAR_KEY =>  {
         $BAR_TOP    =>  'default-round',
@@ -52,7 +57,7 @@ my $scene_config = {
         
     },
     
-    $BACKGROUND_IMG_KEY =>'data/pack1.png',
+    $BACKGROUND_IMG_KEY =>'data/map/pack.atlas?map1',
     $SKIN_KEY   =>  'data/uiskin.json',
     
     $LABELS_KEY =>  {

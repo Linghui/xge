@@ -14,7 +14,7 @@ public class $class_name extends RPGScreen $implements{
     private NumericBar loadingBar = null;
 
     public $class_name(Game game){
-        super(game);
+        super(game, $screen_width, $screen_height);
     }
     
     @Override
@@ -64,7 +64,8 @@ $source_loading
     
     private void init(){
     
-        this.setBackGround(new TextureRegion(manager.get("$background", Texture.class)), false);
+        TextureRegion backRegion = $background;
+        this.setBackGround(backRegion, false);
         
         AnimationActor playerAnimation = new AnimationActor( new AnimationGroup(Resources.getInstance().readAnimationResource("$leading_role_json", false, false, manager.get("$leading_role_pack", TextureAtlas.class))));
         playerAnimation.y = 480/8;

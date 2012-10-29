@@ -7,10 +7,15 @@ use warnings;
 use Data::Dumper qw/Dumper/;
 use Template;
 
+my $PACK_SUFFIX = '/pack';
+
 my $CLASS_NAME      = 'class_name';
 my $SCENE_NAME_KEY  = 'scene_name';
 my $EXTENDS_KEY     = 'extends';
 my $IMPLEMENTS_KEY  = 'implements';
+
+my $SCREEN_WIDHT    = 'screen_width';
+my $SCREEN_HEIGHT   = 'screen_height';
 
 my $BACKGROUND_IMG_KEY  = 'background';
 my $SKIN_KEY    =   'skin';
@@ -76,7 +81,9 @@ sub generate_java(){
     
     my $vars = {
         $CLASS_NAME  => $config->{$SCENE_NAME_KEY},
-        $BACKGROUND_IMG_KEY  => $config->{$BACKGROUND_IMG_KEY},
+        $SCREEN_WIDHT  => $config->{$SCREEN_WIDHT},
+        $SCREEN_HEIGHT  => $config->{$SCREEN_HEIGHT},
+#        $BACKGROUND_IMG_KEY  => $config->{$BACKGROUND_IMG_KEY},
         $LOADING_BACKGROUND_KEY  => $config->{$LOADING_BACKGROUND_KEY},
         $BAR_TOP  => $config->{$LADING_BAR_KEY}->{$BAR_TOP},
         $BAR_BOTTOM  => $config->{$LADING_BAR_KEY}->{$BAR_BOTTOM},
@@ -95,6 +102,11 @@ sub generate_java(){
         $vars->{$EXTENDS_KEY} = "$EXTENDS_KEY ".$config->{$EXTENDS_KEY};
     }
     
+    # background
+    $vars->{$BACKGROUND_IMG_KEY} = $self->get_background_resion($config->{$BACKGROUND_IMG_KEY});
+    
+    
+    # loading and unloading source
 #    my $source_loading_list = $config->{$SOURCE_LOADING};
     my $source_loading_list = $self->get_loading_list($config);
     my $all_src_load = "";
@@ -118,10 +130,11 @@ sub generate_java(){
     my $init_buttons_value = $self->get_init_buttons_value($config);
     $vars->{$INIT_BUTTONS} = $init_buttons_value;
 
+    # deal leading role resource
     my ($leading_role_src_id)  =   $config->{$LEADING_ROLE_SRC} =~ /(\d+)$/;
     
     $vars->{$LEADING_ROLE_JSON}   = $config->{$LEADING_ROLE_SRC} .'/'.$leading_role_src_id.'.json',
-    $vars->{$LEADING_ROLE_PACK}   = $config->{$LEADING_ROLE_SRC} .'/pack',
+    $vars->{$LEADING_ROLE_PACK}   = $config->{$LEADING_ROLE_SRC} .$PACK_SUFFIX,
     
     my $init_npcs_value =   $self->get_init_npcs_value($config);
     $vars->{$INIT_NPCS} = $init_npcs_value;
@@ -131,6 +144,23 @@ sub generate_java(){
     || die $template->error();
     
     
+}
+
+sub get_background_resion(){
+    
+    my $self = shift;
+    my $source = shift;
+    
+    my $line = "";
+    
+    if($source =~ /\.png/){
+        $line = " new TextureRegion(manager.get(\"$source\", Texture.class));\n";
+    } elsif ($source =~ /pack/){
+        my ($pack_file, $region_name) = split /\?/, $source;
+        $line = " manager.get(\"$pack_file\", TextureAtlas.class).findRegion(\"$region_name\");\n";
+    }
+    
+    return $line;
 }
 
 sub get_load_line(){
@@ -169,13 +199,19 @@ sub get_loading_list(){
     my @list = ();
 
     push @list, $config->{$SKIN_KEY};
-    push @list, $config->{$BACKGROUND_IMG_KEY};
-    push @list, $config->{$LEADING_ROLE_SRC}.'/pack';
+    
+    my $background_resource = $config->{$BACKGROUND_IMG_KEY};
+    if( $background_resource =~ /pack/ ){
+        ($background_resource) = split /\?/, $background_resource;
+    }
+    push @list, $background_resource;
+    
+    push @list, $config->{$LEADING_ROLE_SRC}.$PACK_SUFFIX;
     
     
     my $npcs = $config->{$NPCS_KEY};
     for my $one_npc (keys %$npcs){
-        push @list, $npcs->{$one_npc}->{$NPC_SRC}.'/pack';
+        push @list, $npcs->{$one_npc}->{$NPC_SRC}.$PACK_SUFFIX;
     }
     
     
@@ -326,7 +362,7 @@ sub get_init_npcs_value(){
         my $vars = {
             $NPC_NAME   =>   $one_npc.'NpcActor',
             $NPC_JSON   => $npcs->{$one_npc}->{$NPC_SRC}.'/'.$src_id.'.json',
-            $NPC_PACK   => $npcs->{$one_npc}->{$NPC_SRC}.'/pack',
+            $NPC_PACK   => $npcs->{$one_npc}->{$NPC_SRC}.$PACK_SUFFIX,
             $NPC_X   =>   $npcs->{$one_npc}->{$X_KEY},
             $NPC_Y   =>   $npcs->{$one_npc}->{$Y_KEY},
             
