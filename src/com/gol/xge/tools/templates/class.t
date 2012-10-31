@@ -66,6 +66,7 @@ $source_loading
     
         TextureRegion backRegion = $background;
         this.setBackGround(backRegion, false);
+        this.setLimitY($limit_y);
         
         AnimationActor playerAnimation = new AnimationActor( new AnimationGroup(Resources.getInstance().readAnimationResource("$leading_role_json", false, false, manager.get("$leading_role_pack", TextureAtlas.class))));
         playerAnimation.y = 480/8;
@@ -101,7 +102,7 @@ $init_npcs
     @Override
     public void dispose() {
 $source_unloading
-
+    manager.dispose();
     }
 }
 

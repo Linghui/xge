@@ -11,6 +11,8 @@ my $SCREEN_WIDHT    = 'screen_width';
 my $SCREEN_HEIGHT   = 'screen_height';
 
 my $BACKGROUND_IMG_KEY  = 'background';
+my $MOVEMENT_LIMIT_Y    = 'limit_y';
+
 my $SKIN_KEY    =   'skin';
 my $TEXT_BUTTONS_KEY    =   'text_buttons';
 my $TEXT_KEY    =   'text';
@@ -58,6 +60,7 @@ my $scene_config = {
     },
     
     $BACKGROUND_IMG_KEY =>'data/map/pack.atlas?map1',
+    $MOVEMENT_LIMIT_Y   => 200,
     $SKIN_KEY   =>  'data/uiskin.json',
     
     $LABELS_KEY =>  {

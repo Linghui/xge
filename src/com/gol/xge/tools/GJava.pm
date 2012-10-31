@@ -18,6 +18,8 @@ my $SCREEN_WIDHT    = 'screen_width';
 my $SCREEN_HEIGHT   = 'screen_height';
 
 my $BACKGROUND_IMG_KEY  = 'background';
+my $MOVEMENT_LIMIT_Y    = 'limit_y';
+
 my $SKIN_KEY    =   'skin';
 my $SOURCE_LOADING  = 'source_loading';
 my $SOURCE_UNLOADING  = 'source_unloading';
@@ -84,6 +86,7 @@ sub generate_java(){
         $SCREEN_WIDHT  => $config->{$SCREEN_WIDHT},
         $SCREEN_HEIGHT  => $config->{$SCREEN_HEIGHT},
 #        $BACKGROUND_IMG_KEY  => $config->{$BACKGROUND_IMG_KEY},
+        $MOVEMENT_LIMIT_Y   =>  $config->{$MOVEMENT_LIMIT_Y},
         $LOADING_BACKGROUND_KEY  => $config->{$LOADING_BACKGROUND_KEY},
         $BAR_TOP  => $config->{$LADING_BAR_KEY}->{$BAR_TOP},
         $BAR_BOTTOM  => $config->{$LADING_BAR_KEY}->{$BAR_BOTTOM},
