@@ -1,6 +1,6 @@
-        TextureRegion rDown = $down_region;
-        TextureRegion rUp   = $up_region;
-        ImageButton [% button_name %] = new ImageButton(rDown, rUp);
+        TextureRegion [% button_name %]Down = $down_region;
+        TextureRegion [% button_name %]Up   = $up_region;
+        ImageButton [% button_name %] = new ImageButton([% button_name %]Down, [% button_name %]Up);
         [% button_name %].x = $button_x;
         [% button_name %].y = $button_y;
         [% button_name %].setClickListener(new ClickListener(){
@@ -16,3 +16,4 @@
     
         });
         this.addActorBottom([% button_name %]);
+

@@ -65,34 +65,51 @@ my $scene_config = {
     
     $LABELS_KEY =>  {
         'l1'  =>{
-            $TEXT_KEY     =>  'success',
-            $STYLE_KEY    =>  'default',
-            $X_KEY        =>  600,
-            $Y_KEY        =>  200,
+            $TEXT_KEY     =>  'Lv.990',
+            $STYLE_KEY    =>  'yellow',
+            $X_KEY        =>  20,
+            $Y_KEY        =>  450,
         }
     },
     
     $TEXT_BUTTONS_KEY   =>  {
         'btn1'  =>  {
-            $TEXT_KEY   =>  'success',
+            $TEXT_KEY   =>  '充值',
             $X_KEY  =>  100,
             $Y_KEY  =>  100,
             
         },
-        'btn2'  =>  {
-            $TEXT_KEY   =>  'very well',
-            $X_KEY  =>  150,
-            $Y_KEY  =>  100,
-            
-        }
     },
     $IMAGE_BUTTONS_KEY  =>  {
-        'image1'  =>  {
-            $TEXT_KEY   =>  'success',
-            $X_KEY  =>  200,
-            $Y_KEY  =>  200,
+        'qishu'  =>  {
+            $X_KEY  =>  730,
+            $Y_KEY  =>  10,
             $IMAGE_BUTTONS_DOWN_REGION_KEY  =>  'qishu',
+            $IMAGE_BUTTONS_UP_REGION_KEY    =>  'qishu',
+        },
+        'bag'  =>  {
+            $X_KEY  =>  660,
+            $Y_KEY  =>  10,
+            $IMAGE_BUTTONS_DOWN_REGION_KEY  =>  'bag',
             $IMAGE_BUTTONS_UP_REGION_KEY    =>  'bag',
+        },
+        'zhenfa'  =>  {
+            $X_KEY  =>  590,
+            $Y_KEY  =>  10,
+            $IMAGE_BUTTONS_DOWN_REGION_KEY  =>  'zhenfa',
+            $IMAGE_BUTTONS_UP_REGION_KEY    =>  'zhenfa',
+        },
+        'yaoguai'  =>  {
+            $X_KEY  =>  520,
+            $Y_KEY  =>  10,
+            $IMAGE_BUTTONS_DOWN_REGION_KEY  =>  'yaoguai',
+            $IMAGE_BUTTONS_UP_REGION_KEY    =>  'yaoguai',
+        },
+        'caishen'  =>  {
+            $X_KEY  =>  730,
+            $Y_KEY  =>  410,
+            $IMAGE_BUTTONS_DOWN_REGION_KEY  =>  'caishen',
+            $IMAGE_BUTTONS_UP_REGION_KEY    =>  'caishen',
         },
     },
     
@@ -102,68 +119,50 @@ my $scene_config = {
         'cuihua'  =>  {
             $NPC_NAME   =>  '翠花',
             $NPC_SRC    =>  'data/30100001',
-            $X_KEY      =>  '300',
-            $Y_KEY      =>  '400',
+            $X_KEY      =>  '350',
+            $Y_KEY      =>  '240',
         },
         'taishan'  =>  {
             $NPC_NAME   =>  '泰山',
             $NPC_SRC    =>  'data/30100002',
-            $X_KEY      =>  '300',
-            $Y_KEY      =>  '450',
+            $X_KEY      =>  '450',
+            $Y_KEY      =>  '240',
         },
         'kezhan'  =>  {
             $NPC_NAME   =>  '客栈',
             $NPC_SRC    =>  'data/30100003',
-            $X_KEY      =>  '200',
-            $Y_KEY      =>  '300',
+            $X_KEY      =>  '750',
+            $Y_KEY      =>  '240',
         },
         'shanpao'  =>  {
             $NPC_NAME   =>  '山炮',
             $NPC_SRC    =>  'data/30100004',
-            $X_KEY      =>  '450',
-            $Y_KEY      =>  '300',
+            $X_KEY      =>  '950',
+            $Y_KEY      =>  '240',
         },
         'biesan'  =>  {
             $NPC_NAME   =>  '瘪三',
             $NPC_SRC    =>  'data/30100005',
-            $X_KEY      =>  '100',
-            $Y_KEY      =>  '300',
+            $X_KEY      =>  '1100',
+            $Y_KEY      =>  '240',
         },
         'dana'  =>  {
             $NPC_NAME   =>  '大拿',
             $NPC_SRC    =>  'data/30100006',
-            $X_KEY      =>  '600',
-            $Y_KEY      =>  '300',
+            $X_KEY      =>  '1300',
+            $Y_KEY      =>  '240',
         },
         'dasheng'  =>  {
             $NPC_NAME   =>  '大圣',
             $NPC_SRC    =>  'data/30100008',
-            $X_KEY      =>  '500',
-            $Y_KEY      =>  '300',
+            $X_KEY      =>  '1450',
+            $Y_KEY      =>  '240',
         },
         'zhu'  =>  {
             $NPC_NAME   =>  '猪',
             $NPC_SRC    =>  'data/30100009',
-            $X_KEY      =>  '200',
-            $Y_KEY      =>  '200',
-        },
-        'lujia'  =>  {
-            $NPC_NAME   =>  '路人甲',
-            $NPC_SRC    =>  'data/30100010',
-            $X_KEY      =>  '100',
-            $Y_KEY      =>  '100',
-        },
-        'jiong'  =>  {
-            $NPC_NAME   =>  '囧人',
-            $NPC_SRC    =>  'data/30100011',
-            $X_KEY      =>  '300',
-            $Y_KEY      =>  '150',
-        },
-        'shangdi'  =>  {
-            $NPC_NAME   =>  'God',
-            $NPC_SRC    =>  'data/30100012',
-            $X_KEY      =>  '150',
-            $Y_KEY      =>  '150',
+            $X_KEY      =>  '1800',
+            $Y_KEY      =>  '180',
         },
     },
 };

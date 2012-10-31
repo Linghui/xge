@@ -102,7 +102,7 @@ $init_npcs
     @Override
     public void dispose() {
 $source_unloading
-    manager.dispose();
+        manager.dispose();
     }
 }
 
