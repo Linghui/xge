@@ -1,4 +1,4 @@
-package com.gol.xge.core.ui;
+package com.gol.xge.rpg.ui;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -6,54 +6,13 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.utils.Disposable;
-import com.gol.xge.rpg.Resources;
 
-
-/*
- * there are two made for initialize Animation Group
- * 	1. Array Made
- * 		just wrap up Animations to a group , use index to change showing animation 
- *  2. Hash Made : suggest to use hash made, easy :)
- *  	for this made, a json file with animation configuration is needed.:
- *  	example:
- *  	{
- *  	image : "$image" (only accept internal file, so need to begin with data/, like data/xxx.png)
- *  	actions : 
- *  	{
- *  		$action_name : {
- *  			speed : $speed (float)
- *  			TextureRegions : [
- *  				{
- *  					x : $x, (int)
- *  					y : $y, (int)
- *  					width : $width, (int)
- *  					height : $height, (int)
- *  					
- *  				}
- *  			],
- *  			......
- *  		},
- *  		......
- *  	}
- *  	
- *  	}
- *  	
- */
 public class AnimationGroup{
 
-    private String TAG = "AnimationGroup";
+//    private String TAG = "AnimationGroup";
 
-	// for array made
-//	private Animation[] animationsArray;
-//	private int animationSize = 0;
-//	private int currentIndex = 0;
-    
-    
 	private float currentFrameTime = 0f;
 	private float timeOut = 0f;
 	private float defaultSpeed = 0.15f;
@@ -70,7 +29,6 @@ public class AnimationGroup{
 	private TextureRegion keyFrame = null;;
 	public  boolean loop = true;
 	private boolean animationStop = false;
-	private String packPath = null;
 
 	public AnimationGroup(HashMap<String, Animation> animationHash){
 	    init(animationHash);

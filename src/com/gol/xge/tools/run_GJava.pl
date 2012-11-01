@@ -75,8 +75,8 @@ my $scene_config = {
     $TEXT_BUTTONS_KEY   =>  {
         'btn1'  =>  {
             $TEXT_KEY   =>  '充值',
-            $X_KEY  =>  100,
-            $Y_KEY  =>  100,
+            $X_KEY  =>  80,
+            $Y_KEY  =>  420,
             
         },
     },

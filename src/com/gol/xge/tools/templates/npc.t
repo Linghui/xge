@@ -1,5 +1,5 @@
 
-        NPC $npc_name = new NPC( new AnimationGroup(Resources.getInstance().readAnimationResource("$npc_json", false, false, manager.get("$npc_pack", TextureAtlas.class)))){
+        NPC $npc_name = new NPC( new AnimationGroup(Common.readAnimationResource("$npc_json", false, false, manager.get("$npc_pack", TextureAtlas.class)))){
 
             @Override
             public void action() {

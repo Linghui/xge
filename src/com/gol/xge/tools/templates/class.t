@@ -68,7 +68,7 @@ $source_loading
         this.setBackGround(backRegion, false);
         this.setLimitY($limit_y);
         
-        AnimationActor playerAnimation = new AnimationActor( new AnimationGroup(Resources.getInstance().readAnimationResource("$leading_role_json", false, false, manager.get("$leading_role_pack", TextureAtlas.class))));
+        AnimationActor playerAnimation = new AnimationActor( new AnimationGroup(Common.readAnimationResource("$leading_role_json", false, false, manager.get("$leading_role_pack", TextureAtlas.class))));
         playerAnimation.y = 480/8;
         Group leadingRole = new Group();
         leadingRole.addActor(playerAnimation);

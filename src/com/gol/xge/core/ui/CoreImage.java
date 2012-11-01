@@ -14,7 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Widget;
 import com.badlogic.gdx.utils.Scaling;
 
 public class CoreImage extends Widget{
-    private String TAG = "CoreImage";
+//    private String TAG = "CoreImage";
 //    
 //    private boolean draggable = false;
 //    private boolean isDown = false;

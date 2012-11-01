@@ -43,7 +43,6 @@ public class Java6Arrays {
         throw new NegativeArraySizeException();
     }
 
-    @SuppressWarnings("unchecked")
 	public static byte [] copyOfRange(byte[] original, int start, int end) {
         if (original.length >= start && 0 <= start) {
             if (start <= end) {
