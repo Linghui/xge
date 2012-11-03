@@ -18,8 +18,55 @@ loading_bar :{
 background  : "游戏场景背景，1.指定png图片路径，或2.指定pack文件路径并问号'?'分割指定TextureRegion名,例 data/map/pack.atlas?map1",
 limit_y     : "指定游戏场景中上半不分不可移动范围, int",
 skin        : "指定skin的json文件路径，例 data/uiskin.json",
-leading_role_src : "指定动画图片文件夹, 例 data/30100001, 默认json文件是data/30100001/30100001.json, pack文件是data/30100001/pack",
+leading_role_src : "主角资源，指定动画图片文件夹, 例 data/30100001, 默认json文件是data/30100001/30100001.json, pack文件是data/30100001/pack",
+labels:[
+# label 数列
+    {
+    name    :   "label 名",
+    text    :   "label 显示内容",
+    style   :   "LabelStyle名，需要在skin中有定义, 例 default",
+    x       :   "x坐标, int",
+    y       :   "y坐标, int",
+    
+    },
+    ...
+],
+text_buttons:[
+# text button 数列
+    {
+    name    :   "text button 名",
+    text    :   "text button 显示内容",
+    x       :   "x坐标, int",
+    y       :   "y坐标, int",
+    
+    },
+    ...
+],
+image_buttons:[
+# image button 数列
+    {
+    name    :   "image button 名",
+    down_region : "button正常状态图片，指定skin中的TextureRegion名",
+    up_region   : "button点击后图片，指定skin中的TextureRegion名",
+    x       :   "x坐标, int",
+    y       :   "y坐标, int",
+    
+    },
+    ...
+],
 
+npcs:[
+# npc 数列
+    {
+    name     : "npc控件名",
+    npc_name : "npc显示名",
+    npc_src  : "npc使用资源，指定动画图片文件夹, 例 data/30100001, 默认json文件是data/30100001/30100001.json, pack文件是data/30100001/pack",
+    x        :   "x坐标, int",
+    y        :   "y坐标, int",
+    
+    },
+    ...
+],
 }
 
 
