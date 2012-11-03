@@ -26,6 +26,7 @@ my $SOURCE_UNLOADING  = 'source_unloading';
 my $INIT_KEY    =   'init';
 my $INIT_BUTTONS    =   'init_buttons';
 
+my $NAME    =   'name';
 my $TEXT_BUTTONS_KEY    =   'text_buttons';
 my $TEXT_KEY    =   'text';
 my $X_KEY   =   'x';
@@ -213,8 +214,8 @@ sub get_loading_list(){
     
     
     my $npcs = $config->{$NPCS_KEY};
-    for my $one_npc (keys %$npcs){
-        push @list, $npcs->{$one_npc}->{$NPC_SRC}.$PACK_SUFFIX;
+    for my $one_npc (@$npcs){
+        push @list, $one_npc->{$NPC_SRC}.$PACK_SUFFIX;
     }
     
     
@@ -244,14 +245,14 @@ sub get_init_labels_value(){
     
     
     my $labels = $config->{$LABELS_KEY};
-    for my $one_label (keys %$labels){
+    for my $one_label (@$labels){
         
         my $vars = {
-            $LABEL_NAME    =>   $one_label,
-            $LABEL_TEXT    =>   $labels->{$one_label}->{$TEXT_KEY},
-            $LABEL_STYLE    =>   $labels->{$one_label}->{$STYLE_KEY},
-            $LABEL_X    =>   $labels->{$one_label}->{$X_KEY},
-            $LABEL_Y    =>   $labels->{$one_label}->{$Y_KEY},
+            $LABEL_NAME    =>   $one_label->{$NAME},
+            $LABEL_TEXT    =>   $one_label->{$TEXT_KEY},
+            $LABEL_STYLE    =>   $one_label->{$STYLE_KEY},
+            $LABEL_X    =>   $one_label->{$X_KEY},
+            $LABEL_Y    =>   $one_label->{$Y_KEY},
         };
         
         
@@ -285,13 +286,13 @@ sub get_init_buttons_value(){
     my $input = 'templates/text_button.t';
     
     my $text_buttons = $config->{$TEXT_BUTTONS_KEY};
-    for my $one_button (keys %$text_buttons){
+    for my $one_button (@$text_buttons){
         
         my $vars = {
-            $BUTTON_NAME    =>   $one_button,
-            $BUTTON_TEXT    =>   $text_buttons->{$one_button}->{$TEXT_KEY},
-            $BUTTON_X    =>   $text_buttons->{$one_button}->{$X_KEY},
-            $BUTTON_Y    =>   $text_buttons->{$one_button}->{$Y_KEY},
+            $BUTTON_NAME    =>   $one_button->{$NAME},
+            $BUTTON_TEXT    =>   $one_button->{$TEXT_KEY},
+            $BUTTON_X    =>   $one_button->{$X_KEY},
+            $BUTTON_Y    =>   $one_button->{$Y_KEY},
             
         };
         
@@ -306,23 +307,23 @@ sub get_init_buttons_value(){
     $input = 'templates/image_button.t';
     
     my $image_buttons = $config->{$IMAGE_BUTTONS_KEY};
-    for my $one_button (keys %$image_buttons){
+    for my $one_button (@$image_buttons){
         
         my $vars = {
-            $BUTTON_NAME    =>   $one_button,
+            $BUTTON_NAME    =>   $one_button->{$NAME},
             $IMAGE_BUTTONS_DOWN_REGION_KEY  => 'null',
             $IMAGE_BUTTONS_UP_REGION_KEY  => 'null',
-            $BUTTON_X    =>   $image_buttons->{$one_button}->{$X_KEY},
-            $BUTTON_Y    =>   $image_buttons->{$one_button}->{$Y_KEY},
+            $BUTTON_X    =>   $one_button->{$X_KEY},
+            $BUTTON_Y    =>   $one_button->{$Y_KEY},
             
         };
         
-        if(defined($image_buttons->{$one_button}->{$IMAGE_BUTTONS_DOWN_REGION_KEY})){
-            $vars->{$IMAGE_BUTTONS_DOWN_REGION_KEY} = 'skin.getRegion("'.$image_buttons->{$one_button}->{$IMAGE_BUTTONS_DOWN_REGION_KEY}.'")';
+        if(defined($one_button->{$IMAGE_BUTTONS_DOWN_REGION_KEY})){
+            $vars->{$IMAGE_BUTTONS_DOWN_REGION_KEY} = 'skin.getRegion("'.$one_button->{$IMAGE_BUTTONS_DOWN_REGION_KEY}.'")';
         }
         
-        if(defined($image_buttons->{$one_button}->{$IMAGE_BUTTONS_UP_REGION_KEY})){
-            $vars->{$IMAGE_BUTTONS_UP_REGION_KEY} = 'skin.getRegion("'.$image_buttons->{$one_button}->{$IMAGE_BUTTONS_UP_REGION_KEY}.'")';
+        if(defined($one_button->{$IMAGE_BUTTONS_UP_REGION_KEY})){
+            $vars->{$IMAGE_BUTTONS_UP_REGION_KEY} = 'skin.getRegion("'.$one_button->{$IMAGE_BUTTONS_UP_REGION_KEY}.'")';
         }
         
         my $output;
@@ -358,16 +359,16 @@ sub get_init_npcs_value(){
     my $input = 'templates/npc.t';
     
     my $npcs = $config->{$NPCS_KEY};
-    for my $one_npc (keys %$npcs){
+    for my $one_npc (@$npcs){
         
-        my ($src_id)  =   $npcs->{$one_npc}->{$NPC_SRC} =~ /(\d+)$/;
+        my ($src_id)  =   $one_npc->{$NPC_SRC} =~ /(\d+)$/;
         print "src_id ====== $src_id\n";
         my $vars = {
-            $NPC_NAME   =>   $one_npc.'NpcActor',
-            $NPC_JSON   => $npcs->{$one_npc}->{$NPC_SRC}.'/'.$src_id.'.json',
-            $NPC_PACK   => $npcs->{$one_npc}->{$NPC_SRC}.$PACK_SUFFIX,
-            $NPC_X   =>   $npcs->{$one_npc}->{$X_KEY},
-            $NPC_Y   =>   $npcs->{$one_npc}->{$Y_KEY},
+            $NAME   =>   $one_npc->{$NAME}.'NpcActor',
+            $NPC_JSON   => $one_npc->{$NPC_SRC}.'/'.$src_id.'.json',
+            $NPC_PACK   => $one_npc->{$NPC_SRC}.$PACK_SUFFIX,
+            $NPC_X   =>   $one_npc->{$X_KEY},
+            $NPC_Y   =>   $one_npc->{$Y_KEY},
             
         };
         

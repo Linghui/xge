@@ -14,6 +14,7 @@ my $BACKGROUND_IMG_KEY  = 'background';
 my $MOVEMENT_LIMIT_Y    = 'limit_y';
 
 my $SKIN_KEY    =   'skin';
+my $NAME        =   'name';
 my $TEXT_BUTTONS_KEY    =   'text_buttons';
 my $TEXT_KEY    =   'text';
 my $X_KEY   =   'x';
@@ -64,107 +65,123 @@ my $scene_config = {
     $LEADING_ROLE_SRC   =>  'data/30100001',
     $SKIN_KEY   =>  'data/uiskin.json',
     
-    $LABELS_KEY =>  {
-        'l1'  =>{
-            $TEXT_KEY     =>  'Lv.990',
-            $STYLE_KEY    =>  'yellow',
-            $X_KEY        =>  20,
-            $Y_KEY        =>  450,
+    $LABELS_KEY =>  [
+        {
+            $NAME       =>  'l1',
+            $TEXT_KEY   =>  'Lv.990',
+            $STYLE_KEY  =>  'yellow',
+            $X_KEY      =>  20,
+            $Y_KEY      =>  450,
         }
-    },
+    ],
     
-    $TEXT_BUTTONS_KEY   =>  {
-        'btn1'  =>  {
+    $TEXT_BUTTONS_KEY   =>  [
+        {
+            $NAME   =>  'btn1',
             $TEXT_KEY   =>  '充值',
             $X_KEY  =>  80,
             $Y_KEY  =>  420,
             
         },
-    },
-    $IMAGE_BUTTONS_KEY  =>  {
-        'qishu'  =>  {
+    ],
+    
+    $IMAGE_BUTTONS_KEY  =>  [
+        {
+            $NAME   =>  'qishu',
             $X_KEY  =>  730,
             $Y_KEY  =>  10,
             $IMAGE_BUTTONS_DOWN_REGION_KEY  =>  'qishu',
             $IMAGE_BUTTONS_UP_REGION_KEY    =>  'qishu',
         },
-        'bag'  =>  {
+        {
+            $NAME   =>  'bag',
             $X_KEY  =>  660,
             $Y_KEY  =>  10,
             $IMAGE_BUTTONS_DOWN_REGION_KEY  =>  'bag',
             $IMAGE_BUTTONS_UP_REGION_KEY    =>  'bag',
         },
-        'zhenfa'  =>  {
+        {
+            $NAME   =>  'zhenfa',
             $X_KEY  =>  590,
             $Y_KEY  =>  10,
             $IMAGE_BUTTONS_DOWN_REGION_KEY  =>  'zhenfa',
             $IMAGE_BUTTONS_UP_REGION_KEY    =>  'zhenfa',
         },
-        'yaoguai'  =>  {
+        {
+            $NAME   =>  'yaoguai',
             $X_KEY  =>  520,
             $Y_KEY  =>  10,
             $IMAGE_BUTTONS_DOWN_REGION_KEY  =>  'yaoguai',
             $IMAGE_BUTTONS_UP_REGION_KEY    =>  'yaoguai',
         },
-        'caishen'  =>  {
+        {
+            $NAME   =>  'caishen',
             $X_KEY  =>  730,
             $Y_KEY  =>  410,
             $IMAGE_BUTTONS_DOWN_REGION_KEY  =>  'caishen',
             $IMAGE_BUTTONS_UP_REGION_KEY    =>  'caishen',
         },
-    },
+    ],
 
     
-    $NPCS_KEY    =>  {
-        'cuihua'  =>  {
+    $NPCS_KEY    =>  [
+        {
+            $NAME   =>  'cuihua',
             $NPC_NAME   =>  '翠花',
             $NPC_SRC    =>  'data/30100001',
             $X_KEY      =>  '350',
             $Y_KEY      =>  '240',
         },
-        'taishan'  =>  {
+        {
+            $NAME   =>  'taishan',
             $NPC_NAME   =>  '泰山',
             $NPC_SRC    =>  'data/30100002',
             $X_KEY      =>  '450',
             $Y_KEY      =>  '240',
         },
-        'kezhan'  =>  {
+        {
+            $NAME   =>  'kezhan',
             $NPC_NAME   =>  '客栈',
             $NPC_SRC    =>  'data/30100003',
             $X_KEY      =>  '750',
             $Y_KEY      =>  '240',
         },
-        'shanpao'  =>  {
+        {
+            $NAME   =>  'shanpao',
             $NPC_NAME   =>  '山炮',
             $NPC_SRC    =>  'data/30100004',
             $X_KEY      =>  '950',
             $Y_KEY      =>  '240',
         },
-        'biesan'  =>  {
+        {
+            $NAME   =>  'biesan',
             $NPC_NAME   =>  '瘪三',
             $NPC_SRC    =>  'data/30100005',
             $X_KEY      =>  '1100',
             $Y_KEY      =>  '240',
         },
-        'dana'  =>  {
+        {
+            $NAME   =>  'dana',
             $NPC_NAME   =>  '大拿',
             $NPC_SRC    =>  'data/30100006',
             $X_KEY      =>  '1300',
             $Y_KEY      =>  '240',
         },
-        'dasheng'  =>  {
+        {
+            $NAME   =>  'dasheng',
             $NPC_NAME   =>  '大圣',
             $NPC_SRC    =>  'data/30100008',
             $X_KEY      =>  '1450',
             $Y_KEY      =>  '240',
         },
-        'zhu'  =>  {
+        {
+            $NAME   =>  'zhu',
             $NPC_NAME   =>  '猪',
             $NPC_SRC    =>  'data/30100009',
             $X_KEY      =>  '1800',
             $Y_KEY      =>  '180',
         },
-    },
+    ],
 };
 
 #my $config_config = $GCTXC->convert_to_java($scene_config);
