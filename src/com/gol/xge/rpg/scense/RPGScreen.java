@@ -512,9 +512,17 @@ public abstract class RPGScreen implements Screen, InputProcessor {
     }
 
     public class NPC extends AnimationActor implements MoveTarget{
+        
+        private NPCAction npcAction = null;
 
         public NPC(AnimationGroup animationGroup) {
             super(animationGroup);
+        }
+        
+        public void setAction(String actionStr){
+            if( actionStr != null){
+                npcAction   =   new NPCAction(actionStr);
+            }
         }
         
         @Override
@@ -525,13 +533,18 @@ public abstract class RPGScreen implements Screen, InputProcessor {
         
         @Override
         public void action() {
-            // TODO Auto-generated method stub
-            
+//            if(npcAction != null){
+//                playAction(npcAction);
+//            }
         }
     }
     
     public interface MoveTarget {
         public void action ();
+    }
+
+    public void playAction(NPCAction npcAction){
+        
     }
 
 }

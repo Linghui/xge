@@ -61,6 +61,7 @@ my $scene_config = {
     
     $BACKGROUND_IMG_KEY =>'data/map/pack.atlas?map1',
     $MOVEMENT_LIMIT_Y   => 200,
+    $LEADING_ROLE_SRC   =>  'data/30100001',
     $SKIN_KEY   =>  'data/uiskin.json',
     
     $LABELS_KEY =>  {
@@ -112,8 +113,7 @@ my $scene_config = {
             $IMAGE_BUTTONS_UP_REGION_KEY    =>  'caishen',
         },
     },
-    
-    $LEADING_ROLE_SRC   =>  'data/30100001',
+
     
     $NPCS_KEY    =>  {
         'cuihua'  =>  {

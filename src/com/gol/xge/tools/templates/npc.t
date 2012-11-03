@@ -4,6 +4,7 @@
             @Override
             public void action() {
                 // TODO Auto-generated method stub
+                super.action();
                 System.out.println("$npc_name action");
             }
         };
