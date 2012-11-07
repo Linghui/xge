@@ -20,8 +20,6 @@ public class AnimationActor extends Group implements AnimationActionInterface{
     AnimationGroup animationGroup;
     TextureRegion frame;
 
-    private OnAnimationComplete listener = null;
-
     public AnimationActor(AnimationGroup animationGroup){
         this(null, animationGroup);
     }
@@ -48,17 +46,6 @@ public class AnimationActor extends Group implements AnimationActionInterface{
     @Override
     public void act(float delta) {
         super.act(delta);
-        if(animationGroup.isDone){
-            
-            if(!actionAdded.isEmpty()){
-                actionAdded.remove(0);
-                this.getAnimationGroup().setAction(actionAdded.get(0), false);
-            } else {
-                if(this.listener != null){
-                    this.listener.completed();
-                }
-            }
-        }
         
         frame = animationGroup.getKeyFrame(delta);
     }
@@ -100,14 +87,6 @@ public class AnimationActor extends Group implements AnimationActionInterface{
 
     public Rectangle getCollistionArea(){
         return rectangle;
-    }
-
-    public void setCompletionListener(final OnAnimationComplete listener){
-        this.listener = listener;
-    }
-    
-    public interface OnAnimationComplete{
-        public void completed();
     }
 
 }

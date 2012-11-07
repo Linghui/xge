@@ -9,9 +9,13 @@ use Template;
 
 my $PACK_SUFFIX = '/pack';
 
+my $PACKAGE         = 'package';
+my $IMPORT          = 'import';
+
 my $CLASS_NAME      = 'class_name';
 my $SCENE_NAME_KEY  = 'scene_name';
 my $EXTENDS_KEY     = 'extends';
+my $PARENT          = 'parent';
 my $IMPLEMENTS_KEY  = 'implements';
 
 my $SCREEN_WIDHT    = 'screen_width';
@@ -96,8 +100,32 @@ sub generate_java(){
         $BAR_X  => $config->{$LADING_BAR_KEY}->{$BAR_X},
         $BAR_Y  => $config->{$LADING_BAR_KEY}->{$BAR_Y},
         $SKIN_KEY  => $config->{$SKIN_KEY},
+        $PACKAGE    => 'package com.gol.game;',
+        $IMPORT     => '
+import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.ui.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
+import com.gol.xge.rpg.Common;
+import com.gol.xge.rpg.InAndExternalFileHandleResolver;
+import com.gol.xge.rpg.scense.NPCAction;
+import com.gol.xge.rpg.scense.RPGScreen;
+import com.gol.xge.rpg.ui.AnimationActor;
+import com.gol.xge.rpg.ui.AnimationGroup;
+import com.gol.xge.rpg.ui.NumericBar;',
     };
-    
+
     if(defined($config->{$IMPLEMENTS_KEY})){
         $vars->{$IMPLEMENTS_KEY} = "$IMPLEMENTS_KEY ".$config->{$IMPLEMENTS_KEY};
     }
@@ -134,11 +162,18 @@ sub generate_java(){
     my $init_buttons_value = $self->get_init_buttons_value($config);
     $vars->{$INIT_BUTTONS} = $init_buttons_value;
 
-    # deal leading role resource
-    my ($leading_role_src_id)  =   $config->{$LEADING_ROLE_SRC} =~ /(\d+)$/;
-    
-    $vars->{$LEADING_ROLE_JSON}   = $config->{$LEADING_ROLE_SRC} .'/'.$leading_role_src_id.'.json',
-    $vars->{$LEADING_ROLE_PACK}   = $config->{$LEADING_ROLE_SRC} .$PACK_SUFFIX,
+    if(defined($config->{$LEADING_ROLE_SRC})){
+        
+        # deal leading role resource
+        my ($leading_role_src_id)  =   $config->{$LEADING_ROLE_SRC} =~ /(\d+)$/;
+        
+        $vars->{$LEADING_ROLE_JSON}   = $config->{$LEADING_ROLE_SRC} .'/'.$leading_role_src_id.'.json',
+        $vars->{$LEADING_ROLE_PACK}   = $config->{$LEADING_ROLE_SRC} .$PACK_SUFFIX,
+        $vars->{$PARENT}   = 'RPGScreen';
+        
+    } else {
+        $vars->{$PARENT}   = 'TacticsScreen';
+    }
     
     my $init_npcs_value =   $self->get_init_npcs_value($config);
     $vars->{$INIT_NPCS} = $init_npcs_value;
@@ -210,7 +245,10 @@ sub get_loading_list(){
     }
     push @list, $background_resource;
     
-    push @list, $config->{$LEADING_ROLE_SRC}.$PACK_SUFFIX;
+    if(defined($config->{$LEADING_ROLE_SRC})){
+        push @list, $config->{$LEADING_ROLE_SRC}.$PACK_SUFFIX;
+    }
+
     
     
     my $npcs = $config->{$NPCS_KEY};

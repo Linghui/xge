@@ -2,7 +2,7 @@ $package
 
 $import
 
-public class $class_name extends RPGScreen $implements{
+public class $class_name extends $parent $implements{
     
     $values
     
@@ -76,6 +76,7 @@ $source_loading
         leadingRole.height = playerAnimation.height;
 
 
+        initCam();
         initLeadingRole(leadingRole);
 
 $init

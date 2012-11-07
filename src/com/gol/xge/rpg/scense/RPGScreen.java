@@ -533,9 +533,9 @@ public abstract class RPGScreen implements Screen, InputProcessor {
         
         @Override
         public void action() {
-//            if(npcAction != null){
-//                playAction(npcAction);
-//            }
+            if(npcAction != null){
+                playAction(npcAction);
+            }
         }
     }
     
