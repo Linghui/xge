@@ -52,6 +52,7 @@ public class AnimationActor extends Group implements AnimationActionInterface{
     @Override
     public void draw(SpriteBatch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
+        batch.setColor(color.r, color.g, color.b, color.a);
         batch.draw(frame, x, y, Math.abs(this.width*scaleX), Math.abs(this.height*scaleY));
     }
     
