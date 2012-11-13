@@ -4,17 +4,21 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map.Entry;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.Json.Serializer;
+import com.badlogic.gdx.utils.JsonReader;
+import com.badlogic.gdx.utils.ObjectMap;
+import com.badlogic.gdx.utils.ObjectMap.Entry;
+import com.badlogic.gdx.utils.SerializationException;
+import com.gol.xge.rpg.ui.AnimationResource;
+
 
 
 public class Common {
@@ -96,27 +100,45 @@ public class Common {
         FileHandle jsonFileHandle = getFileHandle(jsonFile);
         String content = jsonFileHandle.readString();
 //        String path = jsonFile.substring(0, jsonFile.lastIndexOf("/"));
-        JsonParser jsonParser = new JsonParser();
         
-        JsonObject actionsObj = jsonParser.parse(content).getAsJsonObject();
+        Json json = new Json();
+        json.setSerializer(AnimationResource.class, new Serializer<AnimationResource>() {
+        	public AnimationResource read (Json json, Object jsonData, Class type) {
+				ObjectMap<String, String[]> map = (ObjectMap<String, String []>)jsonData;
+				String url = json.readValue("url", String.class, "", jsonData);
+				return new AnimationResource(url, map);
+        	}
+
+			@Override
+			public void write(Json json, AnimationResource object,
+					Class knownType) {
+				// TODO Auto-generated method stub
+				
+			}
+
+		});
+        AnimationResource ar = json.fromJson(AnimationResource.class, jsonFileHandle);
+        
+        JsonReader jsonParser = new JsonReader();
+        ObjectMap actionsObj = ar.getResourceMap();
 //        Gdx.app.log(TAG, "content -- " + content );
         
         actionsObj.remove("url");
-        Iterator<Entry<String, JsonElement>> iter = actionsObj.entrySet().iterator();
+        Iterator<Entry<String, Array<String>>> iter = actionsObj.entries().iterator();
         String defaultActionName = "";
         
 //        TextureAtlas atlas = getTextureAtlasByFile(packFile);
         while(iter.hasNext()){
-            Entry<String, JsonElement> entry = iter.next();
-            String actionName = entry.getKey();
+            Entry<String, Array<String>> entry = iter.next();
+            String actionName = entry.key;
 //            Gdx.app.log(TAG, "actionName -====== " + actionName);
             if( "".equals(defaultActionName) ){
                 defaultActionName = actionName;
             }
-            JsonArray texIds = entry.getValue().getAsJsonArray();
+            Array<String> texIds = entry.value;
             List<TextureRegion> actionAnimation = new ArrayList<TextureRegion>();
-            for( JsonElement element : texIds){
-                String id = element.getAsString();
+            for( String element : texIds){
+                String id = element;
 //                Gdx.app.log(TAG, "getting ||||||||||| 'id'" + id);
                 TextureRegion one = atlas.createSprite(id);
                 one.flip(flipX, flipY);
