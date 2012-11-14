@@ -47,7 +47,7 @@ public abstract class TacticsScreen implements Screen, InputProcessor {
     MoveTarget target = null;
     
     // all value below is usd to deal with view and leading role movement
-    protected OrthographicCamera cam;
+    private OrthographicCamera cam;
     private float camCurrentX = 0;
     private float camCurrentY = 0;
     private float camMoveToX = 0;
@@ -93,14 +93,6 @@ public abstract class TacticsScreen implements Screen, InputProcessor {
         camCurrentY = cam.position.y;
         camMoveToX  = cam.position.x;
         camMoveToY  = cam.position.y;
-    }
-    
-    public int getBackgroundWidth(){
-        return background_width;
-    }
-    
-    public int getBackgroundHeight(){
-        return background_height;
     }
     
     /*
@@ -240,9 +232,6 @@ public abstract class TacticsScreen implements Screen, InputProcessor {
         
     }
 
-    public void setRootVisible(boolean visible) {
-        this.rootStage.getRoot().visible = visible;
-    }
 
     @Override
     public void resize(int width, int height) {

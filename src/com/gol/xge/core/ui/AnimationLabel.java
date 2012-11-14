@@ -3,10 +3,8 @@ package com.gol.xge.core.ui;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.scenes.scene2d.OnActionCompleted;
 import com.badlogic.gdx.scenes.scene2d.actions.Delay;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveTo;
 import com.badlogic.gdx.scenes.scene2d.actions.Sequence;
@@ -14,7 +12,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 
 public class AnimationLabel extends Group {
-    private String TAG  = "AnimationLabel";
 
     public static final int DIR_VER = 1;
     
@@ -45,23 +42,13 @@ public class AnimationLabel extends Group {
     /*
      * 注意：这里的MoveTo指定的坐标是文字当前位置的相对坐标，不是全局坐标， 要注意！ 
      */
-    
     public void MoveTo(float x, float y, float duration){
-        MoveTo(x, y, duration, null);
-    }
-    
-    public void MoveTo(float x, float y, float duration, OnActionCompleted listener){
-        for(int index = 0; index < labels.size(); index++){
-            Label l = labels.get(index);
+        int index = 0;
+        for(Label l: labels){
             float moveToX = x + l.x;
             float moveToY = y + l.y;
-            Sequence sqaction = Sequence.$(Delay.$(delay * index), MoveTo.$(moveToX, moveToY, duration));
-            if(index == labels.size() - 1 
-                    && listener != null){
-                Gdx.app.log(TAG, "set up success");
-                sqaction.setCompletionListener(listener);
-            }
-            l.action(sqaction);
+            l.action(Sequence.$(Delay.$(delay * index), MoveTo.$(moveToX, moveToY, duration)));
+            index++;
         }
     }
     
@@ -90,5 +77,5 @@ public class AnimationLabel extends Group {
     public void setDelay(float delay){
         this.delay = delay;
     }
-
+    
 }
