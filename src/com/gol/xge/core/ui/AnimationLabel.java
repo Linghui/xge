@@ -16,6 +16,7 @@ public class AnimationLabel extends Group {
     public static final int DIR_VER = 1;
     
     private int direction = DIR_VER;
+    private float delay = 0.3f;
     
     List<Label> labels = new ArrayList<Label>();
     
@@ -38,17 +39,43 @@ public class AnimationLabel extends Group {
         }
     }
     
+    /*
+     * 注意：这里的MoveTo指定的坐标是文字当前位置的相对坐标，不是全局坐标， 要注意！ 
+     */
+    public void MoveTo(float x, float y, float duration){
+        int index = 0;
+        for(Label l: labels){
+            float moveToX = x + l.x;
+            float moveToY = y + l.y;
+            l.action(Sequence.$(Delay.$(delay * index), MoveTo.$(moveToX, moveToY, duration)));
+            index++;
+        }
+    }
+    
+    
+    /*
+     * (non-Javadoc)
+     * @see com.badlogic.gdx.scenes.scene2d.Actor#action(com.badlogic.gdx.scenes.scene2d.Action)
+     * 不能完全包装出想要的结果，各个action中操作的属性都不同，并且action的最终状态值不可读，对于透明度调整的action还可以
+     * 但是坐标移动就比较困难 比如 MoveTo action, 从参数中不可得知到底要移动到哪里，所以各个小label的偏移后的最终值也不可计算,
+     * 只能重写一个不同的方法 实现坐标类的移动
+     * 注意：坐标移动相关：比如MoveTo指定的坐标是文字当前位置的相对坐标，不是全局坐标， 要注意！
+     */
     @Override
     public void action (Action action) {
 //        super.action(action);
         int index = 0;
         for(Label l: labels){
 //            if(action instanceof MoveTo){
-                l.action(Sequence.$(Delay.$(0.1f*index), action.copy()));
+                l.action(Sequence.$(Delay.$(delay * index), action.copy()));
                 index++;
 //            }
             
         }
+    }
+    
+    public void setDelay(float delay){
+        this.delay = delay;
     }
     
 }
