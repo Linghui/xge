@@ -27,8 +27,10 @@ public class AnimationActor extends Group implements AnimationActionInterface{
         super(name);
         this.animationGroup = animationGroup;
         frame = animationGroup.getKeyFrame(0f);
-        this.width = animationGroup.getKeyFrame(0).getRegionWidth();
-        this.height = animationGroup.getKeyFrame(0).getRegionHeight();
+        this.width = Math.abs(animationGroup.getKeyFrame(0).getRegionWidth());
+        this.height = Math.abs(animationGroup.getKeyFrame(0).getRegionHeight());
+        this.originX = this.width/2;
+        this.originY= this.height/2;
         this.touchable = true;
     }
 
@@ -53,7 +55,7 @@ public class AnimationActor extends Group implements AnimationActionInterface{
     public void draw(SpriteBatch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
         batch.setColor(color.r, color.g, color.b, color.a);
-        batch.draw(frame, x, y, Math.abs(this.width*scaleX), Math.abs(this.height*scaleY));
+        batch.draw(frame, x, y, originX, originY, this.width, this.height, scaleX, scaleY, rotation);
     }
     
     @Override
