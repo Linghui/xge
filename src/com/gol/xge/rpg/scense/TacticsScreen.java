@@ -210,6 +210,28 @@ public abstract class TacticsScreen implements Screen, InputProcessor {
         backgroundStage.draw();
         rootStage.draw();
         
+        // shaking camera
+        if(this.cmaShakingLeftSeconds != 0f){
+            shakingCount+=delta;
+            if(shakingCount > cmaShakingLeftSeconds){
+                cmaShakingLeftSeconds = 0f;
+                shakingCount = 0f;
+                cam.position.x = camXbeforeShaking;
+                cam.position.y = camYbeforeShaking;
+                return;
+            }
+            this.camShakingRange*=-1;
+            Gdx.app.log(TAG, "this.camShakingRange " + this.camShakingRange);
+            
+            float camTx = this.camShakingRange + this.camXbeforeShaking;
+            float camTy = this.camShakingRange + this.camYbeforeShaking;
+            Gdx.app.log(TAG, "camTx " + camTx + "camTy " + camTy);
+            
+            cam.position.x = camTx;
+            cam.position.y = camTy;
+            return;
+        }
+        
 
 
         if( camCurrentX != this.camMoveToX){
@@ -303,12 +325,12 @@ public abstract class TacticsScreen implements Screen, InputProcessor {
 //        Gdx.app.log(TAG, "x - " + x + " : y - " + y);
         if(!rootStage.touchDown(x, y, pointer, button)){
             if(!this.backgroundStage.touchDown(x, y, pointer, button)){
-                
+                this.moveCamTo(x, y);
             }
         }
 
         
-        this.moveCamTo(x, y);
+        
 //        this.moveCamTo(x, y);
         return false;
     }
@@ -399,6 +421,20 @@ public abstract class TacticsScreen implements Screen, InputProcessor {
     public void playAction(NPCAction npcAction){
         
     }
+    
+    private float cmaShakingLeftSeconds = 0f;
+    private float shakingCount = 0f;
+    private float camXbeforeShaking = 0f;
+    private float camYbeforeShaking = 0f;
+    private float camShakingRange = 2f;
+    
+    public void shakeCam(float seconds){
+        cmaShakingLeftSeconds = seconds;
+        camXbeforeShaking = cam.position.x;
+        camYbeforeShaking = cam.position.y;
+    }
+    
+    
 
 }
 
