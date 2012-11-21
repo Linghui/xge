@@ -3,33 +3,27 @@ package com.gol.xge.rpg;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.AnimationAction;
-import com.badlogic.gdx.scenes.scene2d.actions.ActionResetingPool;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.actions.TemporalAction;
 import com.gol.xge.rpg.ui.AnimationActor;
 
-public class CoreAnimationAction extends AnimationAction {
+public class CoreAnimationAction extends TemporalAction {
     private String TAG = "CoreAnimationAction";
-    private static final ActionResetingPool<CoreAnimationAction> pool = new ActionResetingPool<CoreAnimationAction>(4, 100) {
-        @Override
-        protected CoreAnimationAction newObject () {
-            return new CoreAnimationAction();
-        }
-    };
-    
+
     private String actionName = null;
 
     // actually only support AnimationActor here
     // do not try this action on other actors.
     public static CoreAnimationAction $ (String actionName) {
-        CoreAnimationAction action = pool.obtain();
+        CoreAnimationAction action = Actions.action(CoreAnimationAction.class);
         action.actionName = actionName;
         return action;
     }
     
 
     @Override
-    public void setTarget(Actor actor) {
-        this.target = actor;
+    public void setActor(Actor actor) {
+        super.setActor(actor);
 //        Gdx.app.log(TAG, "actionName === " + actionName + " -- on " + actor.name);
         if( !(actor instanceof AnimationActor)){
             // throw out exception is better.
@@ -39,20 +33,14 @@ public class CoreAnimationAction extends AnimationAction {
     }
 
     @Override
-    public void act(float delta) {
-//        Gdx.app.log(TAG, "((AnimationActor)target).animationGroup.isDone === " + ((AnimationActor)target).animationGroup.isDone);
-        this.done = ((AnimationActor)target).getAnimationGroup().isDone;
+    public boolean act(float delta) {
+        return ((AnimationActor)actor).getAnimationGroup().isDone;
     }
 
+
     @Override
-    public Action copy() {
-        return null;
-    }
-    
-    @Override
-    public void finish () {
-        super.finish();
-        pool.free(this);
+    protected void update(float percent) {
+        
     }
 
 }

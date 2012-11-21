@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.utils.Disposable;
 
 public class AnimationActor extends Group implements AnimationActionInterface{
@@ -24,14 +25,13 @@ public class AnimationActor extends Group implements AnimationActionInterface{
         this(null, animationGroup);
     }
     public AnimationActor(String name, AnimationGroup animationGroup){
-        super(name);
+        this.setName(name);
         this.animationGroup = animationGroup;
         frame = animationGroup.getKeyFrame(0f);
-        this.width = Math.abs(animationGroup.getKeyFrame(0).getRegionWidth());
-        this.height = Math.abs(animationGroup.getKeyFrame(0).getRegionHeight());
-        this.originX = this.width/2;
-        this.originY= this.height/2;
-        this.touchable = true;
+        this.setWidth(Math.abs(animationGroup.getKeyFrame(0).getRegionWidth()));
+        this.setHeight(Math.abs(animationGroup.getKeyFrame(0).getRegionHeight()));
+        this.setOrigin(this.getWidth()/2, this.getHeight()/2);
+        this.setTouchable(Touchable.enabled);
     }
 
     /*
@@ -54,13 +54,16 @@ public class AnimationActor extends Group implements AnimationActionInterface{
     @Override
     public void draw(SpriteBatch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
-        batch.setColor(color.r, color.g, color.b, color.a);
-        batch.draw(frame, x, y, originX, originY, this.width, this.height, scaleX, scaleY, rotation);
+        batch.setColor(this.getColor().r, this.getColor().g, this.getColor().b, this.getColor().a);
+        batch.draw(frame, this.getX(), this.getY(), 
+                this.getOriginX(), this.getOriginY()
+                , this.getWidth(), this.getHeight()
+                , this.getScaleX(), this.getScaleY(), this.getRotation());
     }
     
     @Override
-    public Actor hit (float x, float y) {
-        return x > 0 && x < width && y > 0 && y < height ? this : null;
+    public Actor hit (float x, float y, boolean touchable) {
+        return x > 0 && x < this.getWidth() && y > 0 && y < this.getHeight() ? this : null;
     }
     
     public void setAction(String actionName){
@@ -80,10 +83,6 @@ public class AnimationActor extends Group implements AnimationActionInterface{
         return animationGroup;
     }
 
-    public void setCollision(boolean able){
-        rectangle = new Rectangle(x,y,this.width,this.height);
-    }
-    
     public void setCollistionArea(Rectangle rectangle){
         this.rectangle = rectangle;
     }

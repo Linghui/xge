@@ -6,12 +6,11 @@ import java.util.List;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.scenes.scene2d.OnActionCompleted;
-import com.badlogic.gdx.scenes.scene2d.actions.Delay;
-import com.badlogic.gdx.scenes.scene2d.actions.MoveTo;
-import com.badlogic.gdx.scenes.scene2d.actions.Sequence;
+import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
+
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 
 public class AnimationLabel extends Group {
     private String TAG  = "AnimationLabel";
@@ -28,7 +27,7 @@ public class AnimationLabel extends Group {
     }
     
     public AnimationLabel(String text, LabelStyle style, String name){
-        super(name);
+        this.setName(name);
         init(text, style);
     }
 
@@ -36,7 +35,7 @@ public class AnimationLabel extends Group {
         for(int index = 0; index < text.length(); index++){
             String word = text.substring(index, index + 1);
             Label l = new Label(word, style);
-            l.y = index * - 20;
+            l.setY(index * - 20);
             this.addActor(l);
             labels.add(l);
         }
@@ -50,18 +49,18 @@ public class AnimationLabel extends Group {
         MoveTo(x, y, duration, null);
     }
     
-    public void MoveTo(float x, float y, float duration, OnActionCompleted listener){
+    public void MoveTo(float x, float y, float duration, Action doneAction){
         for(int index = 0; index < labels.size(); index++){
             Label l = labels.get(index);
-            float moveToX = x + l.x;
-            float moveToY = y + l.y;
-            Sequence sqaction = Sequence.$(Delay.$(delay * index), MoveTo.$(moveToX, moveToY, duration));
+            float moveToX = x + l.getX();
+            float moveToY = y + l.getY();
+            SequenceAction sqaction = sequence(delay(delay * index), moveTo(moveToX, moveToY, duration));
             if(index == labels.size() - 1 
-                    && listener != null){
+                    && doneAction != null){
                 Gdx.app.log(TAG, "set up success");
-                sqaction.setCompletionListener(listener);
+                sqaction.addAction(doneAction);
             }
-            l.action(sqaction);
+            l.addAction(sqaction);
         }
     }
     
@@ -75,12 +74,13 @@ public class AnimationLabel extends Group {
      * 注意：坐标移动相关：比如MoveTo指定的坐标是文字当前位置的相对坐标，不是全局坐标， 要注意！
      */
     @Override
-    public void action (Action action) {
+    public void addAction (Action action) {
 //        super.action(action);
         int index = 0;
         for(Label l: labels){
 //            if(action instanceof MoveTo){
-                l.action(Sequence.$(Delay.$(delay * index), action.copy()));
+            l.addAction(sequence(delay(delay*index), action));
+//                l.action(Sequence.$(Delay.$(delay * index), action.copy()));
                 index++;
 //            }
             

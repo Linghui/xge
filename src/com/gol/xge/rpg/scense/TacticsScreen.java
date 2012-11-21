@@ -10,10 +10,14 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Event;
+import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Disposable;
+import com.gol.xge.rpg.scense.RPGScreen.MoveTarget;
+import com.gol.xge.rpg.scense.RPGScreen.NPC;
 import com.gol.xge.rpg.ui.AnimationActor;
 import com.gol.xge.rpg.ui.AnimationGroup;
 
@@ -111,18 +115,12 @@ public abstract class TacticsScreen implements Screen, InputProcessor {
      *  removeStage(name)
      *  
      */
-    public Vector2 toRootStageCoordinates(int x, int y){
-        Vector2 out = new Vector2();
-        Vector2 coords = new Vector2();
-        rootStage.toStageCoordinates(x, y, coords);
-        Group.toChildCoordinates(topGroup, coords.x, coords.y, out);
-        return out;
-    }
-    
+
     public Vector2 toBackgroudStageCoordinates(int x, int y){
         Vector2 coords = new Vector2();
-        this.backgroundStage.toStageCoordinates(x, y, coords);
-        return coords;
+        coords.x = x;
+        coords.y = y;
+        return this.backgroundStage.screenToStageCoordinates(coords);
     }
     
     public void setBackgroudStage(Stage stage){
@@ -138,11 +136,11 @@ public abstract class TacticsScreen implements Screen, InputProcessor {
 
         Image backgroundImg = new Image(background);
         if(fitScreen){
-            backgroundImg.width = rootStage.width();
-            backgroundImg.height = rootStage.height();
+            backgroundImg.setWidth(rootStage.getWidth());
+            backgroundImg.setHeight(rootStage.getHeight());
         }
-        background_width = (int) backgroundImg.width;
-        background_height = (int) backgroundImg.height;
+        background_width = (int) backgroundImg.getWidth();
+        background_height = (int) backgroundImg.getHeight();
         backgroundStage.addActor(backgroundImg);
     }
     
@@ -170,12 +168,13 @@ public abstract class TacticsScreen implements Screen, InputProcessor {
         return this.findActorBackground(id + "");
     }
     
+
     public Actor findActorBackground(String name){
-        return this.backgroundStage.findActor(name);
+        return this.backgroundStage.getRoot().findActor(name);
     }
     
     public void removeActorBackground(Actor actor){
-        this.backgroundStage.removeActor(actor);
+        this.backgroundStage.getRoot().removeActor(actor);
         if(actor instanceof Disposable ){
             ((Disposable) actor).dispose();
             
@@ -192,7 +191,7 @@ public abstract class TacticsScreen implements Screen, InputProcessor {
     
     public void removeActorBackground(String name){
 //        Gdx.app.log(TAG, "removeActorBackground(String name) = " + name);
-        this.removeActorBackground(this.backgroundStage.findActor(name));
+        this.removeActorBackground(this.backgroundStage.getRoot().findActor(name));
     }
     
     public Game getGame(){
@@ -263,7 +262,7 @@ public abstract class TacticsScreen implements Screen, InputProcessor {
     }
 
     public void setRootVisible(boolean visible) {
-        this.rootStage.getRoot().visible = visible;
+        this.rootStage.getRoot().setVisible(visible);
     }
 
     @Override
@@ -349,12 +348,6 @@ public abstract class TacticsScreen implements Screen, InputProcessor {
     }
 
     @Override
-    public boolean touchMoved(int x, int y) {
-        rootStage.touchMoved(x, y);
-        return false;
-    }
-
-    @Override
     public boolean scrolled(int amount) {
         
         rootStage.scrolled(amount);
@@ -366,6 +359,9 @@ public abstract class TacticsScreen implements Screen, InputProcessor {
     
     public void moveCamTo(int x, int y){
 
+        if(cam == null){
+            return;
+        }
         Vector2 coords = this.toBackgroudStageCoordinates(x, y);
         
         movedOnX = 0f;
@@ -386,24 +382,27 @@ public abstract class TacticsScreen implements Screen, InputProcessor {
       DPS_ONY = distanceOnY/timeCost;
     }
 
-    public class NPC extends AnimationActor implements MoveTarget{
+public class NPC extends AnimationActor implements MoveTarget{
         
         private NPCAction npcAction = null;
 
         public NPC(AnimationGroup animationGroup) {
             super(animationGroup);
+            this.addListener(new EventListener(){
+
+                @Override
+                public boolean handle(Event event) {
+                    action();
+                    return true;
+                }
+                
+            });
         }
         
         public void setAction(String actionStr){
             if( actionStr != null){
                 npcAction   =   new NPCAction(actionStr);
             }
-        }
-        
-        @Override
-        public boolean touchDown (float x, float y, int pointer) {
-            action();
-            return false;
         }
         
         @Override
