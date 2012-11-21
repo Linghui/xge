@@ -221,11 +221,11 @@ public abstract class TacticsScreen implements Screen, InputProcessor {
                 return;
             }
             this.camShakingRange*=-1;
-            Gdx.app.log(TAG, "this.camShakingRange " + this.camShakingRange);
+//            Gdx.app.log(TAG, "this.camShakingRange " + this.camShakingRange);
             
             float camTx = this.camShakingRange + this.camXbeforeShaking;
             float camTy = this.camShakingRange + this.camYbeforeShaking;
-            Gdx.app.log(TAG, "camTx " + camTx + "camTy " + camTy);
+//            Gdx.app.log(TAG, "camTx " + camTx + "camTy " + camTy);
             
             cam.position.x = camTx;
             cam.position.y = camTy;
