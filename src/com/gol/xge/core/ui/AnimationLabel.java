@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
+import com.badlogic.gdx.scenes.scene2d.Action;
 
 public class AnimationLabel extends Group {
     private String TAG  = "AnimationLabel";
@@ -77,13 +78,14 @@ public class AnimationLabel extends Group {
     public void addAction (Action action) {
 //        super.action(action);
         int index = 0;
+        super.addAction(sequence(delay(delay*index), action));
         for(Label l: labels){
-//            if(action instanceof MoveTo){
-            l.addAction(sequence(delay(delay*index), action));
+////            if(action instanceof MoveToAction.class){
+//                l.addAction(sequence(delay(delay*index), action));
 //                l.action(Sequence.$(Delay.$(delay * index), action.copy()));
-                index++;
-//            }
-            
+//                index++;
+////            }
+//            
         }
     }
     

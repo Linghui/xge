@@ -354,6 +354,12 @@ public abstract class TacticsScreen implements Screen, InputProcessor {
         return false;
     }
     
+
+    @Override
+    public boolean mouseMoved(int screenX, int screenY) {
+        return false;
+    }
+    
     float DPS_ONX = 0f;
     float DPS_ONY = 0f;
     
