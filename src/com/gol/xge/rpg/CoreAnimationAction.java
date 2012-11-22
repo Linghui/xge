@@ -24,6 +24,7 @@ public class CoreAnimationAction extends TemporalAction {
     @Override
     public void setActor(Actor actor) {
         super.setActor(actor);
+        
 //        Gdx.app.log(TAG, "actionName === " + getActionName() + " -- on " + this.actor.getName());
         if( !(actor instanceof AnimationActor)){
             // throw out exception is better.
