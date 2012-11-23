@@ -1,4 +1,4 @@
-package com.gol.xge.core.ui;
+package com.gol.xge.rpg.ui;
 
 import java.util.ArrayList;
 import java.util.List;
