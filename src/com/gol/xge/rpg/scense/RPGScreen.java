@@ -13,6 +13,8 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Disposable;
@@ -102,16 +104,21 @@ public abstract class RPGScreen implements Screen, InputProcessor {
         backgroundStage = new Stage(RPGScreen.width, RPGScreen.height, false);
     }
     
-    public void initLeadingRole(Actor actor){
-        cam = (OrthographicCamera) this.getCamera();
 
+    public void initCam(){
+
+        cam = (OrthographicCamera) this.getCamera();
+        cam.position.x = this.background_width/2;
+        cam.position.y = this.background_height/2;
         camCurrentX = cam.position.x;
         camCurrentY = cam.position.y;
         camMoveToX  = cam.position.x;
         camMoveToY  = cam.position.y;
-
         cam_x_moving_stop = false;
         cam_y_moving_stop = false;
+    }
+    
+    public void initLeadingRole(Actor actor){
         
         this.player = actor;
         
@@ -514,12 +521,12 @@ public abstract class RPGScreen implements Screen, InputProcessor {
 
         public NPC(AnimationGroup animationGroup) {
             super(animationGroup);
-            this.addListener(new EventListener(){
+            this.addListener(new InputListener(){
 
                 @Override
-                public boolean handle(Event event) {
+                public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
                     setMoveTarget(NPC.this);
-                    return true;
+                    return false;
                 }
                 
             });
@@ -547,5 +554,11 @@ public abstract class RPGScreen implements Screen, InputProcessor {
         
     }
 
+
+    @Override
+    public boolean mouseMoved(int screenX, int screenY) {
+        // TODO Auto-generated method stub
+        return false;
+    }
 }
 

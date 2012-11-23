@@ -211,14 +211,20 @@ public abstract class TacticsScreen implements Screen, InputProcessor {
         
         // shaking camera
         if(this.cmaShakingLeftSeconds != 0f){
-            shakingCount+=delta;
+            shakingCount += delta;
+            camShakingPerCount += delta;
             if(shakingCount > cmaShakingLeftSeconds){
                 cmaShakingLeftSeconds = 0f;
+                camShakingPerCount = 0f;
                 shakingCount = 0f;
                 cam.position.x = camXbeforeShaking;
                 cam.position.y = camYbeforeShaking;
                 return;
             }
+            if(camShakingPerCount < this.camShakingInterval){
+                return;
+            }
+            camShakingPerCount = 0f;
             this.camShakingRange*=-1;
 //            Gdx.app.log(TAG, "this.camShakingRange " + this.camShakingRange);
             
@@ -432,6 +438,8 @@ public class NPC extends AnimationActor implements MoveTarget{
     private float camXbeforeShaking = 0f;
     private float camYbeforeShaking = 0f;
     private float camShakingRange = 2f;
+    private float camShakingPerCount = 0f;
+    private float camShakingInterval = 0.06f;
     
     public void shakeCam(float seconds){
         cmaShakingLeftSeconds = seconds;
