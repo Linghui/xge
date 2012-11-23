@@ -8,6 +8,13 @@ use Data::Dumper qw/Dumper/;
 use Template;
 
 my $PACK_SUFFIX = '/pack';
+my $TEMPLATE_DIR = 'templates';
+my $TEMPLATE_DEFAULT_VERSION = '0.9.7';
+my $TEMPLATE_PATH = undef;
+my %SUPPORT_VERSION = (
+            '96' => '0.9.6',
+            '97' => '0.9.7',
+            );
 
 my $PACKAGE         = 'package';
 my $IMPORT          = 'import';
@@ -66,7 +73,16 @@ my $NPC_SRC     =   'npc_src';
 
 sub new(){
     my $class = shift;
+    my $version = shift;
+    
     my $self = {};
+    
+    if( defined($version) && exists $SUPPORT_VERSION{$version}){
+        $TEMPLATE_PATH = "$TEMPLATE_DIR/".$SUPPORT_VERSION{$version}."/";
+    } else {
+        $TEMPLATE_PATH = "$TEMPLATE_DIR/$TEMPLATE_DEFAULT_VERSION/";
+    }
+    
     bless $self, $class;
     return $self;
 }
@@ -75,7 +91,7 @@ sub generate_java(){
     my $self = shift;
     my $config = shift;
 
-    print Dumper($config);
+#    print Dumper($config);
     
     # some useful options (see below for full list)
     my $t_config = {
@@ -84,7 +100,7 @@ sub generate_java(){
     
     my $template = Template->new($t_config);
     
-    my $input = 'templates/class.t';
+    my $input = "$TEMPLATE_PATH/class.t";
     
     my $vars = {
         $CLASS_NAME  => $config->{$SCENE_NAME_KEY},
@@ -101,29 +117,6 @@ sub generate_java(){
         $BAR_Y  => $config->{$LADING_BAR_KEY}->{$BAR_Y},
         $SKIN_KEY  => $config->{$SKIN_KEY},
         $PACKAGE    => 'package com.gol.game;',
-        $IMPORT     => '
-import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.scenes.scene2d.ui.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
-import com.gol.xge.rpg.Common;
-import com.gol.xge.rpg.InAndExternalFileHandleResolver;
-import com.gol.xge.rpg.scense.NPCAction;
-import com.gol.xge.rpg.scense.RPGScreen;
-import com.gol.xge.rpg.ui.AnimationActor;
-import com.gol.xge.rpg.ui.AnimationGroup;
-import com.gol.xge.rpg.ui.NumericBar;',
     };
 
     if(defined($config->{$IMPLEMENTS_KEY})){
@@ -279,7 +272,7 @@ sub get_init_labels_value(){
     
     my $template = Template->new($t_config);
     
-    my $input = 'templates/label.t';
+    my $input = "$TEMPLATE_PATH/label.t";
     
     
     my $labels = $config->{$LABELS_KEY};
@@ -321,7 +314,7 @@ sub get_init_buttons_value(){
     
     my $template = Template->new($t_config);
     
-    my $input = 'templates/text_button.t';
+    my $input = "$TEMPLATE_PATH/text_button.t";
     
     my $text_buttons = $config->{$TEXT_BUTTONS_KEY};
     for my $one_button (@$text_buttons){
@@ -342,7 +335,7 @@ sub get_init_buttons_value(){
         
     }
     
-    $input = 'templates/image_button.t';
+    $input = "$TEMPLATE_PATH/image_button.t";
     
     my $image_buttons = $config->{$IMAGE_BUTTONS_KEY};
     for my $one_button (@$image_buttons){
@@ -394,13 +387,13 @@ sub get_init_npcs_value(){
     
     my $template = Template->new($t_config);
     
-    my $input = 'templates/npc.t';
+    my $input = "$TEMPLATE_PATH/npc.t";
     
     my $npcs = $config->{$NPCS_KEY};
     for my $one_npc (@$npcs){
         
         my ($src_id)  =   $one_npc->{$NPC_SRC} =~ /(\d+)$/;
-        print "src_id ====== $src_id\n";
+#        print "src_id ====== $src_id\n";
         my $vars = {
             $NAME   =>   $one_npc->{$NAME}.'NpcActor',
             $NPC_JSON   => $one_npc->{$NPC_SRC}.'/'.$src_id.'.json',

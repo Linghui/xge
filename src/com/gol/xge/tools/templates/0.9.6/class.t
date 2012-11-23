@@ -1,6 +1,27 @@
 $package
 
-$import
+import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.ui.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
+import com.gol.xge.rpg.Common;
+import com.gol.xge.rpg.InAndExternalFileHandleResolver;
+import com.gol.xge.rpg.scense.NPCAction;
+import com.gol.xge.rpg.scense.RPGScreen;
+import com.gol.xge.rpg.ui.AnimationActor;
+import com.gol.xge.rpg.ui.AnimationGroup;
+import com.gol.xge.rpg.ui.NumericBar;
 
 public class $class_name extends $parent $implements{
     
