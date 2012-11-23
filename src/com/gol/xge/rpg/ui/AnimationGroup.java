@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
@@ -60,7 +61,7 @@ public class AnimationGroup{
 	    currentFrameTime = 0f; // always start animation for the first frame 
 	    animationStop = false;
 		if(animationHash.containsKey(actionName)){
-//			Gdx.app.log(TAG, " setAction - actionName : " + actionName);
+//			Gdx.app.log("group", " setAction - actionName : " + actionName + " loop " + loop);
 			Animation animation = animationHash.get(actionName); 
 			timeOut = animation.animationDuration;
 			currentAnimation = animation;
@@ -91,7 +92,7 @@ public class AnimationGroup{
 	    if( currentAnimation != null && animationStop == false){
 	        keyFrame = currentAnimation.getKeyFrame(currentFrameTime, loop);
 	    }
-//	    Gdx.app.log(TAG, "loop = " + loop + "currentFrameTime = " + currentFrameTime + "timeOut = " + timeOut);
+//	    Gdx.app.log("group", "loop = " + loop + " currentFrameTime = " + currentFrameTime + " timeOut = " + timeOut);
 	    if(loop == false && currentFrameTime > timeOut && timeOut != 0f){
 	        timeOut = 0f;
             isDone = true;

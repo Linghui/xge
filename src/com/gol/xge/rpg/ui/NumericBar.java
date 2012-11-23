@@ -4,16 +4,16 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.scenes.scene2d.ui.Align;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
-import com.gol.xge.core.ui.CoreImage;
+import com.badlogic.gdx.scenes.scene2d.utils.Align;
 
 public class NumericBar extends Group{
 
     private String TAG = "NumericBar";
-    private CoreImage backgroundBar;
-    private CoreImage topBar;
+    private Image backgroundBar;
+    private Image topBar;
     private Label label;
     
     private int padPix = 2;
@@ -37,8 +37,8 @@ public class NumericBar extends Group{
     public NumericBar(NinePatch background, NinePatch top, int width, int height, 
             int statusNum, int baseNum, LabelStyle style){
 
-        backgroundBar = new CoreImage(background);
-        topBar = new CoreImage(top);
+        backgroundBar = new Image(background);
+        topBar = new Image(top);
 
         setBarWidHei(width, height);
         
@@ -50,9 +50,9 @@ public class NumericBar extends Group{
 
         if(style != null){
             label = new Label(statusNum+"/"+baseNum, style);
-            label.width = width;
-            label.height = height;
-            label.setAlignment(Align.CENTER, Align.CENTER);
+            label.setWidth(width);
+            label.setHeight(height);
+            label.setAlignment(Align.center, Align.center);
             this.addActor(label);
             
         }
@@ -63,26 +63,26 @@ public class NumericBar extends Group{
     public NumericBar(TextureRegion backgroupRegion, TextureRegion topRegion,int statusNum, int baseNum, LabelStyle style){
         this.topRegion = topRegion;
         
-        backgroundBar = new CoreImage(backgroupRegion);
-        topBar = new CoreImage(topRegion);
+        backgroundBar = new Image(backgroupRegion);
+        topBar = new Image(topRegion);
         
-        this.width = backgroundBar.width;
-        this.height = backgroundBar.height;
+        this.setWidth(backgroundBar.getWidth());
+        this.setHeight(backgroundBar.getHeight());
         
         this.addActor(backgroundBar);
         this.addActor(topBar);
 
-        topBarMaxWidth = (int)topBar.width;
+        topBarMaxWidth = (int)topBar.getWidth();
 //        Gdx.app.log(TAG, "topBar.width - " + topBar.width);
         this.setBaseNum(baseNum);
         this.setStatusNum(statusNum);
         
         if(style != null){
             label = new Label(statusNum+"/"+baseNum, style);
-            label.width = backgroundBar.width;
-            label.height = backgroundBar.getPrefHeight();
+            label.setWidth(backgroundBar.getWidth());
+            label.setHeight(backgroundBar.getPrefHeight());
 //            label.setAlignment(Align.CENTER, Align.CENTER);
-            label.setAlignment(Align.CENTER);
+            label.setAlignment(Align.center);
             this.addActor(label);
             
         }
@@ -146,7 +146,7 @@ public class NumericBar extends Group{
         if(topRegion != null){
             topRegion.setRegion(topRegion, 0, 0, (int)width, topRegion.getRegionHeight());
         } 
-        topBar.width = width;
+        topBar.setWidth(width);
         topBar.layout();
     }
     
@@ -155,17 +155,17 @@ public class NumericBar extends Group{
      */
     public void setBarWidHei(int width, int height){
 
-        this.width = width;
-        this.height = height;
-        backgroundBar.width  = width;
-        backgroundBar.height = height;
+        this.setWidth(width);
+        this.setHeight(height);
+        backgroundBar.setWidth(width);
+        backgroundBar.setHeight(height);
         backgroundBar.layout();
         
-        topBar.x = padPix; 
-        topBar.y = padPix; 
+        topBar.setX(padPix); 
+        topBar.setY(padPix); 
         topBarMaxWidth  =  width - padPix * 2;
-        topBar.width = topBarMaxWidth;
-        topBar.height = height - padPix * 2;
+        topBar.setWidth(topBarMaxWidth);
+        topBar.setHeight(height - padPix * 2);
         topBar.layout();
         
     }

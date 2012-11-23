@@ -10,6 +10,8 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Event;
+import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -116,8 +118,8 @@ public abstract class RPGScreen implements Screen, InputProcessor {
         // display player in the middle of screen, 
         // but requirement is not always like this,
         // so need to figure out how to put it at other place, but not current priority
-        player.x = (RPGScreen.width - player.width)/2;
-        player.y = (RPGScreen.height - player.height)/2;
+        player.setX((RPGScreen.width - player.getWidth())/2);
+        player.setY((RPGScreen.height - player.getHeight())/2);
         
         addActorBottom(player);
     }
@@ -130,18 +132,19 @@ public abstract class RPGScreen implements Screen, InputProcessor {
      *  removeStage(name)
      *  
      */
-    public Vector2 toRootStageCoordinates(int x, int y){
-        Vector2 out = new Vector2();
-        Vector2 coords = new Vector2();
-        rootStage.toStageCoordinates(x, y, coords);
-        Group.toChildCoordinates(topGroup, coords.x, coords.y, out);
-        return out;
-    }
+//    public Vector2 toRootStageCoordinates(int x, int y){
+//        Vector2 out = new Vector2();
+//        Vector2 coords = new Vector2();
+//        rootStage.toStageCoordinates(x, y, coords);
+//        Group.toChildCoordinates(topGroup, coords.x, coords.y, out);
+//        return out;
+//    }
     
     public Vector2 toBackgroudStageCoordinates(int x, int y){
         Vector2 coords = new Vector2();
-        this.backgroundStage.toStageCoordinates(x, y, coords);
-        return coords;
+        coords.x = x;
+        coords.y = y;
+        return this.backgroundStage.screenToStageCoordinates(coords);
     }
     
     public void setBackgroudStage(Stage stage){
@@ -157,11 +160,11 @@ public abstract class RPGScreen implements Screen, InputProcessor {
 
         Image backgroundImg = new Image(background);
         if(fitScreen){
-            backgroundImg.width = rootStage.width();
-            backgroundImg.height = rootStage.height();
+            backgroundImg.setWidth(rootStage.getWidth());
+            backgroundImg.setHeight(rootStage.getHeight());
         }
-        background_width = (int) backgroundImg.width;
-        background_height = (int) backgroundImg.height;
+        background_width = (int) backgroundImg.getWidth();
+        background_height = (int) backgroundImg.getHeight();
         backgroundStage.addActor(backgroundImg);
     }
     
@@ -184,13 +187,13 @@ public abstract class RPGScreen implements Screen, InputProcessor {
             // 处理当屏幕上半部分有不可行走部分的情况
             if(my < limitY){
             
-                    float bh = (RPGScreen.height - my) - player.y;
-                    float sh = (RPGScreen.height - limitY) - player.y;
-                    float bw = mx - player.x;
+                    float bh = (RPGScreen.height - my) - player.getY();
+                    float sh = (RPGScreen.height - limitY) - player.getY();
+                    float bw = mx - player.getX();
                     
                     float sw = bw * (sh/bh);
                     
-                    mx = (int) (player.x + sw);
+                    mx = (int) (player.getX() + sw);
                     my = limitY;
                     Gdx.app.log(TAG, "!!!!!mx - " + mx + " : my - " + my);
                 
@@ -251,11 +254,11 @@ public abstract class RPGScreen implements Screen, InputProcessor {
     }
     
     public Actor findActorBackground(String name){
-        return this.backgroundStage.findActor(name);
+        return this.backgroundStage.getRoot().findActor(name);
     }
     
     public void removeActorBackground(Actor actor){
-        this.backgroundStage.removeActor(actor);
+        this.backgroundStage.getRoot().removeActor(actor);
         if(actor instanceof Disposable ){
             ((Disposable) actor).dispose();
             
@@ -272,7 +275,7 @@ public abstract class RPGScreen implements Screen, InputProcessor {
     
     public void removeActorBackground(String name){
 //        Gdx.app.log(TAG, "removeActorBackground(String name) = " + name);
-        this.removeActorBackground(this.backgroundStage.findActor(name));
+        this.removeActorBackground(this.backgroundStage.getRoot().findActor(name));
     }
     
     public Game getGame(){
@@ -325,18 +328,18 @@ public abstract class RPGScreen implements Screen, InputProcessor {
                     
                 } else {
                     // in edge , so move player
-                    player.x += disOnX;
+                    player.setX(player.getX() + disOnX);
                     if( on_x_edge < 0){
                         // in edge left and move to right
-                        if( disOnX > 0 && player.x > RPGScreen.width/2 - player.width/2){
-                            player.x = RPGScreen.width/2 - player.width/2;
+                        if( disOnX > 0 && player.getX() > RPGScreen.width/2 - player.getWidth()/2){
+                            player.setX(RPGScreen.width/2 - player.getWidth()/2);
                             on_x_edge = 0;
                             cam_x_moving_stop = false;
                         }
                     } else if ( on_x_edge > 0){
                         // in edge right and move to left
-                        if( disOnX < 0 && player.x < RPGScreen.width/2 - player.width/2){
-                            player.x = RPGScreen.width/2 - player.width/2;
+                        if( disOnX < 0 && player.getX() < RPGScreen.width/2 - player.getWidth()/2){
+                            player.setX(RPGScreen.width/2 - player.getWidth()/2);
                             on_x_edge = 0;
                             cam_x_moving_stop = false;
                         }
@@ -373,16 +376,16 @@ public abstract class RPGScreen implements Screen, InputProcessor {
                     }
                     
                 } else {
-                    player.y += disOnY;
+                    player.setY(player.getY() + disOnY);
                     if(on_y_edge < 0){
-                        if( disOnY > 0 && player.y > RPGScreen.height/2 - player.height/2){
-                            player.y = RPGScreen.height/2 - player.height/2;
+                        if( disOnY > 0 && player.getY() > RPGScreen.height/2 - player.getHeight()/2){
+                            player.setY(RPGScreen.height/2 - player.getHeight()/2);
                             on_y_edge = 0;
                             cam_y_moving_stop = false;
                         }
                     } else if(on_y_edge > 0){
-                        if( disOnY < 0 && player.y < RPGScreen.height/2 - player.height/2){
-                            player.y = RPGScreen.height/2 - player.height/2;
+                        if( disOnY < 0 && player.getY() < RPGScreen.height/2 - player.getHeight()/2){
+                            player.setY(RPGScreen.height/2 - player.getHeight()/2);
                             on_y_edge = 0;
                             cam_y_moving_stop = false;
                         }
@@ -494,12 +497,6 @@ public abstract class RPGScreen implements Screen, InputProcessor {
     }
 
     @Override
-    public boolean touchMoved(int x, int y) {
-        rootStage.touchMoved(x, y);
-        return false;
-    }
-
-    @Override
     public boolean scrolled(int amount) {
         
         rootStage.scrolled(amount);
@@ -517,18 +514,21 @@ public abstract class RPGScreen implements Screen, InputProcessor {
 
         public NPC(AnimationGroup animationGroup) {
             super(animationGroup);
+            this.addListener(new EventListener(){
+
+                @Override
+                public boolean handle(Event event) {
+                    setMoveTarget(NPC.this);
+                    return true;
+                }
+                
+            });
         }
         
         public void setAction(String actionStr){
             if( actionStr != null){
                 npcAction   =   new NPCAction(actionStr);
             }
-        }
-        
-        @Override
-        public boolean touchDown (float x, float y, int pointer) {
-            setMoveTarget(this);
-            return false;
         }
         
         @Override

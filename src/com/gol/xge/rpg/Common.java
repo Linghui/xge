@@ -144,7 +144,11 @@ public class Common {
                 one.flip(flipX, flipY);
                 actionAnimation.add(one);
             }
-            Animation animation = new Animation(0.1f, actionAnimation);
+            TextureRegion[] regions = new TextureRegion[actionAnimation.size()];
+            for(int index = 0 ; index < actionAnimation.size(); index++){
+                regions[index] = actionAnimation.get(index);
+            }
+            Animation animation = new Animation(0.1f, regions);
             animationHash.put(actionName, animation);
 //            Gdx.app.log(TAG, "done actionName ||||||||||| ''" + actionName);
         }
