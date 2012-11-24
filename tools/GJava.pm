@@ -150,10 +150,10 @@ sub generate_scene(){
     $vars->{$SOURCE_UNLOADING} = $all_src_unload;
     $vars->{$BAR_SOURCE_COUNT}  = $all_source_count;
     
-    my $init_labels_value  = $self->get_init_labels_value($config);
+    my $init_labels_value  = $self->get_init_labels_value($config, 'this.addActorBottom');
     $vars->{$INIT_LABELS} = $init_labels_value;
     
-    my $init_buttons_value = $self->get_init_buttons_value($config);
+    my $init_buttons_value = $self->get_init_buttons_value($config, 'this.addActorBottom');
     $vars->{$INIT_BUTTONS} = $init_buttons_value;
 
     if(defined($config->{$LEADING_ROLE_SRC})){
@@ -169,7 +169,7 @@ sub generate_scene(){
         $vars->{$PARENT}   = 'TacticsScreen';
     }
     
-    my $init_npcs_value =   $self->get_init_npcs_value($config);
+    my $init_npcs_value =   $self->get_init_npcs_value($config, 'this.addActorBackground');
     $vars->{$INIT_NPCS} = $init_npcs_value;
     
     my $output = undef;
@@ -261,6 +261,8 @@ sub get_init_labels_value(){
     
     my $self = shift;
     my $config = shift;
+    my $add_to  = shift;
+    
     my $all_label_lines = "";
     
     my $LABEL_NAME  =   'label_name';
@@ -288,7 +290,7 @@ sub get_init_labels_value(){
             $LABEL_STYLE    =>   $one_label->{$STYLE_KEY},
             $LABEL_X    =>   $one_label->{$X_KEY},
             $LABEL_Y    =>   $one_label->{$Y_KEY},
-            $ADD_TO_KEY =>  'this.addActorBottom',
+            $ADD_TO_KEY =>   $add_to,
         };
         
         
@@ -304,8 +306,10 @@ sub get_init_labels_value(){
 }
 
 sub get_init_buttons_value(){
-    my $self = shift;
-    my $config = shift;
+    my $self    = shift;
+    my $config  = shift;
+    my $add_to  = shift;
+    
     my $all_button_lines = "";
     
     my $BUTTON_NAME = 'button_name';
@@ -329,7 +333,7 @@ sub get_init_buttons_value(){
             $BUTTON_TEXT    =>   $one_button->{$TEXT_KEY},
             $BUTTON_X    =>   $one_button->{$X_KEY},
             $BUTTON_Y    =>   $one_button->{$Y_KEY},
-            $ADD_TO_KEY =>  'this.addActorBottom',
+            $ADD_TO_KEY  =>   $add_to,
         };
         
         my $output;
@@ -351,7 +355,7 @@ sub get_init_buttons_value(){
             $IMAGE_BUTTONS_UP_REGION_KEY  => 'null',
             $BUTTON_X    =>   $one_button->{$X_KEY},
             $BUTTON_Y    =>   $one_button->{$Y_KEY},
-            $ADD_TO_KEY =>  'this.addActorBottom',
+            $ADD_TO_KEY  =>   $add_to,
         };
         
         if(defined($one_button->{$IMAGE_BUTTONS_DOWN_REGION_KEY})){
@@ -377,6 +381,7 @@ sub get_init_buttons_value(){
 sub get_init_npcs_value(){
     my $self    =   shift;
     my $config  =   shift;
+    my $add_to  = shift;
     
     my $all_npc_lines = "";
     
