@@ -92,6 +92,8 @@ public abstract class RPGScreen implements Screen, InputProcessor {
     public void show(){
         Gdx.input.setInputProcessor(this);
 
+        rootStage = new Stage(RPGScreen.width, RPGScreen.height, false);
+        
         topGroup = new Group();
         rootStage.addActor(topGroup);
         
