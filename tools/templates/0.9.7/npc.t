@@ -10,4 +10,4 @@
         };
         [% name %].setX($npc_x);
         [% name %].setY($npc_y);
-        this.addActorBackground($name);
+        $add_to($name);

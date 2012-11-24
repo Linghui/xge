@@ -1,6 +1,5 @@
-        TextureRegion [% button_name %]Down = $down_region;
-        TextureRegion [% button_name %]Up   = $up_region;
-        ImageButton [% button_name %] = new ImageButton(new TextureRegionDrawable([% button_name %]Down), new TextureRegionDrawable([% button_name %]Up));
+        TextButton $button_name = new TextButton("$button_text",skin.get(TextButtonStyle.class));
+        [% button_name %].setName("$button_name");
         [% button_name %].setX($button_x);
         [% button_name %].setY($button_y);
         [% button_name %].addListener(new InputListener(){
@@ -12,6 +11,5 @@
             }
     
         });
-        
-        this.addActorBottom([% button_name %]);
+        $add_to($button_name);
 

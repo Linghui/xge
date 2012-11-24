@@ -42,6 +42,7 @@ my $TEXT_BUTTONS_KEY    =   'text_buttons';
 my $TEXT_KEY    =   'text';
 my $X_KEY   =   'x';
 my $Y_KEY   =   'y';
+my $ADD_TO_KEY = 'add_to';
 
 my $INIT_LABELS =   'init_labels';
 my $LABELS_KEY  =   'labels';
@@ -87,7 +88,7 @@ sub new(){
     return $self;
 }
 
-sub generate_java(){
+sub generate_scene(){
     my $self = shift;
     my $config = shift;
 
@@ -287,6 +288,7 @@ sub get_init_labels_value(){
             $LABEL_STYLE    =>   $one_label->{$STYLE_KEY},
             $LABEL_X    =>   $one_label->{$X_KEY},
             $LABEL_Y    =>   $one_label->{$Y_KEY},
+            $ADD_TO_KEY =>  'this.addActorBottom',
         };
         
         
@@ -327,7 +329,7 @@ sub get_init_buttons_value(){
             $BUTTON_TEXT    =>   $one_button->{$TEXT_KEY},
             $BUTTON_X    =>   $one_button->{$X_KEY},
             $BUTTON_Y    =>   $one_button->{$Y_KEY},
-            
+            $ADD_TO_KEY =>  'this.addActorBottom',
         };
         
         my $output;
@@ -349,7 +351,7 @@ sub get_init_buttons_value(){
             $IMAGE_BUTTONS_UP_REGION_KEY  => 'null',
             $BUTTON_X    =>   $one_button->{$X_KEY},
             $BUTTON_Y    =>   $one_button->{$Y_KEY},
-            
+            $ADD_TO_KEY =>  'this.addActorBottom',
         };
         
         if(defined($one_button->{$IMAGE_BUTTONS_DOWN_REGION_KEY})){
@@ -403,7 +405,7 @@ sub get_init_npcs_value(){
             $NPC_PACK   => $one_npc->{$NPC_SRC}.$PACK_SUFFIX,
             $NPC_X   =>   $one_npc->{$X_KEY},
             $NPC_Y   =>   $one_npc->{$Y_KEY},
-            
+            $ADD_TO_KEY =>  'this.addActorBackground',
         };
         
         
@@ -416,6 +418,12 @@ sub get_init_npcs_value(){
     }
     
     return $all_npc_lines;
+}
+
+sub generate_window(){
+    my $self = shift;
+    my $window_config = shift;
+    
 }
 
 1

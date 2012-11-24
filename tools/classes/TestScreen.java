@@ -91,10 +91,18 @@ public class TestScreen extends RPGScreen {
             initLabels();
             initButtons();
             initNpcs();
+            selfInit();
+            return;
         }
+        
+        selfRender(delta);
 
     }
     
+    private void selfRender(float delta) {
+        // TODO: do your own special render here
+    }
+
     private void init(){
     
         TextureRegion backRegion =  manager.get("data/map/pack.atlas", TextureAtlas.class).findRegion("map1");
@@ -128,7 +136,7 @@ public class TestScreen extends RPGScreen {
     private void initButtons(){
 
         TextButton btn1 = new TextButton("充值",skin.get(TextButtonStyle.class));
-        btn1.setName(btn1);
+        btn1.setName("btn1");
         btn1.setX(80);
         btn1.setY(420);
         btn1.addListener(new InputListener(){
@@ -340,6 +348,10 @@ public class TestScreen extends RPGScreen {
         this.addActorBackground(zhuNpcActor);
 
 
+    }
+    
+    private void selfInit() {
+        // TODO: do your own special init here
     }
 
     @Override

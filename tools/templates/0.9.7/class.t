@@ -80,10 +80,18 @@ $source_loading
             initLabels();
             initButtons();
             initNpcs();
+            selfInit();
+            return;
         }
+        
+        selfRender(delta);
 
     }
     
+    private void selfRender(float delta) {
+        // TODO: do your own special render here
+    }
+
     private void init(){
     
         TextureRegion backRegion = $background;
@@ -120,6 +128,10 @@ $init_buttons
 
 $init_npcs
 
+    }
+    
+    private void selfInit() {
+        // TODO: do your own special init here
     }
 
     @Override

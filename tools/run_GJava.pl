@@ -212,15 +212,19 @@ my $input = $ARGV[0];
 $scene_config = from_json($input);
 
 my $gJava = GJava->new();
-my $class = $gJava->generate_java($scene_config);
+my $scene_class = $gJava->generate_scene($scene_config);
 
 open WRT, "> $class_output_dir".$scene_config->{$SCENE_NAME_KEY}.".java"
     or die "open file error $!";
 
-print WRT "$class";
+print WRT "$scene_class";
 
 close WRT;
 #print "$class";
+
+my $window_config = {};
+
+my $window_class = $gJava->generate_window($window_config);
 
 
 
