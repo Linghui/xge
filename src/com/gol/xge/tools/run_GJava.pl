@@ -198,8 +198,16 @@ $scene_config = {
 
 my $class_output_dir = 'classes/';
 
-my $input = <>;
-chomp $input;
+#
+#my $input = <>;
+#chomp $input;
+
+if(!defined($ARGV[0])){
+    die "Need json config string input\n";
+}
+
+my $input = $ARGV[0];
+
 
 $scene_config = from_json($input);
 
