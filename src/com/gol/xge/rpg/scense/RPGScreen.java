@@ -40,7 +40,6 @@ public abstract class RPGScreen implements Screen, InputProcessor {
     
     private   Stage rootStage;       // stage for things controlled by user, like player, menu, control button
                                      // which are relative static with screen
-    private   Group bottomGroup;
     private   Group topGroup;
 
     private   Stage backgroundStage; // stage for background, like tiled map,  
@@ -93,11 +92,6 @@ public abstract class RPGScreen implements Screen, InputProcessor {
     public void show(){
         Gdx.input.setInputProcessor(this);
 
-        // topGroup display priority is higher than bottomGroup.
-        rootStage = new Stage(RPGScreen.width, RPGScreen.height, false);
-        bottomGroup = new Group();
-        rootStage.addActor(bottomGroup);
-        
         topGroup = new Group();
         rootStage.addActor(topGroup);
         
@@ -249,7 +243,7 @@ public abstract class RPGScreen implements Screen, InputProcessor {
     }
     
     public void addActorBottom(Actor actor){
-        this.bottomGroup.addActor(actor);
+        this.rootStage.addActor(actor);
     }
     
     public void addActorBackground(Actor actor){

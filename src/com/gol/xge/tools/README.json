@@ -1,10 +1,15 @@
 # introduction for keys that tool supports
-
+# keys with *necessary are necessary
 {
+# *necessary
 scene_name      : "场景名称",
+# *necessary
 screen_width    : "场景宽, int",
+# *necessary
 screen_height   : "场景高, int",
+# *necessary
 loading_backgroud : "加载页面背景，指定png图片路径",
+# *necessary
 loading_bar :{
 # 进度条属性
     bar_top     : "进度条顶, 指定skin中的TextureRegion名",
@@ -15,8 +20,10 @@ loading_bar :{
     bar_y       : "y坐标, int",
     
 },
+# *necessary
 background  : "游戏场景背景，1.指定png图片路径，或2.指定pack文件路径并问号'?'分割指定TextureRegion名,例 data/map/pack.atlas?map1",
 limit_y     : "指定游戏场景中上半不分不可移动范围, int",
+# *necessary
 skin        : "指定skin的json文件路径，例 data/uiskin.json",
 leading_role_src : "主角资源，指定动画图片文件夹, 例 data/30100001, 默认json文件是data/30100001/30100001.json, pack文件是data/30100001/pack",
 labels:[
