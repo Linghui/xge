@@ -171,10 +171,13 @@ sub generate_java(){
     my $init_npcs_value =   $self->get_init_npcs_value($config);
     $vars->{$INIT_NPCS} = $init_npcs_value;
     
+    my $output = undef;
+    
     # process input template, substituting variables
-    $template->process($input, $vars)
+    $template->process($input, $vars, \$output)
     || die $template->error();
     
+    return $output;
     
 }
 

@@ -5,7 +5,9 @@ use warnings;
 
 use GCTXC;
 use GJava;
+use JSON;
 
+# 下面这些定义全都是例子 可供参考
 my $SCENE_NAME_KEY  = 'scene_name';
 my $SCREEN_WIDHT    = 'screen_width';
 my $SCREEN_HEIGHT   = 'screen_height';
@@ -42,10 +44,9 @@ my $NPCS_KEY    =   'npcs';
 my $NPC_NAME    =   'npc_name';
 my $NPC_SRC     =   'npc_src';
 
+my $scene_config = {};
 
-my $GCTXC = GCTXC->new();
-
-my $scene_config = {
+$scene_config = {
     $SCENE_NAME_KEY => 'TestScreen',
     $SCREEN_WIDHT   => 800,
     $SCREEN_HEIGHT  => 480,
@@ -184,7 +185,34 @@ my $scene_config = {
     ],
 };
 
+# 事例结束 ＝＝＝＝＝＝ END
+
 #my $config_config = $GCTXC->convert_to_java($scene_config);
 
+#my $json_text = to_json($scene_config);
+#print $json_text;
+#print "\n";
+
+#use Data::Dumper qw/Dumper/;
+#print Dumper($scene_config);
+
+my $class_output_dir = 'classes/';
+
+my $input = <>;
+chomp $input;
+
+$scene_config = from_json($input);
+
 my $gJava = GJava->new();
-$gJava->generate_java($scene_config);
+my $class = $gJava->generate_java($scene_config);
+
+open WRT, "> $class_output_dir".$scene_config->{$SCENE_NAME_KEY}.".java"
+    or die "open file error $!";
+
+print WRT "$class";
+
+close WRT;
+#print "$class";
+
+
+
