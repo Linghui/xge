@@ -425,9 +425,37 @@ sub get_init_npcs_value(){
     return $all_npc_lines;
 }
 
+
+
+my $WINDOW_CLASS = 'window_class';
+my $TITLE   = 'title';
+
 sub generate_window(){
     my $self = shift;
     my $window_config = shift;
+    
+    my $vars = {
+        $WINDOW_CLASS => $window_config->{$WINDOW_CLASS},
+        $TITLE => $window_config->{$TITLE},        
+    };
+    
+    
+    my $t_config = {
+        INTERPOLATE  => 1,               # expand "$var" in plain text
+    };
+    
+    my $template = Template->new($t_config);
+    
+    my $input = "$TEMPLATE_PATH/window.t";
+    
+    
+    my $output = undef;
+    
+    # process input template, substituting variables
+    $template->process($input, $vars, \$output)
+    || die $template->error();
+    
+    return $output;
     
 }
 

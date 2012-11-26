@@ -6,6 +6,7 @@ use warnings;
 use GCTXC;
 use GJava;
 use JSON;
+use Getopt::Std;
 
 # 下面这些定义全都是例子 可供参考
 my $SCENE_NAME_KEY  = 'scene_name';
@@ -202,11 +203,31 @@ my $class_output_dir = 'classes/';
 #my $input = <>;
 #chomp $input;
 
-if(!defined($ARGV[0])){
-    die "Need json config string input\n";
+my %opts = ();
+
+# options
+# h: help
+# f: for file or stdin input
+# none: for command line string input
+getopts('hf', \%opts);
+
+if( $opts{h} ){
+    &usage();
+    exit 0;
 }
 
-my $input = $ARGV[0];
+my $input = undef;
+
+if( $opts{f} ){
+    $input = <>;
+    chomp $input;
+} else {
+    
+    if(!defined($ARGV[0])){
+        die "Need json config string input\n";
+    }
+    $input = $ARGV[0];
+}
 
 
 $scene_config = from_json($input);
@@ -221,10 +242,33 @@ print WRT "$scene_class";
 
 close WRT;
 #print "$class";
+# output sence class done
 
-my $window_config = {};
+
+my $WINDOW_CLASS = 'window_class';
+my $TITLE   = 'title';
+# output window class
+my $window_config = {
+    $WINDOW_CLASS => 'TestWindow',
+    $TITLE  => 'test',
+};
 
 my $window_class = $gJava->generate_window($window_config);
+open WRT, "> $class_output_dir".$window_config->{$WINDOW_CLASS}.".java"
+or die "open file error $!";
 
+print WRT "$window_class";
 
+close WRT;
 
+sub usage(){
+
+    print <<EOF;
+Usage:
+   perl $0 
+EOF
+}
+
+sub HELP_MESSAGE(){
+    print "help!!!\n";
+}
