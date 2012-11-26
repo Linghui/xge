@@ -199,10 +199,6 @@ $scene_config = {
 
 my $class_output_dir = 'classes/';
 
-#
-#my $input = <>;
-#chomp $input;
-
 my %opts = ();
 
 # options
@@ -224,7 +220,9 @@ if( $opts{f} ){
 } else {
     
     if(!defined($ARGV[0])){
-        die "Need json config string input\n";
+        print STDERR "Need json config string input\n";
+        &usage();
+        exit 1;
     }
     $input = $ARGV[0];
 }
@@ -265,10 +263,16 @@ sub usage(){
 
     print <<EOF;
 Usage:
-   perl $0 
+    perl $0 [-h | -f \$file_name/STDIN | \$json_string]
+    -h: help
+    -f: file or STDIN input mode
+        example: perl $0 -f config_demo.json
+    no options: for command json string input
+    
 EOF
 }
 
 sub HELP_MESSAGE(){
-    print "help!!!\n";
+    &usage();
+    exit 0;
 }
