@@ -2,13 +2,9 @@ package com.gol.xge.dragonBones.objects;
 
 import java.util.zip.Inflater;
 
-import javax.print.DocFlavor.BYTE_ARRAY;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.gol.xge.dragonBones.utils.BytesType;
-import com.gol.xge.util.SByteBuffer;
-import com.sun.corba.se.impl.ior.ByteBuffer;
 
 public class XMLDataParser {
     
