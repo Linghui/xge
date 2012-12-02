@@ -1,0 +1,40 @@
+{
+    "skin": "data/uiskin.json",
+    "screen_height": 480,
+    "text_buttons": [
+        {
+            "y": 200,
+            "text": "登陆",
+            "name": "btn1",
+            "x": 100
+        }
+    ],
+    "text_fields": [
+        {
+            "name": "username",
+            "x": 100,
+            "y": 300,
+            "hint": "用户名"
+            
+        },
+        {
+            "name": "password",
+            "x": 100,
+            "y": 250,
+            "hint": "密码"
+            
+        }
+    ],
+    "background": "data/logo.png",
+    "limit_y": 0,
+    "scene_name": "LoginScreen",
+    "screen_width": 800,
+    "loading_bar": {
+        "bar_bottom": "default-round",
+        "bar_x": "50",
+        "bar_y": "50",
+        "bar_top": "default-round",
+        "bar_width": "300",
+        "bar_height": "50"
+    }
+}
