@@ -9,6 +9,7 @@ import java.util.Set;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.gol.xge.dragonBones.objects.SkeletonAndTextureAtlasData;
 
 public class AnimationGroup{
 
@@ -35,7 +36,11 @@ public class AnimationGroup{
 	    init(animationHash);
 	}
 	
-	private void init(HashMap<String, Animation> animationHash){
+	public AnimationGroup(SkeletonAndTextureAtlasData data) {
+	    
+    }
+
+    private void init(HashMap<String, Animation> animationHash){
 	    
 
         this.animationHash = animationHash;

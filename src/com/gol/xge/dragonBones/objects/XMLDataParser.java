@@ -1,14 +1,28 @@
 package com.gol.xge.dragonBones.objects;
 
+import java.io.IOException;
 import java.util.zip.Inflater;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
+import org.w3c.dom.Document;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Gdx2DPixmap;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.XmlReader;
+import com.badlogic.gdx.utils.XmlReader.Element;
 import com.gol.xge.dragonBones.utils.BytesType;
 
 public class XMLDataParser {
     
     public static SkeletonAndTextureAtlasData paresXMLData(byte[] bytes) throws Exception{
+        SkeletonAndTextureAtlasData atlasData = null;
         String type = BytesType.getType(bytes);
         System.out.println("type " + type);
         System.out.println("SkeletonAndTextureAtlasData paresXMLData type" + type);
@@ -35,7 +49,8 @@ public class XMLDataParser {
             int resultLength = decompresser.inflate(result);
             decompresser.end();
             System.out.println(" resultLength " + resultLength);
-            System.out.println(" result " + new String(result));
+            String skeletonXmlStr = new String(result);
+            System.out.println(" result " + skeletonXmlStr);
             // read skeleton xml done
             
             // read texture xml
@@ -55,7 +70,8 @@ public class XMLDataParser {
             decompresser.end();
 
             System.out.println(" resultLength " + resultLength);
-            System.out.println(" result " + new String(result));
+            String textureXmlStr = new String(result);
+            System.out.println(" result " + textureXmlStr);
             // read texture xml done
             
             // read texture data
@@ -66,6 +82,11 @@ public class XMLDataParser {
             FileHandle handle = Gdx.files.external("data/test.png");
             handle.writeBytes(textureBytes, false);
             
+            XmlReader reader = new XmlReader();
+            Element skeletonElement = reader.parse(skeletonXmlStr);
+            Element textureElement = reader.parse(textureXmlStr);
+            
+            atlasData = new SkeletonAndTextureAtlasData(skeletonElement, textureElement, textureBytes);
             
         } else if (type.equals(BytesType.ZIP)){
             throw new Exception("Uncompress Error");
@@ -73,6 +94,34 @@ public class XMLDataParser {
             throw new Exception("Unknown Data Error");
         }
         
-        return null;
+        return atlasData;
+    }
+
+    public static TextureAtlas paresTextureData(Element textureElement,
+            byte[] textureBytes) {
+
+        TextureAtlas atlas = new TextureAtlas();
+        Texture texture = null;
+        try {
+            Pixmap pixmap = new Pixmap(new Gdx2DPixmap(textureBytes, 0, textureBytes.length, 0));
+            texture = new Texture(pixmap); 
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        
+        
+        Array<Element>  subTextureElement = textureElement.getChildrenByName("SubTexture");
+        for(Element element : subTextureElement){
+            System.out.println(element.getAttribute("name"));
+            atlas.addRegion(element.getAttribute("name")
+                            , texture
+                            , element.getIntAttribute("x")
+                            , element.getIntAttribute("y")
+                            , element.getIntAttribute("width")
+                            , element.getIntAttribute("height"));
+        }
+        
+        return atlas;
     }
 }
