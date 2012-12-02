@@ -1,1 +1,130 @@
-{"npcs":[{"y":"240","name":"cuihua","x":"350","npc_src":"data/30100001","npc_name":"翠花"},{"y":"240","name":"taishan","x":"450","npc_src":"data/30100002","npc_name":"泰山"},{"y":"240","name":"kezhan","x":"750","npc_src":"data/30100003","npc_name":"客栈"},{"y":"240","name":"shanpao","x":"950","npc_src":"data/30100004","npc_name":"山炮"},{"y":"240","name":"biesan","x":"1100","npc_src":"data/30100005","npc_name":"瘪三"},{"y":"240","name":"dana","x":"1300","npc_src":"data/30100006","npc_name":"大拿"},{"y":"240","name":"dasheng","x":"1450","npc_src":"data/30100008","npc_name":"大圣"},{"y":"180","name":"zhu","x":"1800","npc_src":"data/30100009","npc_name":"猪"}],"skin":"data/uiskin.json","screen_height":480,"text_buttons":[{"y":420,"text":"充值","name":"btn1","x":80}],"background":"data/map/pack.atlas?map1","limit_y":200,"scene_name":"TestScreen","image_buttons":[{"up_region":"qishu","y":10,"down_region":"qishu","name":"qishu","x":730},{"up_region":"bag","y":10,"down_region":"bag","name":"bag","x":660},{"up_region":"zhenfa","y":10,"down_region":"zhenfa","name":"zhenfa","x":590},{"up_region":"yaoguai","y":10,"down_region":"yaoguai","name":"yaoguai","x":520},{"up_region":"caishen","y":410,"down_region":"caishen","name":"caishen","x":730}],"leading_role_src":"data/30100001","labels":[{"y":450,"text":"Lv.990","style":"yellow","name":"l1","x":20}],"screen_width":800,"loading_backgroud":"data/40009002_pack1.png","loading_bar":{"bar_bottom":"default-round","bar_x":"50","bar_y":"50","bar_top":"default-round","bar_width":"300","bar_height":"50"}}
+{
+    "npcs": [
+        {
+            "y": "240",
+            "name": "cuihua",
+            "x": "350",
+            "npc_src": "data/30100001",
+            "npc_name": "翠花"
+        },
+        {
+            "y": "240",
+            "name": "taishan",
+            "x": "450",
+            "npc_src": "data/30100002",
+            "npc_name": "泰山"
+        },
+        {
+            "y": "240",
+            "name": "kezhan",
+            "x": "750",
+            "npc_src": "data/30100003",
+            "npc_name": "客栈"
+        },
+        {
+            "y": "240",
+            "name": "shanpao",
+            "x": "950",
+            "npc_src": "data/30100004",
+            "npc_name": "山炮"
+        },
+        {
+            "y": "240",
+            "name": "biesan",
+            "x": "1100",
+            "npc_src": "data/30100005",
+            "npc_name": "瘪三"
+        },
+        {
+            "y": "240",
+            "name": "dana",
+            "x": "1300",
+            "npc_src": "data/30100006",
+            "npc_name": "大拿"
+        },
+        {
+            "y": "240",
+            "name": "dasheng",
+            "x": "1450",
+            "npc_src": "data/30100008",
+            "npc_name": "大圣"
+        },
+        {
+            "y": "180",
+            "name": "zhu",
+            "x": "1800",
+            "npc_src": "data/30100009",
+            "npc_name": "猪"
+        }
+    ],
+    "skin": "data/uiskin.json",
+    "screen_height": 480,
+    "text_buttons": [
+        {
+            "y": 420,
+            "text": "充值",
+            "name": "btn1",
+            "x": 80
+        }
+    ],
+    "background": "data/40009002_pack1.png",
+    "limit_y": 200,
+    "scene_name": "TestScreen",
+    "image_buttons": [
+        {
+            "up_region": "qishu",
+            "y": 10,
+            "down_region": "qishu",
+            "name": "qishu",
+            "x": 730
+        },
+        {
+            "up_region": "bag",
+            "y": 10,
+            "down_region": "bag",
+            "name": "bag",
+            "x": 660
+        },
+        {
+            "up_region": "zhenfa",
+            "y": 10,
+            "down_region": "zhenfa",
+            "name": "zhenfa",
+            "x": 590
+        },
+        {
+            "up_region": "yaoguai",
+            "y": 10,
+            "down_region": "yaoguai",
+            "name": "yaoguai",
+            "x": 520
+        },
+        {
+            "up_region": "caishen",
+            "y": 410,
+            "down_region": "caishen",
+            "name": "caishen",
+            "x": 730
+        }
+    ],
+    "leading_role_src": "data/30100001",
+    "labels": [
+        {
+            "y": 450,
+            "text": "Lv.990",
+            "style": "yellow",
+            "name": "l1",
+            "x": 20
+        }
+    ],
+    "screen_width": 800,
+    "loading_backgroud": "data/40009002_pack1.png",
+    "loading_bar": {
+        "bar_bottom": "default-round",
+        "bar_x": "50",
+        "bar_y": "50",
+        "bar_top": "default-round",
+        "bar_width": "300",
+        "bar_height": "50"
+    }
+}

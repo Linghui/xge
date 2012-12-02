@@ -7,6 +7,7 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -20,6 +21,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.gol.xge.rpg.Common;
 import com.gol.xge.rpg.InAndExternalFileHandleResolver;
 import com.gol.xge.rpg.scense.RPGScreen;
+import com.gol.xge.rpg.scense.TacticsScreen;
 import com.gol.xge.rpg.ui.AnimationActor;
 import com.gol.xge.rpg.ui.AnimationGroup;
 import com.gol.xge.rpg.ui.NumericBar;
@@ -42,9 +44,20 @@ public class $class_name extends $parent $implements{
     @Override
     public void show(){
         super.show();
-        loadingBackgroundTexture = new Texture(Gdx.files.internal("$loading_backgroud"));
-        this.setBackGround(new TextureRegion(loadingBackgroundTexture));
+        TextureRegion loadingRegion = getLoadingTextureRegion("$loading_backgroud");
+        this.setBackGround(loadingRegion);
 $source_loading
+    }
+    
+    private TextureRegion getLoadingTextureRegion(String path){
+        
+        if(path != null || "".equals(path)){
+            return null;
+        }
+
+        loadingBackgroundTexture = new Texture(Gdx.files.internal(path));
+        TextureRegion region = new TextureRegion(loadingBackgroundTexture);
+        return region;
     }
 
 	$class_body
@@ -74,7 +87,9 @@ $source_loading
             }
         } 
         if(manager.update() && this.srcLoadDone == false){
-            loadingBackgroundTexture.dispose();
+            if(loadingBackgroundTexture != null){
+                loadingBackgroundTexture.dispose();
+            }
             this.srcLoadDone = true;
             init();
             initLabels();
@@ -98,18 +113,28 @@ $source_loading
         this.setBackGround(backRegion, false);
         this.setLimitY($limit_y);
         
-        AnimationActor playerAnimation = new AnimationActor( new AnimationGroup(Common.readAnimationResource("$leading_role_json", false, false, manager.get("$leading_role_pack", TextureAtlas.class))));
+        Actor actor = createLeadingRole("$leading_role_json", "$leading_role_pack");
+
+        initCam();
+        initLeadingRole(actor);
+
+$init
+    }
+    
+    private Actor createLeadingRole(String json, String pack){
+    
+        if(!json.endsWith("json")){
+            return null;
+        }
+
+        AnimationActor playerAnimation = new AnimationActor( new AnimationGroup(Common.readAnimationResource(json, false, false, manager.get(pack, TextureAtlas.class))));
         playerAnimation.setY(480/8);
         Group leadingRole = new Group();
         leadingRole.addActor(playerAnimation);
         leadingRole.setWidth(playerAnimation.getWidth());
         leadingRole.setHeight(playerAnimation.getHeight());
-
-
-        initCam();
-        initLeadingRole(leadingRole);
-
-$init
+        
+        return leadingRole;
     }
 
     private void initLabels(){

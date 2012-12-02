@@ -215,8 +215,9 @@ if( $opts{h} ){
 my $input = undef;
 
 if( $opts{f} ){
-    $input = <>;
-    chomp $input;
+    my @all_lines = <>;
+    chomp @all_lines;
+    $input = join '', @all_lines;
 } else {
     
     if(!defined($ARGV[0])){
@@ -226,7 +227,6 @@ if( $opts{f} ){
     }
     $input = $ARGV[0];
 }
-
 
 $scene_config = from_json($input);
 
