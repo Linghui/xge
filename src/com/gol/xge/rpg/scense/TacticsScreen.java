@@ -70,13 +70,6 @@ public abstract class TacticsScreen extends CoreScreen implements InputProcessor
         camMoveToY  = cam.position.y;
     }
 
-    public Vector2 toBackgroudStageCoordinates(int x, int y){
-        Vector2 coords = new Vector2();
-        coords.x = x;
-        coords.y = y;
-        return this.backgroundStage.screenToStageCoordinates(coords);
-    }
-
 
     @Override
     public void render(float delta) {
