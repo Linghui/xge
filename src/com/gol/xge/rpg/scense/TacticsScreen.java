@@ -42,6 +42,7 @@ public abstract class TacticsScreen extends CoreScreen implements InputProcessor
     MoveTarget target = null;
     
     // all value below is usd to deal with view and leading role movement
+    private boolean fixedCam = false;
     private float camCurrentX = 0;
     private float camCurrentY = 0;
     private float camMoveToX = 0;
@@ -51,6 +52,8 @@ public abstract class TacticsScreen extends CoreScreen implements InputProcessor
     private float distanceOnX = 0f;
     private float distanceOnY = 0f;
     private float DPS = 1000;
+    private float DPS_ONX = 0f;
+    private float DPS_ONY = 0f;
     
 
     public TacticsScreen(Game game) {
@@ -132,14 +135,19 @@ public abstract class TacticsScreen extends CoreScreen implements InputProcessor
         }
         
     }
+    
+    public void setCamFixed(boolean fixed){
+        this.fixedCam = fixed;
+    }
 
     @Override
     public void clickOnBackgroud(int x, int y){
+        if(this.fixedCam){
+            return;
+        }
         this.moveCamTo(x, y);
     }
     
-    float DPS_ONX = 0f;
-    float DPS_ONY = 0f;
     
     public void moveCamTo(int x, int y){
 
