@@ -26,7 +26,7 @@ import com.gol.xge.rpg.ui.AnimationGroup;
  * 支持  角色设定，移动
  *      npc设定，响应
  */
-public abstract class RPGScreen implements Screen, InputProcessor {
+public abstract class RPGScreen extends CoreScreen implements InputProcessor {
     private String TAG = "RPGScreen";
     
     protected static Game game;
@@ -34,23 +34,12 @@ public abstract class RPGScreen implements Screen, InputProcessor {
     public static int width = 800;
     public static int height = 480;
     
-    // background_xxx are used to deal with the scope of leading role can move to.
-    private int background_width  = 0;
-    private int background_height = 0;
-    
-    private   Stage rootStage;       // stage for things controlled by user, like player, menu, control button
-                                     // which are relative static with screen
-    private   Group topGroup;
-
-    private   Stage backgroundStage; // stage for background, like tiled map,  
-    
     private int limitY = 0;
 
     // call for target.action() when leading role movement done
     MoveTarget target = null;
     
     // all value below is usd to deal with view and leading role movement
-    private OrthographicCamera cam;
     private float camCurrentX = 0;
     private float camCurrentY = 0;
     private float camMoveToX = 0;
@@ -76,36 +65,18 @@ public abstract class RPGScreen implements Screen, InputProcessor {
     
     
     private Actor player = null;
-    
+
     public RPGScreen(Game game) {
-        this(game, width, height);
+        super(game);
     }
     
     public RPGScreen(Game game, int width, int height){
-        this.game = game;
-        RPGScreen.width = width;
-        RPGScreen.height = height;
+        super(game, width, height);
     }
-    
-
-    @Override
-    public void show(){
-        Gdx.input.setInputProcessor(this);
-
-        rootStage = new Stage(RPGScreen.width, RPGScreen.height, false);
-        
-        topGroup = new Group();
-        rootStage.addActor(topGroup);
-        
-        backgroundStage = new Stage(RPGScreen.width, RPGScreen.height, false);
-    }
-    
 
     public void initCam(){
-
+        super.initCam();
         cam = (OrthographicCamera) this.getCamera();
-        cam.position.x = this.background_width/2;
-        cam.position.y = this.background_height/2;
         camCurrentX = cam.position.x;
         camCurrentY = cam.position.y;
         camMoveToX  = cam.position.x;
@@ -116,6 +87,9 @@ public abstract class RPGScreen implements Screen, InputProcessor {
     
     public void initLeadingRole(Actor actor){
         
+        if(actor == null){
+            return;
+        }
         this.player = actor;
         
         // display player in the middle of screen, 
@@ -125,54 +99,6 @@ public abstract class RPGScreen implements Screen, InputProcessor {
         player.setY((RPGScreen.height - player.getHeight())/2);
         
         addActorBottom(player);
-    }
-    
-    /*
-     * need to add some function to deal with more than one stage.
-     * like 
-     *  addStage(name, stage)
-     *  stage topStage();
-     *  removeStage(name)
-     *  
-     */
-//    public Vector2 toRootStageCoordinates(int x, int y){
-//        Vector2 out = new Vector2();
-//        Vector2 coords = new Vector2();
-//        rootStage.toStageCoordinates(x, y, coords);
-//        Group.toChildCoordinates(topGroup, coords.x, coords.y, out);
-//        return out;
-//    }
-    
-    public Vector2 toBackgroudStageCoordinates(int x, int y){
-        Vector2 coords = new Vector2();
-        coords.x = x;
-        coords.y = y;
-        return this.backgroundStage.screenToStageCoordinates(coords);
-    }
-    
-    public void setBackgroudStage(Stage stage){
-        this.backgroundStage = stage;
-    }
-    
-    // for just one screen background picture, this is easy to use
-    public void setBackGround(TextureRegion background){
-        this.setBackGround(background, true);
-    }
-    
-    public void setBackGround(TextureRegion background, boolean fitScreen){
-
-        Image backgroundImg = new Image(background);
-        if(fitScreen){
-            backgroundImg.setWidth(rootStage.getWidth());
-            backgroundImg.setHeight(rootStage.getHeight());
-        }
-        background_width = (int) backgroundImg.getWidth();
-        background_height = (int) backgroundImg.getHeight();
-        backgroundStage.addActor(backgroundImg);
-    }
-    
-    public Camera getCamera(){
-        return backgroundStage.getCamera();
     }
 
     public void setLimitY(int y){
@@ -240,61 +166,9 @@ public abstract class RPGScreen implements Screen, InputProcessor {
       
   }
     
-    public void addActorTop(Actor actor){
-        this.topGroup.addActor(actor);
-    }
-    
-    public void addActorBottom(Actor actor){
-        this.rootStage.addActor(actor);
-    }
-    
-    public void addActorBackground(Actor actor){
-        this.backgroundStage.addActor(actor);
-    }
-    
-    public Actor findActorBackground(int id){
-        return this.findActorBackground(id + "");
-    }
-    
-    public Actor findActorBackground(String name){
-        return this.backgroundStage.getRoot().findActor(name);
-    }
-    
-    public void removeActorBackground(Actor actor){
-        this.backgroundStage.getRoot().removeActor(actor);
-        if(actor instanceof Disposable ){
-            ((Disposable) actor).dispose();
-            
-        }
-    }
-    
-    public void clearActorBackground(){
-        this.backgroundStage.clear();
-    }
-
-    public void removeActorBackground(int id){
-        this.removeActorBackground(id + "");
-    }
-    
-    public void removeActorBackground(String name){
-//        Gdx.app.log(TAG, "removeActorBackground(String name) = " + name);
-        this.removeActorBackground(this.backgroundStage.getRoot().findActor(name));
-    }
-    
-    public Game getGame(){
-        return game;
-    }
-    
-
     @Override
     public void render(float delta) {
-        Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-        Gdx.gl.glEnable(GL10.GL_BLEND);
-        Gdx.gl.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA);
-        backgroundStage.act(delta);
-        rootStage.act(delta);
-        backgroundStage.draw();
-        rootStage.draw();
+        super.render(delta);
         
 
         if(this.player != null){
@@ -313,7 +187,7 @@ public abstract class RPGScreen implements Screen, InputProcessor {
                     
                     // moved into edge, stop moving camera
                     if( this.camCurrentX < RPGScreen.width/2 
-                            || this.camCurrentX > (background_width - RPGScreen.width/2)){
+                            || this.camCurrentX > (this.getBackgroundWidth() - RPGScreen.width/2)){
                         cam_x_moving_stop = true;
                         
                         // to see run into left edge or right edge
@@ -321,7 +195,7 @@ public abstract class RPGScreen implements Screen, InputProcessor {
                             this.camCurrentX = RPGScreen.width/2 ;
                             on_x_edge = -1; // left edge
                         } else {
-                            this.camCurrentX = background_width - RPGScreen.width/2;
+                            this.camCurrentX = this.getBackgroundWidth() - RPGScreen.width/2;
                             on_x_edge = 1;  // right edge
                         }
                     } else {
@@ -365,13 +239,13 @@ public abstract class RPGScreen implements Screen, InputProcessor {
                 if(!cam_y_moving_stop){
                     
                     if(this.camCurrentY < RPGScreen.height/2 
-                            || this.camCurrentY > (background_height - RPGScreen.height/2)){
+                            || this.camCurrentY > (this.getBackgroundHeight() - RPGScreen.height/2)){
                         cam_y_moving_stop = true;
                         if(this.camCurrentY < RPGScreen.height/2 ){
                             this.camCurrentY = RPGScreen.height/2 ;
                             on_y_edge = -1;
                         } else {
-                            this.camCurrentY = (background_height - RPGScreen.height/2);
+                            this.camCurrentY = (this.getBackgroundHeight() - RPGScreen.height/2);
                             on_y_edge = 1;
                         }
                     } else {
@@ -420,93 +294,6 @@ public abstract class RPGScreen implements Screen, InputProcessor {
         }
     }
 
-    @Override
-    public void resize(int width, int height) {
-        
-    }
-
-    @Override
-    public void hide() {
-        
-    }
-
-    @Override
-    public void pause() {
-        
-    }
-
-    @Override
-    public void resume() {
-        
-    }
-
-    @Override
-    public void dispose() {
-//        Gdx.app.log(TAG, "dispose");
-        rootStage.clear();
-        rootStage.dispose();
-        backgroundStage.clear();
-        backgroundStage.dispose();
-    }
-
-    @Override
-    public boolean keyDown(int keycode) {
-        rootStage.keyDown(keycode);
-        Gdx.app.log(TAG, "keyDown !!!! " + keycode);
-        if(keycode == 4  // back button
-                || keycode == 29){ // button a , for testing
-//            this.closeGame();
-            return false;
-        }
-        return false;
-    }
-
-    @Override
-    public boolean keyUp(int keycode) {
-        rootStage.keyUp(keycode);
-        return false;
-    }
-
-    @Override
-    public boolean keyTyped(char character) {
-        rootStage.keyTyped(character);
-        return false;
-    }
-
-    
-    @Override
-    public boolean touchDown(int x, int y, int pointer, int button) {
-//        Gdx.app.log(TAG, "x - " + x + " : y - " + y);
-        if(!rootStage.touchDown(x, y, pointer, button)){
-            if(!this.backgroundStage.touchDown(x, y, pointer, button)){
-                
-                this.clickOnBackgroud(x,y);
-            }
-        }
-        return false;
-    }
-
-    @Override
-    public boolean touchUp(int x, int y, int pointer, int button) {
-        rootStage.touchUp(x, y, pointer, button);
-        backgroundStage.touchUp(x, y, pointer, button);
-        return false;
-    }
-
-    @Override
-    public boolean touchDragged(int x, int y, int pointer) {
-        
-        return rootStage.touchDragged(x, y, pointer);
-    }
-
-    @Override
-    public boolean scrolled(int amount) {
-        
-        rootStage.scrolled(amount);
-        return false;
-    }
-
-    
     public void setMoveTarget(MoveTarget target){
         this.target = target;
     }
@@ -550,11 +337,5 @@ public abstract class RPGScreen implements Screen, InputProcessor {
         
     }
 
-
-    @Override
-    public boolean mouseMoved(int screenX, int screenY) {
-        // TODO Auto-generated method stub
-        return false;
-    }
 }
 

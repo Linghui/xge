@@ -26,22 +26,14 @@ import com.gol.xge.rpg.ui.AnimationGroup;
  * 支持  角色设定，移动
  *      npc设定，响应
  */
-public abstract class TacticsScreen implements Screen, InputProcessor {
-    private String TAG = "RPGScreen";
+public abstract class TacticsScreen extends CoreScreen implements InputProcessor {
+    private String TAG = "TacticsScreen";
     
     protected static Game game;
 
     public static int width = 800;
     public static int height = 480;
     
-    // background_xxx are used to deal with the scope of leading role can move to.
-    private int background_width  = 0;
-    private int background_height = 0;
-    
-    private   Stage rootStage;       // stage for things controlled by user, like player, menu, control button
-                                     // which are relative static with screen
-    private   Group topGroup;
-
     private   Stage backgroundStage; // stage for background, like tiled map,  
     
     private int limitY = 0;
@@ -50,7 +42,6 @@ public abstract class TacticsScreen implements Screen, InputProcessor {
     MoveTarget target = null;
     
     // all value below is usd to deal with view and leading role movement
-    protected OrthographicCamera cam;
     private float camCurrentX = 0;
     private float camCurrentY = 0;
     private float camMoveToX = 0;
@@ -60,57 +51,24 @@ public abstract class TacticsScreen implements Screen, InputProcessor {
     private float distanceOnX = 0f;
     private float distanceOnY = 0f;
     private float DPS = 1000;
+    
 
     public TacticsScreen(Game game) {
-        this(game, width, height);
+        super(game);
     }
     
     public TacticsScreen(Game game, int width, int height){
-        this.game = game;
-        TacticsScreen.width = width;
-        TacticsScreen.height = height;
-    }
-    
-
-    @Override
-    public void show(){
-        Gdx.input.setInputProcessor(this);
-
-        rootStage = new Stage(RPGScreen.width, RPGScreen.height, false);
-        
-        topGroup = new Group();
-        rootStage.addActor(topGroup);
-        
-        backgroundStage = new Stage(TacticsScreen.width, TacticsScreen.height, false);
+        super(game, width, height);
     }
     
     public void initCam(){
-
+        super.initCam();
         cam = (OrthographicCamera) this.getCamera();
-        cam.position.x = this.background_width/2;
-        cam.position.y = this.background_height/2;
         camCurrentX = cam.position.x;
         camCurrentY = cam.position.y;
         camMoveToX  = cam.position.x;
         camMoveToY  = cam.position.y;
     }
-    
-    public int getBackgroundWidth(){
-        return background_width;
-    }
-    
-    public int getBackgroundHeight(){
-        return background_height;
-    }
-    
-    /*
-     * need to add some function to deal with more than one stage.
-     * like 
-     *  addStage(name, stage)
-     *  stage topStage();
-     *  removeStage(name)
-     *  
-     */
 
     public Vector2 toBackgroudStageCoordinates(int x, int y){
         Vector2 coords = new Vector2();
@@ -118,92 +76,11 @@ public abstract class TacticsScreen implements Screen, InputProcessor {
         coords.y = y;
         return this.backgroundStage.screenToStageCoordinates(coords);
     }
-    
-    public void setBackgroudStage(Stage stage){
-        this.backgroundStage = stage;
-    }
-    
-    // for just one screen background picture, this is easy to use
-    public void setBackGround(TextureRegion background){
-        this.setBackGround(background, true);
-    }
-    
-    public void setBackGround(TextureRegion background, boolean fitScreen){
 
-        Image backgroundImg = new Image(background);
-        if(fitScreen){
-            backgroundImg.setWidth(rootStage.getWidth());
-            backgroundImg.setHeight(rootStage.getHeight());
-        }
-        background_width = (int) backgroundImg.getWidth();
-        background_height = (int) backgroundImg.getHeight();
-        backgroundStage.addActor(backgroundImg);
-    }
-    
-    public Camera getCamera(){
-        return backgroundStage.getCamera();
-    }
-
-    public void setLimitY(int y){
-        this.limitY = y;
-    }
-    
-    public void addActorTop(Actor actor){
-        this.topGroup.addActor(actor);
-    }
-    
-    public void addActorBottom(Actor actor){
-        this.rootStage.addActor(actor);
-    }
-    
-    public void addActorBackground(Actor actor){
-        this.backgroundStage.addActor(actor);
-    }
-    
-    public Actor findActorBackground(int id){
-        return this.findActorBackground(id + "");
-    }
-    
-
-    public Actor findActorBackground(String name){
-        return this.backgroundStage.getRoot().findActor(name);
-    }
-    
-    public void removeActorBackground(Actor actor){
-        this.backgroundStage.getRoot().removeActor(actor);
-        if(actor instanceof Disposable ){
-            ((Disposable) actor).dispose();
-            
-        }
-    }
-    
-    public void clearActorBackground(){
-        this.backgroundStage.clear();
-    }
-
-    public void removeActorBackground(int id){
-        this.removeActorBackground(id + "");
-    }
-    
-    public void removeActorBackground(String name){
-//        Gdx.app.log(TAG, "removeActorBackground(String name) = " + name);
-        this.removeActorBackground(this.backgroundStage.getRoot().findActor(name));
-    }
-    
-    public Game getGame(){
-        return game;
-    }
-    
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-        Gdx.gl.glEnable(GL10.GL_BLEND);
-        Gdx.gl.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA);
-        backgroundStage.act(delta);
-        rootStage.act(delta);
-        backgroundStage.draw();
-        rootStage.draw();
+        super.render(delta);
         
         // shaking camera
         if(this.cmaShakingLeftSeconds != 0f){
@@ -263,103 +140,9 @@ public abstract class TacticsScreen implements Screen, InputProcessor {
         
     }
 
-    public void setRootVisible(boolean visible) {
-        this.rootStage.getRoot().setVisible(visible);
-    }
-
     @Override
-    public void resize(int width, int height) {
-        
-    }
-
-    @Override
-    public void hide() {
-        
-    }
-
-    @Override
-    public void pause() {
-        
-    }
-
-    @Override
-    public void resume() {
-        
-    }
-
-    @Override
-    public void dispose() {
-//        Gdx.app.log(TAG, "dispose");
-        rootStage.clear();
-        rootStage.dispose();
-        backgroundStage.clear();
-        backgroundStage.dispose();
-    }
-
-    @Override
-    public boolean keyDown(int keycode) {
-        rootStage.keyDown(keycode);
-        Gdx.app.log(TAG, "keyDown !!!! " + keycode);
-        if(keycode == 4  // back button
-                || keycode == 29){ // button a , for testing
-//            this.closeGame();
-            return false;
-        }
-        return false;
-    }
-
-    @Override
-    public boolean keyUp(int keycode) {
-        rootStage.keyUp(keycode);
-        return false;
-    }
-
-    @Override
-    public boolean keyTyped(char character) {
-        rootStage.keyTyped(character);
-        return false;
-    }
-
-    
-    @Override
-    public boolean touchDown(int x, int y, int pointer, int button) {
-//        Gdx.app.log(TAG, "x - " + x + " : y - " + y);
-        if(!rootStage.touchDown(x, y, pointer, button)){
-            if(!this.backgroundStage.touchDown(x, y, pointer, button)){
-                this.moveCamTo(x, y);
-            }
-        }
-
-        
-        
-//        this.moveCamTo(x, y);
-        return false;
-    }
-
-    @Override
-    public boolean touchUp(int x, int y, int pointer, int button) {
-        rootStage.touchUp(x, y, pointer, button);
-        backgroundStage.touchUp(x, y, pointer, button);
-        return false;
-    }
-
-    @Override
-    public boolean touchDragged(int x, int y, int pointer) {
-        Gdx.app.log(TAG, "touchDragged x - " + x + " : y - " + y);
-        return rootStage.touchDragged(x, y, pointer);
-    }
-
-    @Override
-    public boolean scrolled(int amount) {
-        
-        rootStage.scrolled(amount);
-        return false;
-    }
-    
-
-    @Override
-    public boolean mouseMoved(int screenX, int screenY) {
-        return false;
+    public void clickOnBackgroud(int x, int y){
+        this.moveCamTo(x, y);
     }
     
     float DPS_ONX = 0f;
@@ -388,6 +171,10 @@ public abstract class TacticsScreen implements Screen, InputProcessor {
       float timeCost = totalDistance/DPS;
       DPS_ONX = distanceOnX/timeCost;
       DPS_ONY = distanceOnY/timeCost;
+    }
+
+    public void setLimitY(int y){
+        this.limitY = y;
     }
 
 public class NPC extends AnimationActor implements MoveTarget{
@@ -442,8 +229,6 @@ public class NPC extends AnimationActor implements MoveTarget{
         camXbeforeShaking = cam.position.x;
         camYbeforeShaking = cam.position.y;
     }
-    
-    
 
 }
 
