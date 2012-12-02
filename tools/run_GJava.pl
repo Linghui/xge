@@ -30,6 +30,8 @@ my $IMAGE_BUTTONS_KEY   =   'image_buttons';
 my $IMAGE_BUTTONS_DOWN_REGION_KEY   =   'down_region';
 my $IMAGE_BUTTONS_UP_REGION_KEY     =   'up_region';
 
+my $TEXT_FIELDS_KEY =   'text_fields';
+
 my $LOADING_BACKGROUND_KEY  =   'loading_backgroud';
 my $LADING_BAR_KEY  =   'loading_bar';
 my $BAR_TOP     =   'bar_top';

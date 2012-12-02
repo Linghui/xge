@@ -44,6 +44,10 @@ my $X_KEY   =   'x';
 my $Y_KEY   =   'y';
 my $ADD_TO_KEY = 'add_to';
 
+my $INIT_TEXTFIELDS = 'init_textfields';
+my $TEXT_FIELDS_KEY = 'text_fields';
+my $HINT_KEY        = 'hint';
+
 my $INIT_LABELS =   'init_labels';
 my $LABELS_KEY  =   'labels';
 my $STYLE_KEY   =   'style';
@@ -155,6 +159,9 @@ sub generate_scene(){
     
     my $init_buttons_value = $self->get_init_buttons_value($config, 'this.addActorBottom');
     $vars->{$INIT_BUTTONS} = $init_buttons_value;
+    
+    my $init_textfields_value = $self->get_init_textfileds_value($config, 'this.addActorBottom');
+    $vars->{$INIT_TEXTFIELDS} = $init_textfields_value;
 
     if(defined($config->{$LEADING_ROLE_SRC})){
         
@@ -376,6 +383,42 @@ sub get_init_buttons_value(){
     
     
     return $all_button_lines;
+}
+
+sub get_init_textfileds_value(){
+    my $self    =   shift;
+    my $config  =   shift;
+    my $add_to  = shift;
+
+    my $all_textfiled_lines = "";
+    
+    my $t_config = {
+        INTERPOLATE  => 1,               # expand "$var" in plain text
+    };
+    
+    my $template = Template->new($t_config);
+    
+    my $input = "$TEMPLATE_PATH/textfield.t";
+    
+    my $textfields = $config->{$TEXT_FIELDS_KEY};
+    for my $one (@$textfields){
+        my $vars = {
+            $NAME   =>    $one->{$NAME},
+            $X_KEY   =>   $one->{$X_KEY},
+            $Y_KEY   =>   $one->{$Y_KEY},
+            $HINT_KEY =>  $one->{$HINT_KEY},
+            $ADD_TO_KEY =>  'this.addActorBackground',
+        };
+        
+        
+        my $output;
+        
+        $template->process($input, $vars, \$output)
+        || die $template->error();
+        $all_textfiled_lines .= $output;
+        
+    }
+    return $all_textfiled_lines;
 }
 
 sub get_init_npcs_value(){
