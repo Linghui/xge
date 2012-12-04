@@ -20,6 +20,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Disposable;
 import com.gol.xge.rpg.ui.AnimationActor;
 import com.gol.xge.rpg.ui.AnimationGroup;
+import com.gol.xge.socket.InOutPutInterface;
 
 /*
  * 横版类游戏父类
@@ -46,8 +47,6 @@ public abstract class CoreScreen implements Screen, InputProcessor {
 
     // all value below is usd to deal with view and leading role movement
     protected OrthographicCamera cam;
-    
-    private Actor player = null;
     
     public CoreScreen(Game game) {
         this(game, width, height);
@@ -172,6 +171,17 @@ public abstract class CoreScreen implements Screen, InputProcessor {
         return game;
     }
     
+    public boolean sendMessage(byte[] message){
+        if(this.game instanceof InOutPutInterface){
+            ((InOutPutInterface)this.game).onWrite(message);
+        }
+        return false;
+    }
+
+    public boolean executeResponse(Object obj) {
+        // TODO Auto-generated method stub
+        return false;
+    }
 
     @Override
     public void render(float delta) {
@@ -287,5 +297,6 @@ public abstract class CoreScreen implements Screen, InputProcessor {
     public boolean mouseMoved(int screenX, int screenY) {
         return false;
     }
+
 }
 

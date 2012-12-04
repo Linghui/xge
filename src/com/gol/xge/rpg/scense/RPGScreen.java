@@ -29,11 +29,6 @@ import com.gol.xge.rpg.ui.AnimationGroup;
 public abstract class RPGScreen extends CoreScreen implements InputProcessor {
     private String TAG = "RPGScreen";
     
-    protected static Game game;
-
-    public static int width = 800;
-    public static int height = 480;
-    
     private int limitY = 0;
 
     // call for target.action() when leading role movement done

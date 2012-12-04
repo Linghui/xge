@@ -30,7 +30,6 @@ public class MessageHandlerA implements InOutPutInterface {
         
     }
 
-    @Override
     public void onWrite(SendInterface contentObj) {
         
         onWrite(contentObj.toByte());

@@ -29,15 +29,6 @@ import com.gol.xge.rpg.ui.AnimationGroup;
 public abstract class TacticsScreen extends CoreScreen implements InputProcessor {
     private String TAG = "TacticsScreen";
     
-    protected static Game game;
-
-    public static int width = 800;
-    public static int height = 480;
-    
-    private   Stage backgroundStage; // stage for background, like tiled map,  
-    
-    private int limitY = 0;
-
     // call for target.action() when leading role movement done
     MoveTarget target = null;
     
@@ -172,10 +163,6 @@ public abstract class TacticsScreen extends CoreScreen implements InputProcessor
       float timeCost = totalDistance/DPS;
       DPS_ONX = distanceOnX/timeCost;
       DPS_ONY = distanceOnY/timeCost;
-    }
-
-    public void setLimitY(int y){
-        this.limitY = y;
     }
 
 public class NPC extends AnimationActor implements MoveTarget{

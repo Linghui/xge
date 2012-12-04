@@ -19,7 +19,6 @@ public interface InOutPutInterface {
      * 
      * 把实现了SendInterface的数据对象加到消息队列中
      */
-    public void onWrite(SendInterface contentObj);
     public void onWrite(byte[] content);
     /*
      * 取得消息队列第一条
