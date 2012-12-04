@@ -1,4 +1,4 @@
-package com.gol.xge.socket;
+package com.gol.xge.socket.listener;
 
 import java.io.InputStream;
 

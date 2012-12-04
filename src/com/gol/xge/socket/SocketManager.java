@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.Queue;
 
 import com.gol.javaconcurrent.Java6Arrays;
+import com.gol.xge.socket.listener.InOutPutInterface;
 
 /*
  * deal with socket message sending out.

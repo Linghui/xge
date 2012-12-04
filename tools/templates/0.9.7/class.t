@@ -27,7 +27,7 @@ import com.gol.xge.rpg.ui.AnimationActor;
 import com.gol.xge.rpg.ui.AnimationGroup;
 import com.gol.xge.rpg.ui.NumericBar;
 
-public class $class_name extends $parent $implements{
+public class $class_name extends $parent implements GMessageProcessInterface{
     
     $values
     
@@ -167,10 +167,23 @@ $init_npcs
         // TODO: do your own special init here
     }
 
+    
+    @Override
+    public boolean processMessage(byte[] message) {
+        System.out.println("processMessage "+new String(message));
+        return false;
+    }
+
+    @Override
+    public void sendMessage(byte[] message) {
+        if(this.game instanceof InOutPutInterface){
+            ((InOutPutInterface)this.game).onWrite(message);
+        }
+    }
+    
     @Override
     public void dispose() {
 $source_unloading
-        manager.dispose();
     }
 }
 

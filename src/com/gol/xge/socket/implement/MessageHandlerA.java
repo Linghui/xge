@@ -7,8 +7,8 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.gol.xge.socket.InOutPutInterface;
 import com.gol.xge.socket.SendInterface;
+import com.gol.xge.socket.listener.InOutPutInterface;
 /*
  * 一个实现的InOutPutInterface ，按行读取数据
  * 

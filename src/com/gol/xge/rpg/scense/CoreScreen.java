@@ -20,7 +20,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Disposable;
 import com.gol.xge.rpg.ui.AnimationActor;
 import com.gol.xge.rpg.ui.AnimationGroup;
-import com.gol.xge.socket.InOutPutInterface;
+import com.gol.xge.socket.listener.InOutPutInterface;
 
 /*
  * 横版类游戏父类
@@ -169,18 +169,6 @@ public abstract class CoreScreen implements Screen, InputProcessor {
     
     public Game getGame(){
         return game;
-    }
-    
-    public boolean sendMessage(byte[] message){
-        if(this.game instanceof InOutPutInterface){
-            ((InOutPutInterface)this.game).onWrite(message);
-        }
-        return false;
-    }
-
-    public boolean executeResponse(Object obj) {
-        // TODO Auto-generated method stub
-        return false;
     }
 
     @Override
