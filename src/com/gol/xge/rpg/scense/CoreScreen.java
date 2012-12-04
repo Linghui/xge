@@ -216,26 +216,36 @@ public abstract class CoreScreen implements Screen, InputProcessor {
 
     @Override
     public boolean keyDown(int keycode) {
-        rootStage.keyDown(keycode);
-        Gdx.app.log(TAG, "keyDown !!!! " + keycode);
+        
         if(keycode == 4  // back button
                 || keycode == 29){ // button a , for testing
 //            this.closeGame();
             return false;
         }
-        return false;
+        if(!rootStage.keyDown(keycode)){
+            return this.backgroundStage.keyDown(keycode);
+        }
+        
+        return true;
     }
 
     @Override
     public boolean keyUp(int keycode) {
-        rootStage.keyUp(keycode);
-        return false;
+
+        if(!rootStage.keyUp(keycode)){
+            return this.backgroundStage.keyUp(keycode);
+        }
+        
+        return true;
     }
 
     @Override
     public boolean keyTyped(char character) {
-        rootStage.keyTyped(character);
-        return false;
+        
+        if(!rootStage.keyTyped(character)){
+            return this.backgroundStage.keyTyped(character);
+        }
+        return true;
     }
 
     
@@ -248,32 +258,33 @@ public abstract class CoreScreen implements Screen, InputProcessor {
                 this.clickOnBackgroud(x,y);
             }
         }
-        return false;
+        return true;
     }
 
     @Override
     public boolean touchUp(int x, int y, int pointer, int button) {
-        rootStage.touchUp(x, y, pointer, button);
-        backgroundStage.touchUp(x, y, pointer, button);
-        return false;
+        if(!rootStage.touchUp(x, y, pointer, button)){
+            return backgroundStage.touchUp(x, y, pointer, button);
+        }
+        
+        return true;
     }
 
     @Override
     public boolean touchDragged(int x, int y, int pointer) {
-        
-        return rootStage.touchDragged(x, y, pointer);
+        if( ! rootStage.touchDragged(x, y, pointer) ){
+            return backgroundStage.touchDragged(x, y, pointer);
+        }
+        return true;
     }
 
     @Override
     public boolean scrolled(int amount) {
-        
-        rootStage.scrolled(amount);
         return false;
     }
 
     @Override
     public boolean mouseMoved(int screenX, int screenY) {
-        // TODO Auto-generated method stub
         return false;
     }
 }
