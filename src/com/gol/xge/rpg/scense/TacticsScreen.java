@@ -8,7 +8,10 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.math.collision.Ray;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.EventListener;
@@ -97,33 +100,33 @@ public abstract class TacticsScreen extends CoreScreen implements InputProcessor
             return;
         }
         
-
-
-        if( camCurrentX != this.camMoveToX){
-
-            float disOnX = DPS_ONX*delta;
-            cam.position.x -= disOnX;
-            movedOnX += disOnX;
-
-            if(Math.abs(movedOnX) > Math.abs(distanceOnX)){
-                DPS_ONX = 0f;
-                movedOnX = 0f;
-                this.cam.position.x = this.camMoveToX;
-            }
-        }
-        
-        if( camCurrentY != this.camMoveToY){
-
-            float disOnY = DPS_ONY*delta;
-            cam.position.y -= disOnY;
-            movedOnY += disOnY;
-            
-            if(Math.abs(movedOnY) > Math.abs(distanceOnY)){
-                DPS_ONY = 0f;
-                movedOnY = 0f;
-                this.cam.position.y = this.camMoveToY;
-            }
-        }
+//
+//
+//        if( camCurrentX != this.camMoveToX){
+//
+//            float disOnX = DPS_ONX*delta;
+//            cam.position.x -= disOnX;
+//            movedOnX += disOnX;
+//
+//            if(Math.abs(movedOnX) > Math.abs(distanceOnX)){
+//                DPS_ONX = 0f;
+//                movedOnX = 0f;
+//                this.cam.position.x = this.camMoveToX;
+//            }
+//        }
+//        
+//        if( camCurrentY != this.camMoveToY){
+//
+//            float disOnY = DPS_ONY*delta;
+//            cam.position.y -= disOnY;
+//            movedOnY += disOnY;
+//            
+//            if(Math.abs(movedOnY) > Math.abs(distanceOnY)){
+//                DPS_ONY = 0f;
+//                movedOnY = 0f;
+//                this.cam.position.y = this.camMoveToY;
+//            }
+//        }
         
     }
     
@@ -218,5 +221,28 @@ public class NPC extends AnimationActor implements MoveTarget{
         camYbeforeShaking = cam.position.y;
     }
 
+    final Vector3 curr = new Vector3();
+    final Vector3 last = new Vector3(-1, -1, -1);
+    final Vector3 delta = new Vector3();
+    
+    @Override
+    public boolean touchDragged(int x, int y, int pointer) {
+        cam.unproject(curr.set(x, y, 0));
+        if (!(last.x == -1 && last.y == -1 && last.z == -1)) {
+            cam.unproject(delta.set(last.x, last.y, 0));
+            delta.sub(curr);
+            cam.position.add(delta.x, delta.y, 0);
+        }
+        last.set(x, y, 0);
+        return false;
+    }
+
+
+    @Override
+    public boolean touchUp (int x, int y, int pointer, int button) {
+        last.set(-1, -1, -1);
+        return super.touchUp(x, y, pointer, button);
+    }
+    
 }
 
