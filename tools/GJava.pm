@@ -152,6 +152,8 @@ sub generate_scene(){
     my $all_src_unload = "";
     my $all_source_count = 0;
     for my $one (@$source_loading_list){
+        next if !defined($one);
+        
         my $load_line = $self->get_load_line($one);
         $all_src_load .= $load_line;
         my $unload_line = $self->get_unload_line($one);
@@ -207,6 +209,10 @@ sub get_background_resion(){
     my $self = shift;
     my $source = shift;
     
+    if( !defined($source)){
+        return "null";
+    }
+    
     my $line = "";
     
     if($source =~ /\.png/){
@@ -257,7 +263,7 @@ sub get_loading_list(){
     push @list, $config->{$SKIN_KEY};
     
     my $background_resource = $config->{$BACKGROUND_IMG_KEY};
-    if( $background_resource =~ /pack/ ){
+    if( defined($background_resource) && $background_resource =~ /pack/ ){
         ($background_resource) = split /\?/, $background_resource;
     }
     push @list, $background_resource;

@@ -1,0 +1,49 @@
+{
+    "skin": "data/uiskin.json",
+    "screen_height": 480,
+    "text_buttons": [
+        {
+            "y": 100,
+            "text": "创建",
+            "name": "btn1",
+            "x": 350
+        }
+    ],
+    "text_fields": [
+        {
+            "name": "username",
+            "x": 300,
+            "y": 150,
+            "hint": "角色名"
+            
+        }
+    ],
+    "image_buttons": [
+        {
+            "up_region": "qishu",
+            "y": 300,
+            "down_region": "qishu",
+            "name": "qishu",
+            "x": 200
+        },
+        {
+            "up_region": "bag",
+            "y": 300,
+            "down_region": "bag",
+            "name": "bag",
+            "x": 400
+        }
+    ],
+    "limit_y": 0,
+    "cam_fix": true,
+    "scene_name": "NewRoleScreen",
+    "screen_width": 800,
+    "loading_bar": {
+        "bar_bottom": "default-round",
+        "bar_x": "50",
+        "bar_y": "50",
+        "bar_top": "default-round",
+        "bar_width": "300",
+        "bar_height": "50"
+    }
+}

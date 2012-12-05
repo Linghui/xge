@@ -35,15 +35,16 @@ public class $class_name extends $parent implements GMessageProcessInterface{
     
     $values
     
-    AssetManager manager = new AssetManager(new InAndExternalFileHandleResolver());
+    private AssetManager manager = null;
     Skin skin = null;
     
     private boolean srcLoadDone = false;
     private Texture loadingBackgroundTexture;
     private NumericBar loadingBar = null;
 
-    public $class_name(Game game){
+    public $class_name(Game game, AssetManager manager){
         super(game, $screen_width, $screen_height);
+        this.manager = manager;
     }
     
     @Override
@@ -114,6 +115,10 @@ $source_loading
 
     private void init(){
     
+        if(skin == null){
+            skin = manager.get("data/uiskin.json", Skin.class);
+        }
+        
         TextureRegion backRegion = $background;
         this.setBackGround(backRegion, false);
         this.setLimitY($limit_y);
