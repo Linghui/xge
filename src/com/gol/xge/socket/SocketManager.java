@@ -73,6 +73,7 @@ public class SocketManager {
 				    byte[] message = inOutPutInterface.getNextMessage();
 					if (message != null) {
 					    output.write(message);
+					    output.flush();
 					}
 					if (new InputStreamReader(input).ready()) {
 					    inOutPutInterface.onRead(input);

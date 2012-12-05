@@ -27,12 +27,16 @@ public class SocketTest {
         
         c1.onWrite("test\n".getBytes());
         
+        SocketTest.listener.stopListener();
+        
         System.out.println("Socket Testing End");
         
     }
     
+    TestServerListener listener = null;
+    
     public SocketTest(){
-        TestServerListener listener = new TestServerListener();
+        listener = new TestServerListener();
         new Thread(listener).start();
     }
     
