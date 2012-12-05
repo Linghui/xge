@@ -7,7 +7,7 @@
             
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                System.out.println("[% button_name %] clicked");
+                Gdx.app.log(TAG, "[% button_name %] clicked");
                 // TODO: strongly recommand do your own implementation in the method below
                 [% button_name %]Action();
                 return true;

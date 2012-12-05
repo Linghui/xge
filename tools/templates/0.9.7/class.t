@@ -30,6 +30,8 @@ import com.gol.xge.socket.listener.GMessageProcessInterface;
 import com.gol.xge.socket.listener.InOutPutInterface;
 
 public class $class_name extends $parent implements GMessageProcessInterface{
+
+    private String TAG = "$class_name";
     
     $values
     
@@ -53,7 +55,7 @@ $source_loading
     }
     
     private TextureRegion getLoadingTextureRegion(String path){
-        
+
         if(path != null || "".equals(path)){
             return null;
         }
@@ -69,8 +71,7 @@ $source_loading
     public void render(float delta){
         super.render(delta);
         if(!manager.update()){
-            
-            System.out.println("progress " + manager.getProgress());
+            Gdx.app.log(TAG, "progress " + manager.getProgress());
             if(manager.isLoaded("data/uiskin.json") && loadingBar == null){
                 skin = manager.get("$skin", Skin.class);
                 
@@ -84,7 +85,7 @@ $source_loading
             
             if(loadingBar != null){
                 int status = (int) (manager.getProgress()*10);
-                System.out.println("status " + status); 
+                Gdx.app.log(TAG, "status " + status);
                 loadingBar.setStatusNum(status);
                 
             }
@@ -173,7 +174,7 @@ $actions
     
     @Override
     public boolean processMessage(byte[] message) {
-        System.out.println("processMessage "+new String(message));
+        Gdx.app.log(TAG, "processMessage "+new String(message));
         return false;
     }
 

@@ -5,7 +5,7 @@
             public void action() {
                 // TODO Auto-generated method stub
                 super.action();
-                System.out.println("$name action");
+                Gdx.app.log(TAG, "$name action");
             }
         };
         [% name %].setX($npc_x);
