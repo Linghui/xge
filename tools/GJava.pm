@@ -76,6 +76,15 @@ my $NPCS_KEY =   'npcs';
 my $NPC_NAME    =   'npc_name';
 my $NPC_SRC     =   'npc_src';
 
+my $ACTIONS = 'actions';
+my $SCOPE   = 'scope';
+my $RETURN_TYPE = 'return_type';
+my $METHOD_NAME = 'method_name';
+my $PARAMETERS  = 'parameters';
+my $RETURN_VALUE= 'return_value';
+
+my @all_button_actions = ();
+
 sub new(){
     my $class = shift;
     my $version = shift;
@@ -178,6 +187,10 @@ sub generate_scene(){
     
     my $init_npcs_value =   $self->get_init_npcs_value($config, 'this.addActorBackground');
     $vars->{$INIT_NPCS} = $init_npcs_value;
+    
+    my $actions = $self->get_actions();
+    
+    $vars->{$ACTIONS} = $actions;
     
     my $output = undef;
     
@@ -349,6 +362,7 @@ sub get_init_buttons_value(){
         || die $template->error();
         $all_button_lines .= $output;
         
+        push @all_button_actions,  $one_button->{$NAME};
     }
     
     $input = "$TEMPLATE_PATH/image_button.t";
@@ -379,6 +393,7 @@ sub get_init_buttons_value(){
         || die $template->error();
         $all_button_lines .= $output;
         
+        push @all_button_actions,  $one_button->{$NAME};
     }
     
     
@@ -468,6 +483,42 @@ sub get_init_npcs_value(){
     return $all_npc_lines;
 }
 
+sub get_actions(){
+    
+    my $all_action_lines = "";
+    
+    my $t_config = {
+        INTERPOLATE  => 1,               # expand "$var" in plain text
+    };
+    
+    my $template = Template->new($t_config);
+    
+    my $input = "$TEMPLATE_PATH/method.t";
+    
+    my $ACTIONS = 'actions';
+    my $SCOPE   = 'scope';
+    my $RETURN_TYPE = 'return_type';
+    my $METHOD_NAME = 'method_name';
+    my $PARAMETERS  = 'parameters';
+    my $RETURN_VALUE= 'return_value';
+    
+    for my $one(@all_button_actions){
+        my $vars = {
+            $METHOD_NAME    =>   $one.'Action',
+            $SCOPE          =>  'public',
+            $RETURN_TYPE    =>  'void',
+        };
+        
+        
+        my $output;
+        
+        $template->process($input, $vars, \$output)
+        || die $template->error();
+        $all_action_lines .= $output;
+    }
+    
+    return $all_action_lines;
+}
 
 
 my $WINDOW_CLASS = 'window_class';

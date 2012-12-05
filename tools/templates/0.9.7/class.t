@@ -26,6 +26,8 @@ import com.gol.xge.rpg.scense.TacticsScreen;
 import com.gol.xge.rpg.ui.AnimationActor;
 import com.gol.xge.rpg.ui.AnimationGroup;
 import com.gol.xge.rpg.ui.NumericBar;
+import com.gol.xge.socket.listener.GMessageProcessInterface;
+import com.gol.xge.socket.listener.InOutPutInterface;
 
 public class $class_name extends $parent implements GMessageProcessInterface{
     
@@ -167,6 +169,7 @@ $init_npcs
         // TODO: do your own special init here
     }
 
+$actions
     
     @Override
     public boolean processMessage(byte[] message) {
