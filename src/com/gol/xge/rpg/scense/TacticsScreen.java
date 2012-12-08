@@ -227,6 +227,9 @@ public class NPC extends AnimationActor implements MoveTarget{
     
     @Override
     public boolean touchDragged(int x, int y, int pointer) {
+        if(fixedCam || cam == null){
+            return false;
+        }
         cam.unproject(curr.set(x, y, 0));
         if (!(last.x == -1 && last.y == -1 && last.z == -1)) {
             cam.unproject(delta.set(last.x, last.y, 0));
