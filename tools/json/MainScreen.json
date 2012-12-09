@@ -6,57 +6,21 @@
             "x": "350",
             "npc_src": "data/30100001",
             "npc_name": "翠花"
-        },
-        {
-            "y": "240",
-            "name": "taishan",
-            "x": "450",
-            "npc_src": "data/30100002",
-            "npc_name": "泰山"
-        },
-        {
-            "y": "240",
-            "name": "kezhan",
-            "x": "750",
-            "npc_src": "data/30100003",
-            "npc_name": "客栈"
-        },
-        {
-            "y": "240",
-            "name": "shanpao",
-            "x": "950",
-            "npc_src": "data/30100004",
-            "npc_name": "山炮"
-        },
-        {
-            "y": "240",
-            "name": "biesan",
-            "x": "1100",
-            "npc_src": "data/30100005",
-            "npc_name": "瘪三"
-        },
-        {
-            "y": "240",
-            "name": "dana",
-            "x": "1300",
-            "npc_src": "data/30100006",
-            "npc_name": "大拿"
         }
     ],
     "skin": "data/uiskin.json",
     "screen_height": 480,
-    "text_buttons": [
-        {
-            "y": 420,
-            "text": "充值",
-            "name": "btn1",
-            "x": 80
-        }
-    ],
     "background": "data/40009002_pack1.png",
     "limit_y": 0,
     "scene_name": "MainScreen",
     "image_buttons": [
+        {
+            "up_region": "yaoguai",
+            "y": 410,
+            "down_region": "yaoguai",
+            "name": "playerHead",
+            "x": 0
+        },
         {
             "up_region": "qishu",
             "y": 10,
@@ -79,10 +43,10 @@
             "x": 590
         },
         {
-            "up_region": "yaoguai",
+            "up_region": "tavern",
             "y": 10,
-            "down_region": "yaoguai",
-            "name": "yaoguai",
+            "down_region": "tavern",
+            "name": "tavern",
             "x": 520
         },
         {
@@ -91,15 +55,78 @@
             "down_region": "caishen",
             "name": "caishen",
             "x": 730
+        },
+        {
+            "up_region": "sliver",
+            "y": 440,
+            "down_region": "sliver",
+            "name": "jingli",
+            "x": 50
+        },
+        {
+            "up_region": "yuanbao",
+            "y": 440,
+            "down_region": "yuanbao",
+            "name": "gold",
+            "x": 150
+        },
+        {
+            "up_region": "sliver",
+            "y": 440,
+            "down_region": "sliver",
+            "name": "sliver",
+            "x": 250
+        },
+        {
+            "up_region": "yuanbao",
+            "y": 440,
+            "down_region": "yuanbao",
+            "name": "rongyu",
+            "x": 350
         }
     ],
     "labels": [
         {
-            "y": 450,
-            "text": "Lv.990",
+            "y": 410,
+            "text": "Lv.99",
             "style": "yellow",
             "name": "l1",
-            "x": 20
+            "x": 60
+        },
+        {
+            "y": 410,
+            "text": "上帝",
+            "style": "yellow",
+            "name": "playerName",
+            "x": 120
+        },
+        {
+            "y": 440,
+            "text": "15/20",
+            "style": "default",
+            "name": "jingliL",
+            "x": 100
+        },
+        {
+            "y": 440,
+            "text": "9900",
+            "style": "default",
+            "name": "goldL",
+            "x": 200
+        },
+        {
+            "y": 440,
+            "text": "9900",
+            "style": "default",
+            "name": "sliverL",
+            "x": 300
+        },
+        {
+            "y": 440,
+            "text": "9900",
+            "style": "default",
+            "name": "rongyuL",
+            "x": 400
         }
     ],
     "screen_width": 800,
