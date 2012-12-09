@@ -105,28 +105,28 @@
             "text": "15/20",
             "style": "default",
             "name": "jingliL",
-            "x": 100
+            "x": 90
         },
         {
             "y": 440,
             "text": "9900",
             "style": "default",
             "name": "goldL",
-            "x": 200
+            "x": 190
         },
         {
             "y": 440,
             "text": "9900",
             "style": "default",
             "name": "sliverL",
-            "x": 300
+            "x": 290
         },
         {
             "y": 440,
             "text": "9900",
             "style": "default",
             "name": "rongyuL",
-            "x": 400
+            "x": 390
         }
     ],
     "screen_width": 800,

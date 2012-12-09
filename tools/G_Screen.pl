@@ -3,7 +3,6 @@
 use strict;
 use warnings;
 
-use GCTXC;
 use GJava;
 use JSON;
 use Getopt::Std;

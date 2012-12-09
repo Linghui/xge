@@ -469,7 +469,7 @@ sub get_init_npcs_value(){
         my ($src_id)  =   $one_npc->{$NPC_SRC} =~ /(\d+)$/;
 #        print "src_id ====== $src_id\n";
         my $vars = {
-            $NAME   =>   $one_npc->{$NAME}.'NpcActor',
+            $NAME   =>   $one_npc->{$NAME},
             $NPC_JSON   => $one_npc->{$NPC_SRC}.'/'.$src_id.'.json',
             $NPC_PACK   => $one_npc->{$NPC_SRC}.$PACK_SUFFIX,
             $NPC_X   =>   $one_npc->{$X_KEY},
@@ -484,6 +484,7 @@ sub get_init_npcs_value(){
         || die $template->error();
         $all_npc_lines .= $output;
         
+        push @all_button_actions,  $one_npc->{$NAME};
     }
     
     return $all_npc_lines;
