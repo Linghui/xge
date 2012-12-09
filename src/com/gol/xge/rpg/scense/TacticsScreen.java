@@ -1,26 +1,16 @@
 package com.gol.xge.rpg.scense;
 
+import javax.swing.event.DocumentEvent.EventType;
+
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Camera;
-import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Intersector;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.math.collision.Ray;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.EventListener;
-import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.utils.Disposable;
-import com.gol.xge.rpg.scense.RPGScreen.MoveTarget;
-import com.gol.xge.rpg.scense.RPGScreen.NPC;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.gol.xge.rpg.ui.AnimationActor;
 import com.gol.xge.rpg.ui.AnimationGroup;
 
@@ -33,21 +23,8 @@ public abstract class TacticsScreen extends CoreScreen implements InputProcessor
     private String TAG = "TacticsScreen";
     
     // call for target.action() when leading role movement done
-    MoveTarget target = null;
-    
     // all value below is usd to deal with view and leading role movement
     private boolean fixedCam = false;
-    private float camCurrentX = 0;
-    private float camCurrentY = 0;
-    private float camMoveToX = 0;
-    private float camMoveToY = 0;
-    private float movedOnX = 0f;
-    private float movedOnY = 0f;
-    private float distanceOnX = 0f;
-    private float distanceOnY = 0f;
-    private float DPS = 1000;
-    private float DPS_ONX = 0f;
-    private float DPS_ONY = 0f;
     
 
     public TacticsScreen(Game game) {
@@ -61,10 +38,6 @@ public abstract class TacticsScreen extends CoreScreen implements InputProcessor
     public void initCam(){
         super.initCam();
         cam = (OrthographicCamera) this.getCamera();
-        camCurrentX = cam.position.x;
-        camCurrentY = cam.position.y;
-        camMoveToX  = cam.position.x;
-        camMoveToY  = cam.position.y;
     }
 
 
@@ -139,49 +112,22 @@ public abstract class TacticsScreen extends CoreScreen implements InputProcessor
         if(this.fixedCam){
             return;
         }
-        this.moveCamTo(x, y);
     }
     
-    
-    public void moveCamTo(int x, int y){
 
-        if(cam == null){
-            return;
-        }
-        Vector2 coords = this.toBackgroudStageCoordinates(x, y);
-        
-        movedOnX = 0f;
-        movedOnY = 0f;
-        
-        this.camMoveToX = coords.x;
-        this.camMoveToY = coords.y;
-        
-        distanceOnX = cam.position.x - this.camMoveToX;
-        distanceOnY = cam.position.y - this.camMoveToY;
-        
-        float totalDistance = (float)Math.sqrt(distanceOnX*distanceOnX + distanceOnY*distanceOnY);
-//      Gdx.app.log(TAG, "distanceOnX - " + distanceOnX);
-//      Gdx.app.log(TAG, "distanceOnY - " + distanceOnY);
-//      Gdx.app.log(TAG, "distance - " + distance);
-      float timeCost = totalDistance/DPS;
-      DPS_ONX = distanceOnX/timeCost;
-      DPS_ONY = distanceOnY/timeCost;
-    }
-
-public class NPC extends AnimationActor implements MoveTarget{
+public class NPC extends AnimationActor {
         
         private NPCAction npcAction = null;
 
         public NPC(AnimationGroup animationGroup) {
             super(animationGroup);
-            this.addListener(new EventListener(){
-
+            this.addListener(new InputListener(){
+                
                 @Override
-                public boolean handle(Event event) {
+                public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
                     action();
                     return true;
                 }
-                
             });
         }
         
@@ -191,16 +137,9 @@ public class NPC extends AnimationActor implements MoveTarget{
             }
         }
         
-        @Override
         public void action() {
-            if(npcAction != null){
-                playAction(npcAction);
-            }
+            playAction(npcAction);
         }
-    }
-    
-    public interface MoveTarget {
-        public void action ();
     }
 
     public void playAction(NPCAction npcAction){
