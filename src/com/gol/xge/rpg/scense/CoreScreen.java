@@ -129,10 +129,12 @@ public abstract class CoreScreen implements Screen, InputProcessor {
     
     public void addActorTop(Actor actor){
         this.topGroup.addActor(actor);
+        topGroup.toFront();
     }
     
     public void addActorBottom(Actor actor){
         this.rootStage.addActor(actor);
+        topGroup.toFront();
     }
     
     public void addActorBackground(Actor actor){

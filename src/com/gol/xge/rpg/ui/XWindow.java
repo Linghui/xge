@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 
 // todo : 
 //	1. add an optional close button
@@ -30,7 +31,7 @@ public class XWindow extends Table {
     String title = null;
 
     public XWindow(Skin skin, float width, float height) {
-        this(skin.get("default", XWindowStyle.class), width, height);
+        this(skin.get("test", XWindowStyle.class), width, height);
         this.skin = skin;
     }
     
@@ -43,25 +44,20 @@ public class XWindow extends Table {
         if(style.hasClose){
 
             // implement touchDown and touchUp for change the down/up image
-            closeImage = new Image(style.closeImg){
-                public boolean touchDown (float x, float y, int pointer) {
-//                    Gdx.app.log(TAG, "close touchdown");
-                    this.setRegion(XWindow.this.style.closeImgDown);
-                    return super.touchDown(x, y, pointer);
-                }
-                public void touchUp (float x, float y, int pointer) {
-//                    Gdx.app.log(TAG, "close touchUp");
-                    closeImage.setRegion(XWindow.this.style.closeImg);
-                    super.touchUp(x, y, pointer);
-                }
-            };
+            closeImage = new Image(style.closeImg);
 
             // for for close click
             closeImage.addListener(new InputListener(){
                 @Override
                 public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                    close();
+                    closeImage.setDrawable(XWindow.this.style.closeImgDown);
                     return true;
+                }
+                
+                @Override
+                public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+                    closeImage.setDrawable(XWindow.this.style.closeImg);
+                    close();
                 }
             });
             
@@ -105,11 +101,11 @@ public class XWindow extends Table {
         if(this.isVisible()){
             close();
         } else {
-            show();
+            open();
         }
     }
 
-    public void show() {
+    public void open() {
         this.setVisible(true);
     }
 
@@ -139,22 +135,22 @@ public class XWindow extends Table {
     }
 
     static public class XWindowStyle{
-        public NinePatch background;
-        public TextureRegion closeImg, closeImgDown;
+        public Drawable background;
+        public Drawable closeImg, closeImgDown;
         private boolean hasClose = true;
         public XWindowStyle(){
             
         }
         
         // style for window has close button
-        public XWindowStyle(NinePatch background , TextureRegion closeImg, TextureRegion closeImgDown ){
+        public XWindowStyle(Drawable background , Drawable closeImg, Drawable closeImgDown ){
             this.background = background;
             this.closeImg = closeImg;
             this.closeImgDown = closeImgDown;
         }
         
         // style for window has no close button
-        public XWindowStyle(NinePatch background){
+        public XWindowStyle(Drawable background){
             this.background = background;
             this.hasClose = false;
         }
