@@ -31,7 +31,7 @@ public class XWindow extends Table {
     String title = null;
 
     public XWindow(Skin skin, float width, float height) {
-        this(skin.get("test", XWindowStyle.class), width, height);
+        this(skin.get("default", XWindowStyle.class), width, height);
         this.skin = skin;
     }
     

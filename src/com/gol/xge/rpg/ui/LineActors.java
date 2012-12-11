@@ -2,6 +2,8 @@ package com.gol.xge.rpg.ui;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.utils.Array;
 
@@ -21,6 +23,14 @@ public class LineActors extends Group {
     
     private int linerDirection;
     
+    public int getLinerDirection() {
+        return linerDirection;
+    }
+
+    public void setLinerDirection(int linerDirection) {
+        this.linerDirection = linerDirection;
+    }
+
     public LineActors(){
         this(0, DIRECTION_UP);
     }
@@ -28,6 +38,13 @@ public class LineActors extends Group {
     public LineActors(int space, int direction){
         this.space = space;
         linerDirection = direction;
+        
+        this.addListener(new InputListener(){
+            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                setAllButtonsCheck(false);
+                return false;
+            }
+        });
     }
     
     public void appendOnLeft(Actor actor){
@@ -57,7 +74,7 @@ public class LineActors extends Group {
             this.setWidth(this.getWidth() + actor.getWidth() + space);
         } else {
             this.setWidth(actor.getWidth());
-            this.setWidth(actor.getHeight());
+            this.setHeight(actor.getHeight());
         }
         
         super.addActor(actor);
