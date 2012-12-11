@@ -157,6 +157,11 @@ public class LineActors extends Group {
     }
     
     public void setButtonCheck(int index, boolean check){
+        
+        if(this.getChildren().size <= index){
+            return;
+        }
+        
         Actor actor = this.getChildren().get(index);
         if(actor != null){
             if((actor instanceof Button)){
