@@ -13,15 +13,24 @@ public class LineActors extends Group {
     
     private int spaceAdjust = 0;
     
+    
+    public final static int DIRECTION_UP      = 1;
+    public final static int DIRECTION_DOWN    = 2;
+    public final static int DIRECTION_LEFT    = 3;
+    public final static int DIRECTION_RIGHT   = 4;
+    
+    private int linerDirection;
+    
     public LineActors(){
-        this(0);
+        this(0, DIRECTION_UP);
     }
     
-    public LineActors(int space){
+    public LineActors(int space, int direction){
         this.space = space;
+        linerDirection = direction;
     }
     
-    public void addButtonOnLeft(Actor actor){
+    public void appendOnLeft(Actor actor){
         Array<Actor> actors = this.getChildren();
         // do not need to set the first actor.x
         if(actors.size >= 1){
@@ -33,12 +42,12 @@ public class LineActors extends Group {
             this.setWidth(actor.getWidth());
             this.setHeight(actor.getHeight());
         }
-        this.addActor(actor);
+        super.addActor(actor);
         spaceAdjust = 0;
 //        Gdx.app.log(TAG, "line width - " + this.width + " : height" + this.height);
     }
     
-    public void addButtonOnRight(Actor actor){
+    public void appendOnRight(Actor actor){
         Array<Actor> actors = this.getChildren();
         // do not need to set the first actor.x 
         if(actors.size >= 1){
@@ -51,11 +60,11 @@ public class LineActors extends Group {
             this.setWidth(actor.getHeight());
         }
         
-        this.addActor(actor);
+        super.addActor(actor);
         spaceAdjust = 0;
     }
     
-    public void addButtonOnTop(Actor actor){
+    public void appendOnTop(Actor actor){
         Array<Actor> actors = this.getChildren();
         // do not need to set the first actor.x 
         if(actors.size >= 1){
@@ -68,11 +77,11 @@ public class LineActors extends Group {
             this.setHeight(actor.getHeight());
         }
         
-        this.addActor(actor);
+        super.addActor(actor);
         spaceAdjust = 0;
     }
     
-    public void addButtonOnBottom(Actor actor){
+    public void appendOnBottom(Actor actor){
         Array<Actor> actors = this.getChildren();
         // do not need to set the first actor.x 
         if(actors.size >= 1){
@@ -87,8 +96,28 @@ public class LineActors extends Group {
             this.setWidth(actor.getWidth());
             this.setHeight(actor.getHeight());
         }
-        this.addActor(actor);
+        super.addActor(actor);
         spaceAdjust = 0;
+    }
+    
+    @Override
+    public void addActor (Actor actor) {
+        switch(this.linerDirection){
+        case LineActors.DIRECTION_UP:
+            this.appendOnTop(actor);
+            break;
+        case LineActors.DIRECTION_DOWN:
+            this.appendOnBottom(actor);
+            break;
+        case LineActors.DIRECTION_LEFT:
+            this.appendOnLeft(actor);
+            break;
+        case LineActors.DIRECTION_RIGHT:
+            this.appendOnRight(actor);
+            break;
+        default:
+            break;
+        }
     }
     
     public int getSize(){
