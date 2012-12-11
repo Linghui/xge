@@ -83,6 +83,8 @@ my $METHOD_NAME = 'method_name';
 my $PARAMETERS  = 'parameters';
 my $RETURN_VALUE= 'return_value';
 
+my $LINEACTORS  =   'lineactors';
+
 my @all_button_actions = ();
 
 sub new(){
@@ -488,6 +490,21 @@ sub get_init_npcs_value(){
     }
     
     return $all_npc_lines;
+}
+
+sub get_lineactors(){
+    
+    my $all_lineactors_lines = "";
+    
+    my $t_config = {
+        INTERPOLATE  => 1,               # expand "$var" in plain text
+    };
+    
+    my $template = Template->new($t_config);
+    
+    my $input = "$TEMPLATE_PATH/lineactors.t";
+    
+    
 }
 
 sub get_actions(){

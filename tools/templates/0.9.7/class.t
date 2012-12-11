@@ -171,6 +171,12 @@ $init_npcs
 
     }
     
+    private void initLiners(){
+
+$init_liners
+
+    }
+    
     private void selfInit() {
         // TODO: do your own special init here
     }

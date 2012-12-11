@@ -13,6 +13,38 @@
     "background": "data/40009002_pack1.png",
     "limit_y": 0,
     "scene_name": "MainScreen",
+    "lineactors":[
+        {
+            "name" : "control_line",
+            "direction" : "up",
+            "space" :   10,
+            "actors"    :{
+                "image_buttons": [
+                    {
+                        "up_region": "qishu",
+                        "y": 10,
+                        "down_region": "qishu",
+                        "name": "qishu",
+                        "x": 730
+                    },
+                    {
+                        "up_region": "bag",
+                        "y": 10,
+                        "down_region": "bag",
+                        "name": "bag",
+                        "x": 660
+                    },
+                    {
+                        "up_region": "zhenfa",
+                        "y": 10,
+                        "down_region": "zhenfa",
+                        "name": "zhenfa",
+                        "x": 590
+                    }                
+                ]
+            }
+        }
+    ],
     "image_buttons": [
         {
             "up_region": "yaoguai",
