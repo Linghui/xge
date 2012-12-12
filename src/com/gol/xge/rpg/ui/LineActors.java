@@ -1,5 +1,6 @@
 package com.gol.xge.rpg.ui;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -41,13 +42,25 @@ public class LineActors extends Group {
         
         this.addListener(new InputListener(){
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                setAllButtonsCheck(false);
+//                setAllButtonsCheck(false);
+                click(x, y);
                 return false;
             }
         });
     }
     
-    public void appendOnLeft(Actor actor){
+    public void click(float x, float y) {
+        Actor actor = hit(x, y, true);
+        setAllButtonsCheck(false);
+        if( actor instanceof Checkable){
+            ((Checkable)actor).setChecked(true);
+        } else if(actor instanceof Button){
+            ((Button)actor).setChecked(true);
+        }
+    }
+
+
+   public void appendOnLeft(Actor actor){
         Array<Actor> actors = this.getChildren();
         // do not need to set the first actor.x
         if(actors.size >= 1){
@@ -200,6 +213,7 @@ public class LineActors extends Group {
                 ((Checkable) child).setChecked(check);
             }
         }
+        System.out.println("test + " + check);
     }
     
 }
