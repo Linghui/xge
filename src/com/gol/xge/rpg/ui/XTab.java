@@ -23,13 +23,16 @@ public class XTab extends Group {
     
     private final String panelPreffix = "panel";
     private final String tabButtonPreffix = "tB";
-    private final String backgroundName = "BN";
+    
+    // add a actor into tab group in this name, 
+    // tab will take it as background and strength it to tab size 
+    public static final String backgroundName = "BN";
     
     private LineActors tabs = new LineActors();
-    private int tabNumber = 0;
+    private int totalTabNumber = 0;
     
     public XTab(Skin skin, NinePatch background, float width, float height, Array<String> tabNames){
-        tabNumber = tabNames.size;
+        totalTabNumber = tabNames.size;
         this.skin = skin;
         
         this.setWidth(width);
@@ -38,7 +41,7 @@ public class XTab extends Group {
         tabs.setLinerDirection(LineActors.DIRECTION_RIGHT);
         this.addActor(tabs);
         
-        for(int index = 0; index < this.tabNumber; index++){
+        for(int index = 0; index < this.totalTabNumber; index++){
             TextButton tabButton = new TextButton(tabNames.get(index)
                     , skin.get("toggle", TextButtonStyle.class));
             tabButton.setName(tabButtonPreffix + index);
@@ -53,10 +56,10 @@ public class XTab extends Group {
             panelBackground.setName(backgroundName);
             panelGroup.addActor(panelBackground);
             
-            // debug
-            TextButton debugB = new TextButton("t"+ index, skin);
-            debugB.setX(20*index);
-            panelGroup.addActor(debugB);
+//            // for debug
+//            TextButton debugB = new TextButton("t"+ index, skin);
+//            debugB.setX(20*index);
+//            panelGroup.addActor(debugB);
             
             this.addActor(panelGroup);
             
@@ -93,7 +96,7 @@ public class XTab extends Group {
             float backgroundHeight = this.getHeight() - tabs.getHeight();
             
             // 调整所有面板宽高 位置
-            for(int index = 0; index < tabNumber; index++){
+            for(int index = 0; index < totalTabNumber; index++){
                 Group tabGroup = ((Group)this.findActor(panelPreffix + index));
                 tabGroup.setWidth(backgroundWidth);
                 tabGroup.setHeight(backgroundHeight);
@@ -113,8 +116,13 @@ public class XTab extends Group {
         
     }
     
-    public void addActorToTab(int tabNumber, Actor actor){
-        
+    public void addActorToTab(int tabNumber, Actor actor) {
+        if(tabNumber >= this.totalTabNumber){
+            Gdx.app.log(TAG, "BIG Warning!!! no " + tabNumber + " to add actor!");
+            return;
+        }
+        Group tabGroup = (Group) this.findActor(panelPreffix + tabNumber);
+        tabGroup.addActor(actor);
     }
     
     public void addTab(String name){
@@ -126,10 +134,10 @@ public class XTab extends Group {
 
         TextButton tabButton = new TextButton(name
                 , skin.get("toggle", TextButtonStyle.class));
-        tabButton.setName(tabButtonPreffix + this.tabNumber);
+        tabButton.setName(tabButtonPreffix + this.totalTabNumber);
         tabs.addActor(tabButton);
         
-        final int page = this.tabNumber;
+        final int page = this.totalTabNumber;
         
         tabButton.addListener(new InputListener(){
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
@@ -138,10 +146,10 @@ public class XTab extends Group {
             }
         });
         
-        tab.setName(panelPreffix + this.tabNumber);
+        tab.setName(panelPreffix + this.totalTabNumber);
         this.addActor(tab);
         
-        this.tabNumber++;
+        this.totalTabNumber++;
         
         this.pack();
     }
@@ -161,7 +169,7 @@ public class XTab extends Group {
     
     public void hideAllTabs(){
 
-        for(int index = 0; index < this.tabNumber; index++){
+        for(int index = 0; index < this.totalTabNumber; index++){
             Actor actor = this.findActor(panelPreffix + index);
             actor.setVisible(false);
         }
