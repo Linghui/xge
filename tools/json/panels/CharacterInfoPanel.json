@@ -1,21 +1,77 @@
 {
     "width": 400,
-    "height": 200,
+    "height": 320,
     "text_buttons": [
         {
-            "y": 160,
+            "y": 260,
             "text": "卸任",
             "name": "unequipBtn",
-            "x": 170
+            "x": 320
         }
     ],
     "labels": [
         {
-            "y": 410,
+            "y": 290,
+            "text": "东方不败",
+            "style": "green",
+            "name": "nameL",
+            "x": 10
+        },
+        {
+            "y": 290,
             "text": "Lv.99",
             "style": "yellow",
-            "name": "l1",
+            "name": "levelL",
+            "x": 90
+        },
+        {
+            "y": 260,
+            "text": "进阶",
+            "style": "default",
+            "name": "stepL",
+            "x": 10
+        },
+        {
+            "y": 260,
+            "text": "15/45",
+            "style": "default",
+            "name": "stepNL",
             "x": 60
+        },
+        {
+            "y": 230,
+            "text": "力量",
+            "style": "default",
+            "name": "strengthL",
+            "x": 10
+        },
+        {
+            "y": 230,
+            "text": "343",
+            "style": "default",
+            "name": "strengthNL",
+            "x": 60
+        },
+        {
+            "y": 200,
+            "text": "敏捷",
+            "style": "default",
+            "name": "speedL",
+            "x": 10
+        },
+        {
+            "y": 200,
+            "text": "532",
+            "style": "default",
+            "name": "speedNL",
+            "x": 60
+        },
+        {
+            "y": 160,
+            "text": "目前就调个大概吧，坐标没精力弄的太细.凑合看吧，括弧笑",
+            "style": "default",
+            "name": "desc",
+            "x": 10
         }
     ],
     "panel_name": "CharacterInfoPanel"

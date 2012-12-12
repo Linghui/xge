@@ -1,0 +1,19 @@
+{
+    "width": 180,
+    "height": 320,
+    "text_buttons": [
+        {
+            "y": 260,
+            "text": "最强",
+            "name": "best",
+            "x": 10
+        },
+        {
+            "y": 260,
+            "text": "全卸",
+            "name": "unload",
+            "x": 90
+        }
+    ],
+    "panel_name": "OpEquipPanel"
+}
