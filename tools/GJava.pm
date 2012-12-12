@@ -85,6 +85,9 @@ my $RETURN_VALUE= 'return_value';
 
 my $LINEACTORS  =   'lineactors';
 
+my $ADD_TO_BOTTOM = 'this.addActorBottom';
+my $ADD_TO_BACKGROUND = 'this.addActorBackground';
+
 my @all_button_actions = ();
 
 sub new(){
@@ -107,6 +110,8 @@ sub generate_scene(){
     my $self = shift;
     my $config = shift;
 
+    &reset_actions();
+    
 #    print Dumper($config);
     
     # some useful options (see below for full list)
@@ -158,8 +163,10 @@ sub generate_scene(){
         
         my $load_line = $self->get_load_line($one);
         $all_src_load .= $load_line;
+        
         my $unload_line = $self->get_unload_line($one);
         $all_src_unload .= $unload_line;
+        
         $all_source_count++;
     }
     
@@ -167,13 +174,15 @@ sub generate_scene(){
     $vars->{$SOURCE_UNLOADING} = $all_src_unload;
     $vars->{$BAR_SOURCE_COUNT}  = $all_source_count;
     
-    my $init_labels_value  = $self->get_init_labels_value($config, 'this.addActorBottom');
+    my $init_labels_value  = $self->get_init_labels_value($config->{$LABELS_KEY}, $ADD_TO_BOTTOM);
     $vars->{$INIT_LABELS} = $init_labels_value;
     
-    my $init_buttons_value = $self->get_init_buttons_value($config, 'this.addActorBottom');
+    my $init_buttons_value = $self->get_init_buttons_value($config->{$TEXT_BUTTONS_KEY}
+                                                            , $config->{$IMAGE_BUTTONS_KEY}
+                                                            , $ADD_TO_BOTTOM);
     $vars->{$INIT_BUTTONS} = $init_buttons_value;
     
-    my $init_textfields_value = $self->get_init_textfileds_value($config, 'this.addActorBottom');
+    my $init_textfields_value = $self->get_init_textfileds_value($config->{$TEXT_FIELDS_KEY}, $ADD_TO_BOTTOM);
     $vars->{$INIT_TEXTFIELDS} = $init_textfields_value;
 
     if(defined($config->{$LEADING_ROLE_SRC})){
@@ -189,7 +198,7 @@ sub generate_scene(){
         $vars->{$PARENT}   = 'TacticsScreen';
     }
     
-    my $init_npcs_value =   $self->get_init_npcs_value($config, 'this.addActorBackground');
+    my $init_npcs_value =   $self->get_init_npcs_value($config, $ADD_TO_BACKGROUND);
     $vars->{$INIT_NPCS} = $init_npcs_value;
     
     my $actions = $self->get_actions();
@@ -257,9 +266,11 @@ sub get_unload_line(){
     return $line;
 }
 
+# pick up all the resources needed and put them into load list
 sub get_loading_list(){
     my $self = shift;
     my $config = shift;
+
     my @list = ();
 
     push @list, $config->{$SKIN_KEY};
@@ -288,7 +299,9 @@ sub get_loading_list(){
 sub get_init_labels_value(){
     
     my $self = shift;
-    my $config = shift;
+    
+    my $labels = shift; # labels array ref
+    
     my $add_to  = shift;
     
     my $all_label_lines = "";
@@ -307,9 +320,7 @@ sub get_init_labels_value(){
     my $template = Template->new($t_config);
     
     my $input = "$TEMPLATE_PATH/label.t";
-    
-    
-    my $labels = $config->{$LABELS_KEY};
+
     for my $one_label (@$labels){
         
         my $vars = {
@@ -335,7 +346,10 @@ sub get_init_labels_value(){
 
 sub get_init_buttons_value(){
     my $self    = shift;
-    my $config  = shift;
+    
+    my $text_buttons  = shift;  # text button array ref
+    my $image_buttons  = shift; # image button array ref
+    
     my $add_to  = shift;
     
     my $all_button_lines = "";
@@ -353,7 +367,6 @@ sub get_init_buttons_value(){
     
     my $input = "$TEMPLATE_PATH/text_button.t";
     
-    my $text_buttons = $config->{$TEXT_BUTTONS_KEY};
     for my $one_button (@$text_buttons){
         
         my $vars = {
@@ -375,7 +388,6 @@ sub get_init_buttons_value(){
     
     $input = "$TEMPLATE_PATH/image_button.t";
     
-    my $image_buttons = $config->{$IMAGE_BUTTONS_KEY};
     for my $one_button (@$image_buttons){
         
         my $vars = {
@@ -409,9 +421,9 @@ sub get_init_buttons_value(){
 }
 
 sub get_init_textfileds_value(){
-    my $self    =   shift;
-    my $config  =   shift;
-    my $add_to  = shift;
+    my $self        =   shift;
+    my $textfields  =   shift;
+    my $add_to      =   shift;
 
     my $all_textfiled_lines = "";
     
@@ -423,14 +435,13 @@ sub get_init_textfileds_value(){
     
     my $input = "$TEMPLATE_PATH/textfield.t";
     
-    my $textfields = $config->{$TEXT_FIELDS_KEY};
     for my $one (@$textfields){
         my $vars = {
             $NAME   =>    $one->{$NAME},
             $X_KEY   =>   $one->{$X_KEY},
             $Y_KEY   =>   $one->{$Y_KEY},
             $HINT_KEY =>  $one->{$HINT_KEY},
-            $ADD_TO_KEY =>  'this.addActorBackground',
+            $ADD_TO_KEY =>  $add_to,
         };
         
         
@@ -476,7 +487,7 @@ sub get_init_npcs_value(){
             $NPC_PACK   => $one_npc->{$NPC_SRC}.$PACK_SUFFIX,
             $NPC_X   =>   $one_npc->{$X_KEY},
             $NPC_Y   =>   $one_npc->{$Y_KEY},
-            $ADD_TO_KEY =>  'this.addActorBackground',
+            $ADD_TO_KEY =>  $add_to,
         };
         
         
@@ -492,6 +503,8 @@ sub get_init_npcs_value(){
     return $all_npc_lines;
 }
 
+
+# not finished
 sub get_lineactors(){
     
     my $all_lineactors_lines = "";
@@ -544,6 +557,9 @@ sub get_actions(){
     return $all_action_lines;
 }
 
+sub reset_actions(){
+    @all_button_actions = ();
+}
 
 my $WINDOW_CLASS = 'window_class';
 my $TITLE   = 'title';
@@ -551,6 +567,8 @@ my $TITLE   = 'title';
 sub generate_window(){
     my $self = shift;
     my $window_config = shift;
+    
+    &reset_actions();
     
     my $vars = {
         $WINDOW_CLASS => $window_config->{$WINDOW_CLASS},
@@ -565,6 +583,73 @@ sub generate_window(){
     my $template = Template->new($t_config);
     
     my $input = "$TEMPLATE_PATH/window.t";
+    
+    
+    my $output = undef;
+    
+    # process input template, substituting variables
+    $template->process($input, $vars, \$output)
+    || die $template->error();
+    
+    return $output;
+    
+}
+
+my $PANEL_NAME  = 'panel_name';
+my $WIDTH       = 'width';
+my $HEIGHT      = 'height';
+my $ADD_ACTOR   = 'this.addActor';
+
+sub generate_panel(){
+    
+    my $self = shift;
+    my $panel_config = shift;
+
+    &reset_actions();
+    
+    my $vars = {
+        $PANEL_NAME => $panel_config->{$PANEL_NAME},
+        $WIDTH      => $panel_config->{$WIDTH},
+        $HEIGHT     => $panel_config->{$HEIGHT},
+    };
+    
+    my $text_buttons_config     = [];
+    my $image_buttons_config    = [];
+    
+    if( defined($panel_config->{$TEXT_BUTTONS_KEY}) ){
+        $text_buttons_config = $panel_config->{$TEXT_BUTTONS_KEY};
+    }
+    
+    if( defined($panel_config->{$IMAGE_BUTTONS_KEY}) ){
+        $image_buttons_config = $panel_config->{$IMAGE_BUTTONS_KEY};
+    }
+    
+    my $init_buttons_value = $self->get_init_buttons_value($text_buttons_config
+                                                        , $image_buttons_config
+                                                        , $ADD_ACTOR);
+
+    $vars->{$INIT_BUTTONS} = $init_buttons_value;
+
+    my $label_config = [];
+    
+    if( defined($panel_config->{$LABELS_KEY}) ){
+        $label_config = $panel_config->{$LABELS_KEY};
+    }
+    
+    my $init_labels_value  = $self->get_init_labels_value($label_config, $ADD_ACTOR);
+    $vars->{$INIT_LABELS} = $init_labels_value;
+
+    my $actions = $self->get_actions();
+    
+    $vars->{$ACTIONS} = $actions;
+    
+    my $t_config = {
+        INTERPOLATE  => 1,               # expand "$var" in plain text
+    };
+    
+    my $template = Template->new($t_config);
+    
+    my $input = "$TEMPLATE_PATH/panel.t";
     
     
     my $output = undef;

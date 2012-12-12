@@ -1,0 +1,22 @@
+{
+    "width": 400,
+    "height": 200,
+    "text_buttons": [
+        {
+            "y": 160,
+            "text": "卸任",
+            "name": "unequipBtn",
+            "x": 170
+        }
+    ],
+    "labels": [
+        {
+            "y": 410,
+            "text": "Lv.99",
+            "style": "yellow",
+            "name": "l1",
+            "x": 60
+        }
+    ],
+    "panel_name": "CharacterInfoPanel"
+}
