@@ -1,0 +1,92 @@
+{
+    "width": 400,
+    "height": 320,
+    "text_buttons": [
+        {
+            "y": 260,
+            "text": "卸任",
+            "name": "unequipBtn",
+            "x": 320
+        }
+    ],
+    "labels": [
+        {
+            "y": 290,
+            "text": "勇者铠甲",
+            "style": "green",
+            "name": "nameL",
+            "x": 10
+        },
+        {
+            "y": 290,
+            "text": "+31",
+            "style": "green",
+            "name": "eqLevelL",
+            "x": 90
+        },
+        {
+            "y": 260,
+            "text": "铠甲",
+            "style": "default",
+            "name": "typeL",
+            "x": 10
+        },
+        {
+            "y": 260,
+            "text": "等级:",
+            "style": "default",
+            "name": "levelL",
+            "x": 60
+        },
+        {
+            "y": 230,
+            "text": "12",
+            "style": "default",
+            "name": "levelNL",
+            "x": 10
+        },
+        {
+            "y": 230,
+            "text": "售价:",
+            "style": "default",
+            "name": "priceL",
+            "x": 60
+        },
+        {
+            "y": 200,
+            "text": "200",
+            "style": "default",
+            "name": "priceNL",
+            "x": 10
+        },
+        {
+            "y": 200,
+            "text": "物防+",
+            "style": "green",
+            "name": "attributeL",
+            "x": 60
+        },
+        {
+            "y": 200,
+            "text": "123",
+            "style": "green",
+            "name": "attributeNL",
+            "x": 60
+        },
+        {
+            "y": 200,
+            "text": "出处:",
+            "style": "green",
+            "name": "placeL",
+            "x": 60
+        },
+        {
+            "y": 160,
+            "text": "智擒鳌拜",
+            "style": "default",
+            "name": "desc",
+            "x": 10
+        }
+    ],
+    "panel_name": "QHEquipPanelTable"
+}

@@ -42,12 +42,12 @@ if( $opts{f} ){
 my $panel_config = from_json($input);
 
 my $gJava = GJava->new();
-my $window_class = $gJava->generate_window($panel_config);
+my $panel_class = $gJava->generate_panel_table($panel_config);
 
-open WRT, "> $class_output_dir".$panel_config->{'window_name'}.".java"
+open WRT, "> $class_output_dir".$panel_config->{'panel_name'}.".java"
 or die "open file error $!";
 
-print WRT "$window_class";
+print WRT "$panel_class";
 
 close WRT;
 

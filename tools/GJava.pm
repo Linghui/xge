@@ -88,7 +88,14 @@ my $LINEACTORS  =   'lineactors';
 my $ADD_TO_BOTTOM = 'this.addActorBottom';
 my $ADD_TO_BACKGROUND = 'this.addActorBackground';
 
-my @all_button_actions = ();
+
+my $PANEL_NAME  = 'panel_name';
+my $WIDTH       = 'width';
+my $HEIGHT      = 'height';
+my $ADD_ACTOR   = 'this.addActor';
+my $INIT_LAYOUT = 'init_layout';
+
+my @all_button_actions = ();    # use to collect action names buttons need
 
 sub new(){
     my $class = shift;
@@ -306,7 +313,6 @@ sub get_init_labels_value(){
     
     my $all_label_lines = "";
     
-    my $LABEL_NAME  =   'label_name';
     my $LABEL_TEXT  =   'label_text';
     my $LABEL_STYLE =   'label_style';
     my $LABEL_X     =   'label_x';
@@ -324,8 +330,8 @@ sub get_init_labels_value(){
     for my $one_label (@$labels){
         
         my $vars = {
-            $LABEL_NAME    =>   $one_label->{$NAME},
-            $LABEL_TEXT    =>   $one_label->{$TEXT_KEY},
+            $NAME           =>   $one_label->{$NAME},
+            $LABEL_TEXT     =>   $one_label->{$TEXT_KEY},
             $LABEL_STYLE    =>   $one_label->{$STYLE_KEY},
             $LABEL_X    =>   $one_label->{$X_KEY},
             $LABEL_Y    =>   $one_label->{$Y_KEY},
@@ -353,8 +359,7 @@ sub get_init_buttons_value(){
     my $add_to  = shift;
     
     my $all_button_lines = "";
-    
-    my $BUTTON_NAME = 'button_name';
+
     my $BUTTON_TEXT = 'button_text';
     my $BUTTON_X = 'button_x';
     my $BUTTON_Y = 'button_y';
@@ -370,7 +375,7 @@ sub get_init_buttons_value(){
     for my $one_button (@$text_buttons){
         
         my $vars = {
-            $BUTTON_NAME    =>   $one_button->{$NAME},
+            $NAME       =>   $one_button->{$NAME},
             $BUTTON_TEXT    =>   $one_button->{$TEXT_KEY},
             $BUTTON_X    =>   $one_button->{$X_KEY},
             $BUTTON_Y    =>   $one_button->{$Y_KEY},
@@ -391,7 +396,7 @@ sub get_init_buttons_value(){
     for my $one_button (@$image_buttons){
         
         my $vars = {
-            $BUTTON_NAME    =>   $one_button->{$NAME},
+            $NAME       =>   $one_button->{$NAME},
             $IMAGE_BUTTONS_DOWN_REGION_KEY  => 'null',
             $IMAGE_BUTTONS_UP_REGION_KEY  => 'null',
             $BUTTON_X    =>   $one_button->{$X_KEY},
@@ -561,8 +566,11 @@ sub reset_actions(){
     @all_button_actions = ();
 }
 
-my $WINDOW_CLASS = 'window_class';
-my $TITLE   = 'title';
+my $WINDOW_NAME = 'window_name';
+my $TITLE       = 'title';
+my $PANELS_KEY  = 'panels';
+my $INIT_PANELS = 'init_panels';
+my $MEANINGLESS_ADD = 'meaningLess';
 
 sub generate_window(){
     my $self = shift;
@@ -570,11 +578,82 @@ sub generate_window(){
     
     &reset_actions();
     
+    my @layouts = ();
+    
     my $vars = {
-        $WINDOW_CLASS => $window_config->{$WINDOW_CLASS},
-        $TITLE => $window_config->{$TITLE},        
+        $WINDOW_NAME => $window_config->{$WINDOW_NAME},
+        $TITLE => $window_config->{$TITLE},
     };
     
+    # all the buttons
+    my $text_buttons_config     = [];
+    my $image_buttons_config    = [];
+    
+    if( defined($window_config->{$TEXT_BUTTONS_KEY}) ){
+        $text_buttons_config = $window_config->{$TEXT_BUTTONS_KEY};
+        push @layouts, @$text_buttons_config;
+    }
+    
+    if( defined($window_config->{$IMAGE_BUTTONS_KEY}) ){
+        $image_buttons_config = $window_config->{$IMAGE_BUTTONS_KEY};
+        push @layouts, @$image_buttons_config;
+    }
+    
+    my $init_buttons_value = $self->get_init_buttons_value($text_buttons_config
+                                                            , $image_buttons_config
+                                                            , $MEANINGLESS_ADD);
+    
+    $vars->{$INIT_BUTTONS} = $init_buttons_value;
+    # button ends
+    
+    
+    # all the labels
+    my $label_config = [];
+    
+    if( defined($window_config->{$LABELS_KEY}) ){
+        $label_config = $window_config->{$LABELS_KEY};
+        push @layouts, @$label_config;
+    }
+    
+    my $init_labels_value  = $self->get_init_labels_value($label_config, $MEANINGLESS_ADD);
+    $vars->{$INIT_LABELS} = $init_labels_value;
+    # label ends
+    
+    
+    # all the panels
+    my $panel_config = [];
+    if( defined($window_config->{$PANELS_KEY}) ){
+        $panel_config = $window_config->{$PANELS_KEY};
+        push @layouts, @$panel_config;
+    }
+    
+    my $init_panels_value  = $self->get_init_panels_value($panel_config);
+    $vars->{$INIT_PANELS} = $init_panels_value;
+    # panel ends
+    
+    
+    # all the layout, need optimise in the future
+    my $layout = "";
+    for my $element (@layouts){
+        $layout .= "        this.add(".$element->{$NAME}.")";
+        if( defined $element->{$WIDTH}){
+            $layout .= ".width(".$element->{$WIDTH}.")";
+        }
+        if( defined $element->{$HEIGHT}){
+            $layout .= ".height(".$element->{$HEIGHT}.")";
+        }
+        $layout .= ";\n";
+        $layout .= "        this.row();\n";
+    }
+    
+    $vars->{$INIT_LAYOUT} = $layout;
+    # layout ends
+    
+    
+    # all the actions
+    my $actions = $self->get_actions();
+    
+    $vars->{$ACTIONS} = $actions;
     
     my $t_config = {
         INTERPOLATE  => 1,               # expand "$var" in plain text
@@ -595,10 +674,19 @@ sub generate_window(){
     
 }
 
-my $PANEL_NAME  = 'panel_name';
-my $WIDTH       = 'width';
-my $HEIGHT      = 'height';
-my $ADD_ACTOR   = 'this.addActor';
+sub get_init_panels_value(){
+    my $self = shift;
+    my $panel_config = shift;
+
+    my $all_lines = "";
+    for my $one (@$panel_config){
+
+        $all_lines .= "        $one->{$CLASS_NAME} $one->{$NAME} = new $one->{$CLASS_NAME}(manager, skin);";
+    }
+    
+    return $all_lines;
+}
+
 
 sub generate_panel(){
     
@@ -650,6 +738,81 @@ sub generate_panel(){
     my $template = Template->new($t_config);
     
     my $input = "$TEMPLATE_PATH/panel.t";
+    
+    
+    my $output = undef;
+    
+    # process input template, substituting variables
+    $template->process($input, $vars, \$output)
+    || die $template->error();
+    
+    return $output;
+    
+}
+
+
+
+sub generate_panel_table(){
+    
+    my $self = shift;
+    my $panel_config = shift;
+    
+    my @layouts = ();
+    
+    &reset_actions();
+    
+    my $vars = {
+        $PANEL_NAME => $panel_config->{$PANEL_NAME},
+    };
+    
+    my $text_buttons_config     = [];
+    my $image_buttons_config    = [];
+    
+    if( defined($panel_config->{$TEXT_BUTTONS_KEY}) ){
+        $text_buttons_config = $panel_config->{$TEXT_BUTTONS_KEY};
+        push @layouts, @$text_buttons_config;
+    }
+    
+    if( defined($panel_config->{$IMAGE_BUTTONS_KEY}) ){
+        $image_buttons_config = $panel_config->{$IMAGE_BUTTONS_KEY};
+        push @layouts, @$image_buttons_config;
+    }
+    
+    my $init_buttons_value = $self->get_init_buttons_value($text_buttons_config
+                                                            , $image_buttons_config
+                                                            , $MEANINGLESS_ADD);
+    
+    $vars->{$INIT_BUTTONS} = $init_buttons_value;
+    
+    my $label_config = [];
+    
+    if( defined($panel_config->{$LABELS_KEY}) ){
+        $label_config = $panel_config->{$LABELS_KEY};
+        push @layouts, @$label_config;
+    }
+    
+    my $init_labels_value  = $self->get_init_labels_value($label_config, $MEANINGLESS_ADD);
+    $vars->{$INIT_LABELS} = $init_labels_value;
+    
+    my $layout = "";
+    for my $element (@layouts){
+        $layout .= "        this.add(".$element->{$NAME}.");\n";
+        $layout .= "        this.row();\n";
+    }
+    $vars->{$INIT_LAYOUT} = $layout;
+    
+    
+    my $actions = $self->get_actions();
+    
+    $vars->{$ACTIONS} = $actions;
+    
+    my $t_config = {
+        INTERPOLATE  => 1,               # expand "$var" in plain text
+    };
+    
+    my $template = Template->new($t_config);
+    
+    my $input = "$TEMPLATE_PATH/panel_table.t";
     
     
     my $output = undef;

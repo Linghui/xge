@@ -1,17 +1,17 @@
-        TextButton $button_name = new TextButton("$button_text",skin.get(TextButtonStyle.class));
-        [% button_name %].setName("$button_name");
-        [% button_name %].setX($button_x);
-        [% button_name %].setY($button_y);
-        [% button_name %].addListener(new InputListener(){
+        TextButton $name = new TextButton("$button_text",skin.get(TextButtonStyle.class));
+        [% name %].setName("$name");
+        [% name %].setX($button_x);
+        [% name %].setY($button_y);
+        [% name %].addListener(new InputListener(){
             
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                Gdx.app.log(TAG, "[% button_name %] clicked");
+                Gdx.app.log(TAG, "[% name %] clicked");
                 // TODO: strongly recommend do your own implementation in the method below
-                [% button_name %]Action();
+                [% name %]Action();
                 return true;
             }
     
         });
-        $add_to($button_name);
+        $add_to($name);
 

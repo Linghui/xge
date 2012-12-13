@@ -1,0 +1,37 @@
+{
+    "width": 800,
+    "height": 480,
+    "text_buttons": [
+        {
+            "y": 260,
+            "text": "强化",
+            "name": "enhanceB",
+            "x": 10
+        }
+    ],
+    "labels": [
+        {
+            "y": 290,
+            "text": "强化费用:",
+            "style": "default",
+            "name": "feeL",
+            "x": 10
+        },
+        {
+            "y": 290,
+            "text": "9527",
+            "style": "default",
+            "name": "feeNL",
+            "x": 10
+        }
+    ],
+    "panels": [
+        {
+            "class_name" : "QHEquipPanelTable",
+            "name":"qhEquipPanelTable",
+            "width":280,
+            "height":320
+        }
+    ],
+    "window_name": "BingqiWindow"
+}
