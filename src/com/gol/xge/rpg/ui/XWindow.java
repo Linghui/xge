@@ -25,14 +25,10 @@ public class XWindow extends Table {
     private Image titleImage = null;
     private Label titleLabel = null;
     
-    private Skin skin = null;
-//    private float originWidth;
-//    private float originWeight;
     String title = null;
 
     public XWindow(Skin skin, float width, float height) {
         this(skin.get("default", XWindowStyle.class), width, height);
-        this.skin = skin;
     }
     
     public XWindow(XWindowStyle style, float width, float height){

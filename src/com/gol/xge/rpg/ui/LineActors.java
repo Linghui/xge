@@ -16,6 +16,7 @@ public class LineActors extends Group {
     
     private int spaceAdjust = 0;
     
+    private PickListener listener = null;
     
     public final static int DIRECTION_UP      = 1;
     public final static int DIRECTION_DOWN    = 2;
@@ -56,6 +57,10 @@ public class LineActors extends Group {
             ((Checkable)actor).setChecked(true);
         } else if(actor instanceof Button){
             ((Button)actor).setChecked(true);
+        }
+        
+        if( listener != null){
+            listener.pick(actor);
         }
     }
 
@@ -214,6 +219,14 @@ public class LineActors extends Group {
             }
         }
         System.out.println("test + " + check);
+    }
+
+    public PickListener getListener() {
+        return listener;
+    }
+
+    public void setListener(PickListener listener) {
+        this.listener = listener;
     }
     
 }
