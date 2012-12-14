@@ -23,6 +23,20 @@
             "style": "default",
             "name": "feeNL",
             "x": 10
+        },
+        {
+            "y": 290,
+            "text": "幸运值",
+            "style": "default",
+            "name": "luckyL",
+            "x": 10
+        },
+        {
+            "y": 290,
+            "text": "我相信你懂的，括弧笑",
+            "style": "default",
+            "name": "descLuckyL",
+            "x": 10
         }
     ],
     "panels": [
@@ -30,6 +44,12 @@
             "class_name" : "QHEquipPanelTable",
             "name":"qhEquipPanelTable",
             "width":280,
+            "height":320
+        },
+        {
+            "class_name" : "EquipPanelTable",
+            "name":"equipPanelTable",
+            "width":350,
             "height":320
         }
     ],

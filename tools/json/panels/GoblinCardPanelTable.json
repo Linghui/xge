@@ -1,0 +1,87 @@
+{
+    "width": 140,
+    "height": 250,
+    "labels": [
+        {
+            "y": 0,
+            "text": "苗人凤",
+            "style": "default",
+            "name": "nameL",
+            "x": 0
+        },
+        {
+            "y": 0,
+            "text": "力量",
+            "style": "default",
+            "name": "strenthL",
+            "x": 0
+        },
+        {
+            "y": 0,
+            "text": "20",
+            "style": "default",
+            "name": "strenthNL",
+            "x": 0
+        },
+        {
+            "y": 0,
+            "text": "智力",
+            "style": "default",
+            "name": "intL",
+            "x": 0
+        },
+        {
+            "y": 0,
+            "text": "31",
+            "style": "default",
+            "name": "intNL",
+            "x": 0
+        },
+        {
+            "y": 0,
+            "text": "敏捷",
+            "style": "default",
+            "name": "agiL",
+            "x": 0
+        },
+        {
+            "y": 0,
+            "text": "31",
+            "style": "default",
+            "name": "agiNL",
+            "x": 0
+        },
+        {
+            "y": 0,
+            "text": "体力",
+            "style": "default",
+            "name": "staL",
+            "x": 0
+        },
+        {
+            "y": 0,
+            "text": "100",
+            "style": "default",
+            "name": "staNL",
+            "x": 0
+        }
+    ],
+    "xcells":[
+        [
+            {
+                "name" : "headAtlas",
+                "src"  : "data/head/pack"
+            }
+        ],
+        {
+            "name" : "head1",
+            "background" : "tipsback",
+            "icon": "30100030",
+            "atlas" : "headAtlas",
+            "width" : 60,
+            "choose_frame" : "choose-frame",
+            "height" : 60
+        }
+    ],
+    "panel_name": "GoblinCardPanel"
+}

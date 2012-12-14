@@ -16,6 +16,7 @@ my %SUPPORT_VERSION = (
             '97' => '0.9.7',
             );
 
+# class
 my $PACKAGE         = 'package';
 my $IMPORT          = 'import';
 
@@ -25,18 +26,35 @@ my $EXTENDS_KEY     = 'extends';
 my $PARENT          = 'parent';
 my $IMPLEMENTS_KEY  = 'implements';
 
+# screen
 my $SCREEN_WIDHT    = 'screen_width';
 my $SCREEN_HEIGHT   = 'screen_height';
 
-my $BACKGROUND_IMG_KEY  = 'background';
+my $BACKGROUND_KEY  = 'background';
 my $MOVEMENT_LIMIT_Y    = 'limit_y';
 
+my $LEADING_ROLE_SRC    =   'leading_role_src';
+my $LEADING_ROLE_JSON   =   'leading_role_json';
+my $LEADING_ROLE_PACK   =   'leading_role_pack';
+
+# resource
 my $SKIN_KEY    =   'skin';
 my $SOURCE_LOADING  = 'source_loading';
 my $SOURCE_UNLOADING  = 'source_unloading';
 my $INIT_KEY    =   'init';
 my $INIT_BUTTONS    =   'init_buttons';
+my $LOADING_BACKGROUND_KEY  =   'loading_backgroud';
 
+my $LADING_BAR_KEY  =   'loading_bar';
+my $BAR_TOP         =   'bar_top';
+my $BAR_BOTTOM      =   'bar_bottom';
+my $BAR_WIDTH       =   'bar_width';
+my $BAR_HEIGHT      =   'bar_height';
+my $BAR_X           =   'bar_x';
+my $BAR_Y           =   'bar_y';
+my $BAR_SOURCE_COUNT   =   'bar_source_count';
+
+# button
 my $NAME    =   'name';
 my $TEXT_BUTTONS_KEY    =   'text_buttons';
 my $TEXT_KEY    =   'text';
@@ -44,58 +62,55 @@ my $X_KEY   =   'x';
 my $Y_KEY   =   'y';
 my $ADD_TO_KEY = 'add_to';
 
+# text field
 my $INIT_TEXTFIELDS = 'init_textfields';
 my $TEXT_FIELDS_KEY = 'text_fields';
 my $HINT_KEY        = 'hint';
 
+# label
 my $INIT_LABELS =   'init_labels';
 my $LABELS_KEY  =   'labels';
 my $STYLE_KEY   =   'style';
 
+# image button
 my $IMAGE_BUTTONS_KEY   =   'image_buttons';
 my $IMAGE_BUTTONS_DOWN_REGION_KEY   =   'down_region';
 my $IMAGE_BUTTONS_UP_REGION_KEY     =   'up_region';
 
-my $LOADING_BACKGROUND_KEY  =   'loading_backgroud';
 
-my $LADING_BAR_KEY  =   'loading_bar';
-my $BAR_TOP =   'bar_top';
-my $BAR_BOTTOM =   'bar_bottom';
-my $BAR_WIDTH =   'bar_width';
-my $BAR_HEIGHT =   'bar_height';
-my $BAR_X   =   'bar_x';
-my $BAR_Y   =   'bar_y';
-my $BAR_SOURCE_COUNT   =   'bar_source_count';
-
-my $LEADING_ROLE_SRC    =   'leading_role_src';
-my $LEADING_ROLE_JSON   =   'leading_role_json';
-my $LEADING_ROLE_PACK   =   'leading_role_pack';
-
+# npc
 my $INIT_NPCS   =   'init_npcs';
 my $NPCS_KEY =   'npcs';
 my $NPC_NAME    =   'npc_name';
 my $NPC_SRC     =   'npc_src';
 
+# action function
 my $ACTIONS = 'actions';
 my $SCOPE   = 'scope';
 my $RETURN_TYPE = 'return_type';
 my $METHOD_NAME = 'method_name';
 my $PARAMETERS  = 'parameters';
 my $RETURN_VALUE= 'return_value';
+my @all_button_actions = ();    # use to collect action names buttons need
 
-my $LINEACTORS  =   'lineactors';
 
+# add tos
 my $ADD_TO_BOTTOM = 'this.addActorBottom';
 my $ADD_TO_BACKGROUND = 'this.addActorBackground';
+my $ADD_ACTOR   = 'this.addActor';
 
 
+# panel
 my $PANEL_NAME  = 'panel_name';
 my $WIDTH       = 'width';
 my $HEIGHT      = 'height';
-my $ADD_ACTOR   = 'this.addActor';
+
+# layout
 my $INIT_LAYOUT = 'init_layout';
 
-my @all_button_actions = ();    # use to collect action names buttons need
+# xcell
+my $XCELL_KEY   = 'xcells';
+
 
 sub new(){
     my $class = shift;
@@ -134,7 +149,7 @@ sub generate_scene(){
         $CLASS_NAME  => $config->{$SCENE_NAME_KEY},
         $SCREEN_WIDHT  => $config->{$SCREEN_WIDHT},
         $SCREEN_HEIGHT  => $config->{$SCREEN_HEIGHT},
-#        $BACKGROUND_IMG_KEY  => $config->{$BACKGROUND_IMG_KEY},
+#        $BACKGROUND_KEY  => $config->{$BACKGROUND_KEY},
         $MOVEMENT_LIMIT_Y   =>  $config->{$MOVEMENT_LIMIT_Y},
         $LOADING_BACKGROUND_KEY  => $config->{$LOADING_BACKGROUND_KEY},
         $BAR_TOP  => $config->{$LADING_BAR_KEY}->{$BAR_TOP},
@@ -156,7 +171,7 @@ sub generate_scene(){
     }
     
     # background
-    $vars->{$BACKGROUND_IMG_KEY} = $self->get_background_resion($config->{$BACKGROUND_IMG_KEY});
+    $vars->{$BACKGROUND_KEY} = $self->get_background_resion($config->{$BACKGROUND_KEY});
     
     
     # loading and unloading source
@@ -282,7 +297,7 @@ sub get_loading_list(){
 
     push @list, $config->{$SKIN_KEY};
     
-    my $background_resource = $config->{$BACKGROUND_IMG_KEY};
+    my $background_resource = $config->{$BACKGROUND_KEY};
     if( defined($background_resource) && $background_resource =~ /pack/ ){
         ($background_resource) = split /\?/, $background_resource;
     }
@@ -681,12 +696,43 @@ sub get_init_panels_value(){
     my $all_lines = "";
     for my $one (@$panel_config){
 
-        $all_lines .= "        $one->{$CLASS_NAME} $one->{$NAME} = new $one->{$CLASS_NAME}(manager, skin);";
+        $all_lines .= "        $one->{$CLASS_NAME} $one->{$NAME} = new $one->{$CLASS_NAME}(manager, skin);\n";
     }
     
     return $all_lines;
 }
 
+my $INIT_XCELLS = 'init_xcells';
+my $ATLAS       = 'atlas';
+my $SRC_KEY     = 'src';
+my $CHOOSE_FRAME= 'choose_frame';
+my $ICON        = 'icon';
+sub get_init_xcells_value(){
+    my $self = shift;
+    my $xcell_config = shift;
+    
+    my $all_lines = "";
+    
+    my $resources = shift @$xcell_config;
+    
+    for my $one (@$resources){
+        $ all_lines .= "        TextureAtlas $one->{$NAME} = manager.get(\"$one->{$SRC_KEY}\", TextureAtlas.class);\n";
+    }
+    
+    $ all_lines .= "\n";
+    
+    for my $one (@$xcell_config){
+        $ all_lines .= "        XCell $one->{$NAME} = new XCell(skin.getPatch(\"$one->{$BACKGROUND_KEY}\"), $one->{$WIDTH}, $one->{$HEIGHT}, $one->{$ATLAS});\n";
+        if( defined($one->{$CHOOSE_FRAME}) ){
+            $ all_lines .= "        $one->{$NAME}.setChooseFrame(skin.getPatch(\"$one->{$CHOOSE_FRAME}\"));\n";
+        }
+        if( defined($one->{$ICON}) ){
+            $ all_lines .= "        $one->{$NAME}.setIcon(\"$one->{$ICON}\");\n";
+        }
+    }
+    
+    return $all_lines;
+}
 
 sub generate_panel(){
     
@@ -765,6 +811,7 @@ sub generate_panel_table(){
         $PANEL_NAME => $panel_config->{$PANEL_NAME},
     };
     
+    # button
     my $text_buttons_config     = [];
     my $image_buttons_config    = [];
     
@@ -781,9 +828,9 @@ sub generate_panel_table(){
     my $init_buttons_value = $self->get_init_buttons_value($text_buttons_config
                                                             , $image_buttons_config
                                                             , $MEANINGLESS_ADD);
-    
     $vars->{$INIT_BUTTONS} = $init_buttons_value;
     
+    # label
     my $label_config = [];
     
     if( defined($panel_config->{$LABELS_KEY}) ){
@@ -794,6 +841,21 @@ sub generate_panel_table(){
     my $init_labels_value  = $self->get_init_labels_value($label_config, $MEANINGLESS_ADD);
     $vars->{$INIT_LABELS} = $init_labels_value;
     
+    # xcell
+    my $xcell_config = [];
+    if( defined($panel_config->{$XCELL_KEY}) ){
+        $xcell_config = $panel_config->{$XCELL_KEY};
+        
+        # the first one is resource , so kick it out
+        my @temp = @$xcell_config;
+        push @layouts, @temp[ 1 .. $#temp ];
+    }
+    
+    my $init_xcells_value  = $self->get_init_xcells_value($xcell_config, $MEANINGLESS_ADD);
+    $vars->{$INIT_XCELLS} = $init_xcells_value;
+    
+    
+    # layout
     my $layout = "";
     for my $element (@layouts){
         $layout .= "        this.add(".$element->{$NAME}.");\n";

@@ -1,0 +1,82 @@
+{
+    "width": 800,
+    "height": 480,
+    "text_buttons": [
+        {
+            "y": 0,
+            "text": "至尊刷新",
+            "name": "bestFlush",
+            "x": 0
+        },
+        {
+            "y": 0,
+            "text": "白金刷新",
+            "name": "betterFlush",
+            "x": 0
+        },
+        {
+            "y": 0,
+            "text": "普通刷新",
+            "name": "normalFlush",
+            "x": 0
+        }
+    ],
+    "labels": [
+        {
+            "y": 0,
+            "text": "可拥有武将数:",
+            "style": "default",
+            "name": "goblinNumberL",
+            "x": 0
+        },
+        {
+            "y": 0,
+            "text": "8/10",
+            "style": "default",
+            "name": "goblinNumberNL",
+            "x": 0
+        },
+        {
+            "y": 0,
+            "text": "至尊刷新",
+            "style": "default",
+            "name": "bestFlushL",
+            "x": 0
+        },
+        {
+            "y": 0,
+            "text": "白金刷新",
+            "style": "default",
+            "name": "betterFlushL",
+            "x": 0
+        },
+        {
+            "y": 0,
+            "text": "普通刷新",
+            "style": "default",
+            "name": "normalFlushL",
+            "x": 0
+        }
+    ],
+    "panels": [
+        {
+            "class_name" : "GoblinCardPanel",
+            "name":"goblinCardPanel1",
+            "width":200,
+            "height":300
+        },
+        {
+            "class_name" : "GoblinCardPanel",
+            "name":"goblinCardPanel2",
+            "width":200,
+            "height":300
+        },
+        {
+            "class_name" : "GoblinCardPanel",
+            "name":"goblinCardPanel3",
+            "width":200,
+            "height":300
+        }
+    ],
+    "window_name": "MengJiangGeWindow"
+}

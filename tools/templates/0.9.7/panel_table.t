@@ -1,8 +1,9 @@
 package com.gol.game;
 
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -11,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
+import com.gol.xge.rpg.ui.XCell;
 
 
 public class $panel_name extends Table {
@@ -33,6 +35,8 @@ public class $panel_name extends Table {
 $init_buttons
 
 $init_labels
+
+$init_xcells
 
         // manage your layout here, sorry wo do not support layout configuration now
         // but we will do the support in the future
