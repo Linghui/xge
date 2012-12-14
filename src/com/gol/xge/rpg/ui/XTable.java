@@ -7,6 +7,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
 
+/*
+ * the same with Table, just add PickListener
+ */
+
 public class XTable extends Table{
 
     private PickListener listener = null;
