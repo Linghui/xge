@@ -1,0 +1,19 @@
+{
+    "width": 800,
+    "height": 480,
+    "panels": [
+        {
+            "class_name" : "BuildUpButtonPanelTable",
+            "name":"buildUpButtonPanelTable",
+            "width":280,
+            "height":400
+        },
+        {
+            "class_name" : "BuildUpInfoPanelTable",
+            "name":"buildUpInfoPanelTable",
+            "width":350,
+            "height":400
+        }
+    ],
+    "window_name": "BuildUpWindow"
+}

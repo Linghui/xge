@@ -1,0 +1,31 @@
+{
+    "width": 400,
+    "height": 320,
+    "text_buttons": [
+        {
+            "y": 260,
+            "text": "Lv26 武神殿(可升级)",
+            "name": "wushenUpBtn",
+            "x": 320
+        },
+        {
+            "y": 260,
+            "text": "Lv22 神兵坊(可升级)",
+            "name": "shenbingUpBtn",
+            "x": 320
+        },
+        {
+            "y": 260,
+            "text": "Lv23 聚贤庄(可升级)",
+            "name": "juxianUpBtn",
+            "x": 320
+        },
+        {
+            "y": 260,
+            "text": "Lv24 仙境(可升级)",
+            "name": "xianjingUpBtn",
+            "x": 320
+        }
+    ],
+    "panel_name": "BuildUpButtonPanelTable"
+}

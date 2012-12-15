@@ -1,0 +1,99 @@
+{
+    "width": 400,
+    "height": 320,
+    "text_buttons": [
+        {
+            "y": 260,
+            "text": "升级",
+            "name": "upgradeBtn",
+            "x": 320
+        }
+    ],
+    "labels": [
+        {
+            "y": 290,
+            "text": "武神殿",
+            "style": "default",
+            "name": "titleL",
+            "x": 10
+        },
+        {
+            "y": 290,
+            "text": "当前等级:",
+            "style": "default",
+            "name": "cLevelL",
+            "x": 90
+        },
+        {
+            "y": 260,
+            "text": "26 级",
+            "style": "default",
+            "name": "cLevelNL",
+            "x": 10
+        },
+        {
+            "y": 260,
+            "text": "主角等级:",
+            "style": "default",
+            "name": "userLevelL",
+            "x": 60
+        },
+        {
+            "y": 230,
+            "text": "27",
+            "style": "default",
+            "name": "userLevelNL",
+            "x": 10
+        },
+        {
+            "y": 230,
+            "text": "银币:",
+            "style": "default",
+            "name": "priceL",
+            "x": 60
+        },
+        {
+            "y": 200,
+            "text": "9527",
+            "style": "default",
+            "name": "priceNL",
+            "x": 10
+        },
+        {
+            "y": 200,
+            "text": "军功:",
+            "style": "default",
+            "name": "honorL",
+            "x": 60
+        },
+        {
+            "y": 200,
+            "text": "123",
+            "style": "green",
+            "name": "honorNL",
+            "x": 60
+        },
+        {
+            "y": 200,
+            "text": "升级效果:",
+            "style": "green",
+            "name": "descTL",
+            "x": 60
+        },
+        {
+            "y": 160,
+            "text": "1. 主城达到30级时，可开启八卦阵",
+            "style": "default",
+            "name": "desc1L",
+            "x": 10
+        },
+        {
+            "y": 160,
+            "text": "2. 主城升级后，其他建筑均可升级",
+            "style": "default",
+            "name": "desc2L",
+            "x": 10
+        }
+    ],
+    "panel_name": "BuildUpInfoPanelTable"
+}
