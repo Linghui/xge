@@ -635,6 +635,17 @@ sub generate_window(){
     # label ends
     
     
+    my $textfield_config = [];
+    
+    if( defined($window_config->{$TEXT_FIELDS_KEY}) ){
+        $textfield_config = $window_config->{$TEXT_FIELDS_KEY};
+        push @layouts, @$textfield_config;
+    }
+    
+    my $init_textfields_value = $self->get_init_textfileds_value($textfield_config, $MEANINGLESS_ADD);
+    $vars->{$INIT_TEXTFIELDS} = $init_textfields_value;
+    
+    
     # all the panels
     my $panel_config = [];
     if( defined($window_config->{$PANELS_KEY}) ){
