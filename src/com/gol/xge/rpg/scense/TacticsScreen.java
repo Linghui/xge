@@ -174,6 +174,22 @@ public class NPC extends AnimationActor {
             cam.unproject(delta.set(last.x, last.y, 0));
             delta.sub(curr);
             cam.position.add(delta.x, delta.y, 0);
+            
+            if( this.getBackgroundWidth() > CoreScreen.width){
+                if(cam.position.x < CoreScreen.width/2){
+                    cam.position.x = CoreScreen.width/2;
+                } else if ( cam.position.x > this.getBackgroundWidth() - CoreScreen.width/2){
+                    cam.position.x = this.getBackgroundWidth() - CoreScreen.width/2;
+                }
+            }
+            
+            if( this.getBackgroundHeight() > CoreScreen.height ){
+                if( cam.position.y < CoreScreen.height/2 ){
+                    cam.position.y = CoreScreen.height/2;
+                } else if( cam.position.y > this.getBackgroundHeight() - CoreScreen.height/2 ) {
+                    cam.position.y = this.getBackgroundHeight() - CoreScreen.height/2;
+                }
+            }
         }
         last.set(x, y, 0);
         return false;

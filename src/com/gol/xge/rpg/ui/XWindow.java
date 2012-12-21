@@ -60,7 +60,7 @@ public class XWindow extends Table {
             resetClosePosition();
             this.addActor(closeImage);
         }
-
+        this.close();
     }
     
     public void setTitle(TextureRegion title){
