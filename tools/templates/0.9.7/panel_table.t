@@ -15,15 +15,15 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.gol.xge.rpg.ui.XCell;
 
 
-public class $panel_name extends Table {
+public class $name extends Table {
 
-    private String TAG = "$panel_name";
+    private String TAG = "$name";
     
     private AssetManager manager = null;
     private Skin skin = null;
     
     
-    public $panel_name(AssetManager manager, Skin skin) {
+    public $name(AssetManager manager, Skin skin) {
         this.manager = manager;
         this.skin = skin;
         init();

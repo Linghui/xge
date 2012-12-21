@@ -1,0 +1,72 @@
+{
+    "width": 800,
+    "height": 480,
+    "text_buttons": [
+        {
+            "y": 260,
+            "text": "Create",
+            "name": "createBtn",
+            "x": 10
+        },
+        {
+            "y": 260,
+            "text": "Cancel",
+            "name": "cancelBtn",
+            "x": 10
+        }
+    ],
+    "labels": [
+        {
+            "y": 290,
+            "text": "type",
+            "style": "default",
+            "name": "typeL",
+            "x": 10
+        },
+        {
+            "y": 290,
+            "text": "name",
+            "style": "default",
+            "name": "nameL",
+            "x": 10
+        },
+        {
+            "y": 290,
+            "text": "width:",
+            "style": "default",
+            "name": "widthL",
+            "x": 10
+        },
+        {
+            "y": 290,
+            "text": "height",
+            "style": "default",
+            "name": "heightL",
+            "x": 10
+        }
+    ],
+    "text_fields": [
+        {
+            "name": "nameTF",
+            "x": 100,
+            "y": 300,
+            "hint": ""
+            
+        },
+        {
+            "name": "widthTF",
+            "x": 100,
+            "y": 250,
+            "hint": ""
+            
+        },
+        {
+            "name": "heightTF",
+            "x": 100,
+            "y": 250,
+            "hint": ""
+            
+        }
+    ],
+    "window_name": "CreateWindow"
+}

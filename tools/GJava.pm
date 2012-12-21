@@ -60,6 +60,9 @@ my $TEXT_BUTTONS_KEY    =   'text_buttons';
 my $TEXT_KEY    =   'text';
 my $X_KEY   =   'x';
 my $Y_KEY   =   'y';
+my $LAYOUT_KEY  = 'layout';
+my $HAS_PARAMETER = 'p';
+my $HAS_NO_PARAMETER = 'np';
 my $ADD_TO_KEY = 'add_to';
 
 # text field
@@ -91,8 +94,9 @@ my $RETURN_TYPE = 'return_type';
 my $METHOD_NAME = 'method_name';
 my $PARAMETERS  = 'parameters';
 my $RETURN_VALUE= 'return_value';
-my @all_button_actions = ();    # use to collect action names buttons need
 
+my @all_button_actions = ();    # use to collect action names buttons need
+my %all_actor_layout = ();
 
 # add tos
 my $ADD_TO_BOTTOM = 'this.addActorBottom';
@@ -109,6 +113,7 @@ my $HEIGHT      = 'height';
 my $INIT_LAYOUT = 'init_layout';
 
 # xcell
+my $ROW_KEY     = 'row';
 my $XCELL_KEY   = 'xcells';
 
 
@@ -344,6 +349,11 @@ sub get_init_labels_value(){
 
     for my $one_label (@$labels){
         
+        # record its layout and use them later
+        if( $one_label->{$LAYOUT_KEY} ){
+            $all_actor_layout{$one_label->{$NAME}} = $one_label->{$LAYOUT_KEY};
+        }
+        
         my $vars = {
             $NAME           =>   $one_label->{$NAME},
             $LABEL_TEXT     =>   $one_label->{$TEXT_KEY},
@@ -389,6 +399,13 @@ sub get_init_buttons_value(){
     
     for my $one_button (@$text_buttons){
         
+        # record its layout and use them later
+        if( $one_button->{$LAYOUT_KEY} ){
+            $all_actor_layout{$one_button->{$NAME}} = $one_button->{$LAYOUT_KEY};
+        }
+        
+        
+#        print Dumper($one_button);
         my $vars = {
             $NAME       =>   $one_button->{$NAME},
             $BUTTON_TEXT    =>   $one_button->{$TEXT_KEY},
@@ -409,6 +426,12 @@ sub get_init_buttons_value(){
     $input = "$TEMPLATE_PATH/image_button.t";
     
     for my $one_button (@$image_buttons){
+        
+        
+        # record its layout and use them later
+        if( $one_button->{$LAYOUT_KEY} ){
+            $all_actor_layout{$one_button->{$NAME}} = $one_button->{$LAYOUT_KEY};
+        }
         
         my $vars = {
             $NAME       =>   $one_button->{$NAME},
@@ -814,12 +837,12 @@ sub generate_panel_table(){
     my $self = shift;
     my $panel_config = shift;
     
-    my @layouts = ();
+#    my @layouts = ();
     
     &reset_actions();
     
     my $vars = {
-        $PANEL_NAME => $panel_config->{$PANEL_NAME},
+        $NAME => $panel_config->{$NAME},
     };
     
     # button
@@ -828,12 +851,12 @@ sub generate_panel_table(){
     
     if( defined($panel_config->{$TEXT_BUTTONS_KEY}) ){
         $text_buttons_config = $panel_config->{$TEXT_BUTTONS_KEY};
-        push @layouts, @$text_buttons_config;
+#        push @layouts, @$text_buttons_config;
     }
     
     if( defined($panel_config->{$IMAGE_BUTTONS_KEY}) ){
         $image_buttons_config = $panel_config->{$IMAGE_BUTTONS_KEY};
-        push @layouts, @$image_buttons_config;
+#        push @layouts, @$image_buttons_config;
     }
     
     my $init_buttons_value = $self->get_init_buttons_value($text_buttons_config
@@ -846,7 +869,7 @@ sub generate_panel_table(){
     
     if( defined($panel_config->{$LABELS_KEY}) ){
         $label_config = $panel_config->{$LABELS_KEY};
-        push @layouts, @$label_config;
+#        push @layouts, @$label_config;
     }
     
     my $init_labels_value  = $self->get_init_labels_value($label_config, $MEANINGLESS_ADD);
@@ -859,18 +882,38 @@ sub generate_panel_table(){
         
         # the first one is resource , so kick it out
         my @temp = @$xcell_config;
-        push @layouts, @temp[ 1 .. $#temp ];
+#        push @layouts, @temp[ 1 .. $#temp ];
     }
     
     my $init_xcells_value  = $self->get_init_xcells_value($xcell_config, $MEANINGLESS_ADD);
     $vars->{$INIT_XCELLS} = $init_xcells_value;
     
     
+    my @layouts = @{$panel_config->{$ROW_KEY}};
+    
     # layout
     my $layout = "";
     for my $element (@layouts){
-        $layout .= "        this.add(".$element->{$NAME}.");\n";
-        $layout .= "        this.row();\n";
+        if( $element eq $ROW_KEY ){
+            $layout .= "        this.row();\n";
+        } else {
+            $layout .= "        this.add($element)";
+            if( defined( $all_actor_layout{$element} ) ){
+                
+                my $ps = $all_actor_layout{$element}->{$HAS_PARAMETER};
+                for my $p_name ( keys %$ps ){
+                    $layout .= ".$p_name(". $ps->{$p_name}.")";
+                }
+                
+                my $nps = $all_actor_layout{$element}->{$HAS_NO_PARAMETER};
+                for my $p_name ( @$nps){
+                    $layout .= ".$p_name()";
+                }
+            }
+            $layout .= ";\n";
+        }
+
+        
     }
     $vars->{$INIT_LAYOUT} = $layout;
     
