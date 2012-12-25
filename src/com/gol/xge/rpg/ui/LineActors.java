@@ -25,16 +25,12 @@ public class LineActors extends Group {
     
     private int linerDirection;
     
-    public int getLinerDirection() {
-        return linerDirection;
-    }
-
-    public void setLinerDirection(int linerDirection) {
-        this.linerDirection = linerDirection;
-    }
-
     public LineActors(){
         this(0, DIRECTION_UP);
+    }
+    
+    public LineActors(int space){
+        this(space, DIRECTION_UP);
     }
     
     public LineActors(int space, int direction){
@@ -218,7 +214,7 @@ public class LineActors extends Group {
                 ((Checkable) child).setChecked(check);
             }
         }
-        System.out.println("test + " + check);
+        Gdx.app.log(TAG, "test + " + check);
     }
 
     public PickListener getListener() {
@@ -229,4 +225,13 @@ public class LineActors extends Group {
         this.listener = listener;
     }
     
+
+    public int getLinerDirection() {
+        return linerDirection;
+    }
+
+    public void setLinerDirection(int linerDirection) {
+        this.linerDirection = linerDirection;
+    }
+
 }

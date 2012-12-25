@@ -167,4 +167,11 @@ public class Common {
         
         
     }
+    
+
+    public static String getClassName(Class c){
+        String trimedClassName = c.getName().substring(c.getName().lastIndexOf(".") + 1);
+        return trimedClassName;
+    }
+    
 }

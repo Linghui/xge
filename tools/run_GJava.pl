@@ -16,12 +16,18 @@ my %opts = ();
 # h: help
 # f: for file or stdin input
 # none: for command line string input
-getopts('hf', \%opts);
+getopts('hfo:', \%opts);
 
 if( $opts{h} ){
     &usage();
     exit 0;
 }
+
+if( $opts{o} ){
+    $class_output_dir = $opts{o};
+    exit 0;
+}
+
 
 my $input = undef;
 

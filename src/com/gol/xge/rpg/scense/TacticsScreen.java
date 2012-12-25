@@ -166,6 +166,9 @@ public class NPC extends AnimationActor {
     
     @Override
     public boolean touchDragged(int x, int y, int pointer) {
+        if(super.touchDragged(x, y, pointer)){
+            return true;
+        }
         if(fixedCam || cam == null){
             return false;
         }
