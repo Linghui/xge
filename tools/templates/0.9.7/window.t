@@ -16,16 +16,16 @@ import com.bearcat.obj.proto.interfaces.XMsgUpdate;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.gol.xge.rpg.ui.XWindow;
 
-public class $window_name extends XWindow implements XMsgUpdate{
+public class $name extends XWindow implements XMsgUpdate{
     
-    private String TAG = "$window_name";
+    private String TAG = "$name";
 
     private final static String TITLE = "$title";
 
     private Skin skin = null;
     private AssetManager manager = null;
     
-    public $window_name(AssetManager manager, Skin skin, float width, float height) {
+    public $name(AssetManager manager, Skin skin, float width, float height) {
         super(skin.get("default", XWindowStyle.class), width, height);
         this.skin = skin;
         this.manager = manager;

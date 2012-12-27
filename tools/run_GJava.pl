@@ -48,6 +48,7 @@ if( $opts{f} ){
 my $NAME_KEY = 'name';
 my $TYPE_KEY = 'type';
 my $PANEL_TYPE = 0;
+my $WINDOW_TYPE = 1;
 
 my $config = from_json($input);
 my $type = $config->{$TYPE_KEY};
@@ -55,8 +56,10 @@ my $type = $config->{$TYPE_KEY};
 my $gJava = GJava->new();
 my ( $class, $action_class ) ;
 
-if( $type == $PANEL_TYPE){
+if( $type == $PANEL_TYPE ){
     ($class, $action_class) = $gJava->generate_panel_table($config);
+} elsif ( $type == $WINDOW_TYPE ){
+    ($class, $action_class) = $gJava->generate_window($config);
 }
 
 

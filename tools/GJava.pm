@@ -619,7 +619,7 @@ sub generate_window(){
     my @layouts = ();
     
     my $vars = {
-        $WINDOW_NAME => $window_config->{$WINDOW_NAME},
+        $NAME => $window_config->{$NAME},
         $TITLE => $window_config->{$TITLE},
     };
     
@@ -719,7 +719,7 @@ sub generate_window(){
     $template->process($input, $vars, \$output)
     || die $template->error();
     
-    return $output;
+    return ($output);
     
 }
 
