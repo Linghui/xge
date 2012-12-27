@@ -26,8 +26,13 @@ public class XCell extends Group implements Checkable{
         this(background, background.getTotalWidth(), background.getTotalHeight(),  null);
     }
     
+
+    public XCell(NinePatch background, TextureAtlas alats){
+        this(background, background.getTotalWidth(), background.getTotalHeight(),  alats);
+    }
+    
     public XCell(NinePatch background, float width, float height, TextureAtlas alats){
-        Image imgB = new Image(background);
+        imgB = new Image(background);
         imgB.setWidth(width);
         imgB.setHeight(height);
         this.setWidth(width);
@@ -35,27 +40,37 @@ public class XCell extends Group implements Checkable{
         this.addActor(imgB);
         this.setAlats(alats);
     }
-    
-    public XCell(TextureRegion background){
-        this(background, null);
-    }
-    
-    public XCell(TextureRegion background, TextureAtlas alats){
-        imgB = new Image(background);
-        this.addActor(imgB);
-        this.setAlats(alats);
-    }
+//    
+//    public XCell(TextureRegion background){
+//        this(background, null);
+//    }
+//    
+//    public XCell(TextureRegion background, TextureAtlas alats){
+//        imgB = new Image(background);
+//        this.addActor(imgB);
+//        this.setAlats(alats);
+//    }
     
     public void setAlats(TextureAtlas alats) {
         this.alats = alats;
     }
     
     public void setIcon(String name){
+        Gdx.app.log(TAG, "setIcon " + name);
         AtlasRegion region = alats.findRegion(name);
         if(icon == null){
             icon = new Image(region);
-            icon.setX( (this.getWidth() - icon.getWidth())/2 );
-            icon.setY( (this.getHeight() - icon.getHeight())/2 );
+            
+            if( this.getWidth() > icon.getWidth()){
+
+                icon.setX( (this.getWidth() - icon.getWidth())/2 );
+                icon.setY( (this.getHeight() - icon.getHeight())/2 );   
+            } else {
+                this.setWidth(icon.getWidth());
+                this.setHeight(icon.getHeight());
+                imgB.setWidth(getWidth());
+                imgB.setHeight(getHeight());
+            }
             this.addActor(icon);
             icon.toFront();
         } else {
@@ -65,6 +80,11 @@ public class XCell extends Group implements Checkable{
     
     public void setChooseFrame(NinePatch patch){
         frame = new Image(patch);
+        resetChooseFrame();
+    }
+    
+    private void resetChooseFrame(){
+
         frame.setWidth(this.getWidth() + 2);
         frame.setHeight(this.getHeight() + 2);
         frame.setX(-1);
@@ -84,9 +104,9 @@ public class XCell extends Group implements Checkable{
 
     @Override
     public boolean isChecked() {
-        return false;
+        return frame.isVisible();
     }
-
+    
     @Override
     public Actor hit (float x, float y, boolean touchable) {
         if (touchable && this.getTouchable() != Touchable.enabled) return null;
