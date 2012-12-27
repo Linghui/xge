@@ -920,7 +920,7 @@ sub generate_panel_table(){
     
     my $actions = $self->get_actions();
     
-    $vars->{$ACTIONS} = $actions;
+    
     
     my $t_config = {
         INTERPOLATE  => 1,               # expand "$var" in plain text
@@ -937,7 +937,26 @@ sub generate_panel_table(){
     $template->process($input, $vars, \$output)
     || die $template->error();
     
-    return $output;
+
+    $vars = undef;
+    
+    $vars = {
+        $NAME => $panel_config->{$NAME} . "Actions",
+        "table_class" => $panel_config->{$NAME},
+        $ACTIONS => $actions,
+    };
+    
+    $input = "$TEMPLATE_PATH/action_class.t";
+    
+    
+    my $action_output = undef;
+    
+    # process input template, substituting variables
+    $template->process($input, $vars, \$action_output)
+    || die $template->error();
+
+    
+    return ($output, $action_output);
     
 }
 

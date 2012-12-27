@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.bearcat.obj.proto.XMsgObj.XMsg;
 import com.bearcat.obj.proto.interfaces.XMsgUpdate;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.gol.xge.rpg.ui.XWindow;
 
 public class $window_name extends XWindow implements XMsgUpdate{

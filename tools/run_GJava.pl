@@ -53,10 +53,10 @@ my $config = from_json($input);
 my $type = $config->{$TYPE_KEY};
 
 my $gJava = GJava->new();
-my $class;
+my ( $class, $action_class ) ;
 
 if( $type == $PANEL_TYPE){
-    $class = $gJava->generate_panel_table($config);
+    ($class, $action_class) = $gJava->generate_panel_table($config);
 }
 
 
@@ -68,6 +68,14 @@ print WRT "$class";
 
 close WRT;
 
+
+open WRT, "> $class_output_dir".$config->{$NAME_KEY}."Actions.java"
+
+or die "open file error $!";
+
+print WRT "$action_class";
+
+close WRT;
 
 sub usage(){
     

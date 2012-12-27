@@ -9,7 +9,7 @@
             public void clicked (InputEvent event, float x, float y) {
                 Gdx.app.log(TAG, "[% name %] clicked");
                 // TODO: strongly recommend do your own implementation in the method below
-                [% name %]Action();
+                actions.[% name %]Action();
             }
     
         });

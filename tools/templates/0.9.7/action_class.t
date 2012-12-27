@@ -16,42 +16,19 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.gol.xge.rpg.ui.XCell;
 
 
-public class $name extends Table {
+public class $name {
 
     private String TAG = "$name";
-    
-    private AssetManager manager = null;
-    private Skin skin = null;
-    private [% name %]Actions actions = null;
+
+    private $table_class table;
     
     
-    public $name(AssetManager manager, Skin skin) {
-        this.manager = manager;
-        this.skin = skin;
-        init();
-        
-        actions = new [% name %]Actions(this);
-    }
-    
-    
-    private void init() {
-
-$init_buttons
-
-$init_labels
-
-$init_xcells
-
-        // manage your layout here, sorry wo do not support layout configuration now
-        // but we will do the support in the future
-$init_layout
-
+    public $name($table_class table) {
+        this.table = table;
     }
 
-    private void meaningLess(Actor actor) {
-        // ingnore this, just for avoiding some history implement problem
-        
-    }
+    
+$actions
 
 
 }
