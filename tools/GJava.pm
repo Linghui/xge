@@ -719,7 +719,10 @@ sub generate_window(){
     $template->process($input, $vars, \$output)
     || die $template->error();
     
-    return ($output);
+    
+    my $action_output = &get_actions_class( $window_config->{$NAME}, $actions);
+    
+    return ($output, $action_output);
     
 }
 
@@ -937,26 +940,38 @@ sub generate_panel_table(){
     $template->process($input, $vars, \$output)
     || die $template->error();
     
+    my $action_output = &get_actions_class( $panel_config->{$NAME}, $actions);
 
-    $vars = undef;
+    return ($output, $action_output);
     
-    $vars = {
-        $NAME => $panel_config->{$NAME} . "Actions",
-        "table_class" => $panel_config->{$NAME},
+}
+
+sub get_actions_class(){
+    my $class_name = shift;
+    my $actions = shift;
+    
+    my $vars = {
+        $NAME => $class_name . "Actions",
+        "table_class" => $class_name,
         $ACTIONS => $actions,
     };
     
-    $input = "$TEMPLATE_PATH/action_class.t";
+    my $input = "$TEMPLATE_PATH/action_class.t";
     
     
     my $action_output = undef;
+    
+    my $t_config = {
+        INTERPOLATE  => 1,               # expand "$var" in plain text
+    };
+    
+    my $template = Template->new($t_config);
     
     # process input template, substituting variables
     $template->process($input, $vars, \$action_output)
     || die $template->error();
 
-    
-    return ($output, $action_output);
+    return $action_output;
     
 }
 

@@ -56,7 +56,7 @@ public class XCell extends Group implements Checkable{
     }
     
     public void setIcon(String name){
-        Gdx.app.log(TAG, "setIcon " + name);
+//        Gdx.app.log(TAG, "setIcon " + name);
         AtlasRegion region = alats.findRegion(name);
         if(icon == null){
             icon = new Image(region);

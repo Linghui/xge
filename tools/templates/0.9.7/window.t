@@ -24,6 +24,7 @@ public class $name extends XWindow implements XMsgUpdate{
 
     private Skin skin = null;
     private AssetManager manager = null;
+    private [% name %]Actions actions = null;
     
     public $name(AssetManager manager, Skin skin, float width, float height) {
         super(skin.get("default", XWindowStyle.class), width, height);
@@ -31,6 +32,8 @@ public class $name extends XWindow implements XMsgUpdate{
         this.manager = manager;
         init();
         selfInit();
+        
+        actions = new [% name %]Actions(this);
     }
 
     private void init() {
@@ -52,8 +55,7 @@ $init_layout
     private void selfInit() {
         // TODO: do your own special init here
     }
-    
-$actions
+
 
     @Override
     public void update(XMsg msg) {
