@@ -20,11 +20,16 @@ public class $name {
 
     private String TAG = "$name";
 
+    private AssetManager manager = null;
+    private Skin skin = null;
+    
     private $table_class table;
     
     
-    public $name($table_class table) {
+    public $name(AssetManager manager, Skin skin, $table_class table) {
         this.table = table;
+        this.manager = manager;
+        this.skin = skin;
     }
 
     

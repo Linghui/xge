@@ -1,0 +1,210 @@
+{
+    "name": "SceneInfoPanel",
+    "type": 0,
+    "width": 350,
+    "height": 400,
+    "text_buttons": [
+        {
+            "name": "b10",
+            "x": 0,
+            "y": 0,
+            "text":"test",
+            "width": 0,
+            "height": 0,
+            "layout": {
+                "p": {},
+                "np": []
+            }
+        },
+        {
+            "name": "b11",
+            "x": 0,
+            "y": 0,
+            "text":"test",
+            "width": 0,
+            "height": 0,
+            "layout": {
+                "p": {},
+                "np": []
+            }
+        },
+        {
+            "name": "b13",
+            "x": 0,
+            "y": 0,
+            "text":"test",
+            "width": 0,
+            "height": 0,
+            "layout": {
+                "p": {},
+                "np": []
+            }
+        },
+        {
+            "name": "b14",
+            "x": 0,
+            "y": 0,
+            "text":"test",
+            "width": 0,
+            "height": 0,
+            "layout": {
+                "p": {},
+                "np": []
+            }
+        }
+    ],
+    "labels": [
+        {
+            "name": "l1",
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "text": "level:",
+            "layout": {
+                "p": {
+                    "padLeft": 10,
+                    "padTop": 10,
+                    "width": 80,
+                    "height": 30
+                },
+                "np": []
+            }
+        },
+        {
+            "name": "l2",
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "text": "20",
+            "layout": {
+                "p": {
+                    "padTop": 10,
+                    "width": 40
+                },
+                "np": []
+            }
+        },
+        {
+            "name": "l3",
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "text": "energy:",
+            "layout": {
+                "p": {},
+                "np": []
+            }
+        },
+        {
+            "name": "l4",
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "text": "1",
+            "layout": {
+                "p": {},
+                "np": []
+            }
+        },
+        {
+            "name": "l5",
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "text": "limit:",
+            "layout": {
+                "p": {},
+                "np": []
+            }
+        },
+        {
+            "name": "l6",
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "text": "1/3",
+            "layout": {
+                "p": {},
+                "np": []
+            }
+        },
+        {
+            "name": "l7",
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "text": "reward:",
+            "layout": {
+                "p": {},
+                "np": []
+            }
+        },
+        {
+            "name": "l8",
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "text": "123",
+            "layout": {
+                "p": {},
+                "np": []
+            }
+        },
+        {
+            "name": "l9",
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "text": "diaoluo:",
+            "layout": {
+                "p": {
+                    "padTop": 10
+                },
+                "np": []
+            }
+        },
+        {
+            "name": "l12",
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "text": "ling X 10",
+            "layout": {
+                "p": {},
+                "np": []
+            }
+        }
+    ],
+    "row": [
+        "l1",
+        "l2",
+        "row",
+        "l3",
+        "l4",
+        "row",
+        "l5",
+        "l6",
+        "row",
+        "l7",
+        "l8",
+        "row",
+        "l9",
+        "row",
+        "b10",
+        "b11",
+        "row",
+        "l12",
+        "b13",
+        "b14"
+    ]
+}

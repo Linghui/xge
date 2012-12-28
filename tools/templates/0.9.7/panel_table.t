@@ -22,7 +22,7 @@ public class $name extends Table {
     
     private AssetManager manager = null;
     private Skin skin = null;
-    private [% name %]Actions actions = null;
+    public [% name %]Actions actions = null;
     
     
     public $name(AssetManager manager, Skin skin) {
@@ -30,7 +30,7 @@ public class $name extends Table {
         this.skin = skin;
         init();
         
-        actions = new [% name %]Actions(this);
+        actions = new [% name %]Actions(manager, skin, this);
     }
     
     

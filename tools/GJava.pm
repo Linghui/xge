@@ -686,21 +686,10 @@ sub generate_window(){
     # panel ends
     
     
-    # all the layout, need optimise in the future
-    my $layout = "";
-    for my $element (@layouts){
-        $layout .= "        this.add(".$element->{$NAME}.")";
-        if( defined $element->{$WIDTH}){
-            $layout .= ".width(".$element->{$WIDTH}.")";
-        }
-        if( defined $element->{$HEIGHT}){
-            $layout .= ".height(".$element->{$HEIGHT}.")";
-        }
-        $layout .= ";\n";
-        $layout .= "        this.row();\n";
-    }
+    my $layout = &get_layouts(@layouts);
     
     $vars->{$INIT_LAYOUT} = $layout;
+    
     # layout ends
     
     
@@ -739,6 +728,7 @@ sub get_init_panels_value(){
     for my $one (@$panel_config){
 
         $all_lines .= "        $one->{$CLASS_NAME} $one->{$NAME} = new $one->{$CLASS_NAME}(manager, skin);\n";
+        $all_lines .= "        $one->{$NAME}.setName(\"$one->{$NAME}\");\n";
     }
     
     return $all_lines;
@@ -899,30 +889,11 @@ sub generate_panel_table(){
     
     my @layouts = @{$panel_config->{$ROW_KEY}};
     
+    
+    
     # layout
-    my $layout = "";
-    for my $element (@layouts){
-        if( $element eq $ROW_KEY ){
-            $layout .= "        this.row();\n";
-        } else {
-            $layout .= "        this.add($element)";
-            if( defined( $all_actor_layout{$element} ) ){
-                
-                my $ps = $all_actor_layout{$element}->{$HAS_PARAMETER};
-                for my $p_name ( keys %$ps ){
-                    $layout .= ".$p_name(". $ps->{$p_name}.")";
-                }
-                
-                my $nps = $all_actor_layout{$element}->{$HAS_NO_PARAMETER};
-                for my $p_name ( @$nps){
-                    $layout .= ".$p_name()";
-                }
-            }
-            $layout .= ";\n";
-        }
-
-        
-    }
+    my $layout = &get_layouts(@layouts);
+    
     $vars->{$INIT_LAYOUT} = $layout;
     
     
@@ -949,6 +920,38 @@ sub generate_panel_table(){
 
     return ($output, $action_output);
     
+}
+
+sub get_layouts(){
+
+    my @layouts = @_;
+    
+    my $layout = "";
+    
+    for my $element (@layouts){
+        if( $element eq $ROW_KEY ){
+            $layout .= "        this.row();\n";
+        } else {
+            $layout .= "        this.add($element)";
+            if( defined( $all_actor_layout{$element} ) ){
+                
+                my $ps = $all_actor_layout{$element}->{$HAS_PARAMETER};
+                for my $p_name ( keys %$ps ){
+                    $layout .= ".$p_name(". $ps->{$p_name}.")";
+                }
+                
+                my $nps = $all_actor_layout{$element}->{$HAS_NO_PARAMETER};
+                for my $p_name ( @$nps){
+                    $layout .= ".$p_name()";
+                }
+            }
+            $layout .= ";\n";
+        }
+        
+        
+    }
+    
+    return $layout;
 }
 
 sub get_actions_class(){
