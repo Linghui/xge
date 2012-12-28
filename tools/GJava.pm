@@ -354,6 +354,11 @@ sub get_init_labels_value(){
             $all_actor_layout{$one_label->{$NAME}} = $one_label->{$LAYOUT_KEY};
         }
         
+        if( !defined($one_label->{$STYLE_KEY})
+            || $one_label->{$STYLE_KEY} =~ /^ *$/){
+            $one_label->{$STYLE_KEY} = "default";
+        }
+        
         my $vars = {
             $NAME           =>   $one_label->{$NAME},
             $LABEL_TEXT     =>   $one_label->{$TEXT_KEY},
