@@ -1,0 +1,45 @@
+{
+    "skin": "data/uiskin.json",
+    "screen_height": 480,
+    "text_buttons": [
+        {
+            "x": 300,
+            "y": 200,
+            "text": "注册",
+            "name": "btn1"
+        }
+    ],
+    "text_fields": [
+        {
+            "name": "username",
+            "x": 300,
+            "y": 350,
+            "hint": "用户名"
+            
+        },
+        {
+            "name": "password",
+            "x": 300,
+            "y": 300,
+            "hint": "密码"
+        },
+        {
+            "name": "passwordConfirm",
+            "x": 300,
+            "y": 250,
+            "hint": "密码确认"
+            
+        }
+    ],
+    "limit_y": 0,
+    "scene_name": "RegisterScreen",
+    "screen_width": 800,
+    "loading_bar": {
+        "bar_bottom": "default-round",
+        "bar_x": "50",
+        "bar_y": "50",
+        "bar_top": "default-round",
+        "bar_width": "300",
+        "bar_height": "50"
+    }
+}
