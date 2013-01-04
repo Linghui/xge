@@ -243,23 +243,6 @@ close WRT;
 #print "$class";
 # output sence class done
 
-
-my $WINDOW_CLASS = 'window_class';
-my $TITLE   = 'title';
-# output window class
-my $window_config = {
-    $WINDOW_CLASS => 'TestWindow',
-    $TITLE  => 'test',
-};
-
-my $window_class = $gJava->generate_window($window_config);
-open WRT, "> $class_output_dir".$window_config->{$WINDOW_CLASS}.".java"
-or die "open file error $!";
-
-print WRT "$window_class";
-
-close WRT;
-
 sub usage(){
 
     print <<EOF;

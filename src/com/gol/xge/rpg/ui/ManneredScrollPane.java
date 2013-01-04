@@ -53,6 +53,9 @@ public class ManneredScrollPane extends ScrollPane {
                 Gdx.app.log(TAG, "touchDown");
                 return true;
             }
+            @Override
+            public void touchDragged (InputEvent event, float x, float y, int pointer) {
+            }
             
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
@@ -79,8 +82,8 @@ public class ManneredScrollPane extends ScrollPane {
             
             
         };
-        
-        Gdx.app.log(TAG, " xxxx " + this.addListener(movingListener));
+        this.setFlingTime(0);
+//        Gdx.app.log(TAG, " xxxx " + this.addListener(movingListener));
         
     }
 
@@ -88,12 +91,36 @@ public class ManneredScrollPane extends ScrollPane {
     private void homing(float distance) {
         this.distance  = distance;
         flag = distance/Math.abs(distance);
-//        Gdx.app.log(TAG, "homing targetP " + distance + " flag " + flag);
+        Gdx.app.log(TAG, "homing targetP " + distance + " flag " + flag);
     }
    
+    private boolean touched = false;
     @Override
     public void act (float delta) {
         super.act(delta);
+        
+        if( Gdx.input.isTouched() ){
+//            Gdx.app.log(TAG, "isTouched");
+            touched = true;
+        } else if ( touched ){
+//            Gdx.app.log(TAG, "touched up");
+            touched = false;
+            int index = 0;
+            float nowP = 0f;
+           
+            if(horizontal){
+                nowP = ManneredScrollPane.this.getScrollX();
+                index = (int) Math.rint(nowP/cellSizeWidth);
+            } else {
+                nowP = ManneredScrollPane.this.getScrollY();
+                index = (int) Math.rint(nowP/cellSizeHeight);
+            }
+//            Gdx.app.log(TAG, "homing index " + index);
+            currentPage = index + 1;
+            float targetP  = getIndexPosition(index);
+//            Gdx.app.log(TAG, "homing targetP " + targetP);
+            homing(targetP - nowP);
+        }
         if(distance != 0  ){
             if(horizontal){
                 this.setScrollX(this.getScrollX() + speed * flag);   
@@ -104,6 +131,12 @@ public class ManneredScrollPane extends ScrollPane {
            
             moved += speed;
             if(moved >= Math.abs(distance)){
+//                Gdx.app.log(TAG, "done");
+                if(horizontal){
+                    this.setScrollX( (currentPage - 1) * cellSizeWidth );   
+                } else {
+                    this.setScrollY( (currentPage - 1) * cellSizeHeight );
+                }
                 moved = 0f;
                 distance = 0f;
             }
