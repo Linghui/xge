@@ -13,7 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
-public class XCell extends Group implements Checkable{
+public class XCell<T> extends Group implements Checkable{
 
     private String TAG = "XCell";
     
@@ -21,6 +21,7 @@ public class XCell extends Group implements Checkable{
     private Image imgB = null;
     private Image frame = null;
     private Image icon = null;
+    private T object = null;
     
     public XCell(NinePatch background){
         this(background, background.getTotalWidth(), background.getTotalHeight(),  null);
@@ -92,6 +93,14 @@ public class XCell extends Group implements Checkable{
         this.addActor(frame);
         frame.toFront();
         frame.setVisible(false);
+    }
+    
+    public void setObject(T object){
+        this.object = object;
+    }
+    
+    public T getObject(){
+        return this.object;
     }
 
     @Override
