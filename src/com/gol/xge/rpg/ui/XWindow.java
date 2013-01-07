@@ -6,11 +6,13 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 
 // todo : 
@@ -60,6 +62,21 @@ public class XWindow extends Table {
             resetClosePosition();
             this.addActor(closeImage);
         }
+        
+        this.addListener(new InputListener(){
+            public void touchDragged (InputEvent event, float x, float y, int pointer) {
+                Gdx.app.log(TAG, "touchDragged");
+                event.handle();
+            }
+        });
+        
+        this.addListener(new ClickListener(){
+            public void drag (InputEvent event, float x, float y, int pointer) {
+                Gdx.app.log(TAG, "drag");
+                
+            } 
+        });
+        this.setTouchable(Touchable.enabled);
         this.close();
     }
     

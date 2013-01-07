@@ -44,44 +44,6 @@ public class ManneredScrollPane extends ScrollPane {
         this.setHeight(200);
         this.pageSize = pageSize;
         this.horizontal = isHorizontal;
-        
-
-        InputListener movingListener = new InputListener(){
-            
-            @Override
-            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                Gdx.app.log(TAG, "touchDown");
-                return true;
-            }
-            @Override
-            public void touchDragged (InputEvent event, float x, float y, int pointer) {
-            }
-            
-            @Override
-            public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                Gdx.app.log(TAG, "touchUp");
-                Gdx.app.log(TAG, "homing x cellSizeWidth " + ManneredScrollPane.this.getScrollX() +" "+ cellSizeWidth);
-                Gdx.app.log(TAG, "homing y " + ManneredScrollPane.this.getScrollY());
-                int index = 0;
-                float nowP = 0f;
-               
-                if(horizontal){
-                    nowP = ManneredScrollPane.this.getScrollX();
-                    index = (int) Math.rint(nowP/cellSizeWidth);
-                } else {
-                    nowP = ManneredScrollPane.this.getScrollY();
-                    index = (int) Math.rint(nowP/cellSizeHeight);
-                }
-//                Gdx.app.log(TAG, "homing index " + index);
-                currentPage = index + 1;
-                float targetP  = getIndexPosition(index);
-//                Gdx.app.log(TAG, "homing targetP " + targetP);
-                homing(targetP - nowP);
-                event.handle();
-            }
-            
-            
-        };
         this.setFlingTime(0);
 //        Gdx.app.log(TAG, " xxxx " + this.addListener(movingListener));
         
@@ -91,14 +53,16 @@ public class ManneredScrollPane extends ScrollPane {
     private void homing(float distance) {
         this.distance  = distance;
         flag = distance/Math.abs(distance);
-        Gdx.app.log(TAG, "homing targetP " + distance + " flag " + flag);
+//        Gdx.app.log(TAG, "homing targetP " + distance + " flag " + flag);
     }
    
     private boolean touched = false;
     @Override
     public void act (float delta) {
         super.act(delta);
-        
+        if( !this.isVisible() ){
+            return;
+        }
         if( Gdx.input.isTouched() ){
 //            Gdx.app.log(TAG, "isTouched");
             touched = true;
