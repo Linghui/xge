@@ -56,6 +56,22 @@ public class XCell<T> extends Group implements Checkable{
         this.alats = alats;
     }
     
+    public void removeIcon(){
+        if( icon != null ){
+            icon.remove();
+            icon = null;
+        }
+    }
+    
+    public void removeObject(){
+        this.object = null;
+    }
+    
+    public void removeContent(){
+        removeIcon();
+        removeObject();
+    }
+    
     public void setIcon(String name){
 //        Gdx.app.log(TAG, "setIcon " + name);
         AtlasRegion region = alats.findRegion(name);
