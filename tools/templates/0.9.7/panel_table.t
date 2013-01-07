@@ -28,9 +28,11 @@ public class $name extends Table {
     public $name(AssetManager manager, Skin skin) {
         this.manager = manager;
         this.skin = skin;
-        init();
-        
+
         actions = new [% name %]Actions(manager, skin, this);
+        
+        init();
+
     }
     
     

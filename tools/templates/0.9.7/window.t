@@ -30,10 +30,13 @@ public class $name extends XWindow implements XMsgUpdate{
         super(skin.get("default", XWindowStyle.class), width, height);
         this.skin = skin;
         this.manager = manager;
+
+        actions = new [% name %]Actions(manager, skin, this);
+        
         init();
         selfInit();
         
-        actions = new [% name %]Actions(manager, skin, this);
+
     }
 
     private void init() {
