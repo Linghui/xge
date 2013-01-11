@@ -280,7 +280,8 @@ public abstract class CoreScreen implements Screen, InputProcessor {
     @Override
     public boolean touchDragged(int x, int y, int pointer) {
         if( ! rootStage.touchDragged(x, y, pointer) ){
-            return backgroundStage.touchDragged(x, y, pointer);
+            backgroundStage.touchDragged(x, y, pointer);
+            return false;
         }
         return true;
     }
