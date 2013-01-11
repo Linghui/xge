@@ -32,6 +32,10 @@ public class SocketManager {
 	public SocketManager(String HOST, int PORT) {
 	    worldSocket = connectToServer(HOST, PORT);
 	}
+	
+	public SocketManager() {
+	    
+	}
 
 	public class ServerListener implements Runnable {
 
