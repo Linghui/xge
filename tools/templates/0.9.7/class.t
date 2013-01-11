@@ -72,7 +72,6 @@ $source_loading
     public void render(float delta){
         super.render(delta);
         if(!manager.update()){
-            Gdx.app.log(TAG, "progress " + manager.getProgress());
             if(manager.isLoaded("data/uiskin.json") && loadingBar == null){
                 skin = manager.get("$skin", Skin.class);
                 

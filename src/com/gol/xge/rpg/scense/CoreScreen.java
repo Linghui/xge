@@ -57,19 +57,21 @@ public abstract class CoreScreen implements Screen, InputProcessor {
         this.game = game;
         CoreScreen.width = width;
         CoreScreen.height = height;
-    }
-    
-
-    @Override
-    public void show(){
-        Gdx.input.setInputProcessor(this);
-
+        
         rootStage = new Stage(CoreScreen.width, CoreScreen.height, false);
         
         topGroup = new Group();
         rootStage.addActor(topGroup);
         
         backgroundStage = new Stage(CoreScreen.width, CoreScreen.height, false);
+    }
+    
+
+    @Override
+    public void show(){
+        Gdx.input.setInputProcessor(this);
+        rootStage.getRoot().setVisible(true);
+        backgroundStage.getRoot().setVisible(true);
     }
     
 
@@ -196,7 +198,8 @@ public abstract class CoreScreen implements Screen, InputProcessor {
 
     @Override
     public void hide() {
-        
+        rootStage.getRoot().setVisible(false);
+        backgroundStage.getRoot().setVisible(false);
     }
 
     @Override

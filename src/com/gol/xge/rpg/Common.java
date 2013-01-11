@@ -1,5 +1,6 @@
 package com.gol.xge.rpg;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -18,7 +19,6 @@ import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.ObjectMap.Entry;
 import com.badlogic.gdx.utils.SerializationException;
 import com.gol.xge.rpg.ui.AnimationResource;
-import com.sun.jmx.snmp.Timestamp;
 
 
 
