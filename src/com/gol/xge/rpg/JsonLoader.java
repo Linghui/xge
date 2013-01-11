@@ -8,18 +8,16 @@ import com.badlogic.gdx.assets.loaders.FileHandleResolver;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import com.badlogic.gdx.utils.JsonReader;
 
-public class JsonElementLoader extends AsynchronousAssetLoader<JsonElement, JsonElementLoader.parameter> {
+public class JsonLoader extends AsynchronousAssetLoader<Array, JsonLoader.parameter> {
 
-    private JsonElement json = null;
-    public JsonElementLoader(FileHandleResolver resolver) {
+    private Array json = null;
+    public JsonLoader(FileHandleResolver resolver) {
         super(resolver);
     }
 
-    public class parameter extends AssetLoaderParameters<JsonElement>{
+    public class parameter extends AssetLoaderParameters<Array>{
 
     }
 
@@ -30,12 +28,11 @@ public class JsonElementLoader extends AsynchronousAssetLoader<JsonElement, Json
 
         String jsonStr = handle.readString("UTF-8");
 
-        JsonParser parser = new JsonParser();
-        json = parser.parse(jsonStr);
+        json = (Array) new JsonReader().parse(jsonStr);
     }
 
     @Override
-    public JsonElement loadSync(AssetManager manager, String fileName,
+    public Array loadSync(AssetManager manager, String fileName,
             parameter parameter) {
         return json;
     }
