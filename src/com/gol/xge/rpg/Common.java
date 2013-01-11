@@ -18,6 +18,7 @@ import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.ObjectMap.Entry;
 import com.badlogic.gdx.utils.SerializationException;
 import com.gol.xge.rpg.ui.AnimationResource;
+import com.sun.jmx.snmp.Timestamp;
 
 
 
@@ -168,4 +169,10 @@ public class Common {
         
     }
     
+    // tag reminds you something
+    public static void timeStamp(String tag){
+        Timestamp ts = new Timestamp(System.currentTimeMillis());
+        String dateStr1 = ts.toString();
+        System.out.println("time stamp " + tag + " : "+dateStr1);
+    }
 }
