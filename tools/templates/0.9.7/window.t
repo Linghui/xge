@@ -27,7 +27,7 @@ public class $name extends XWindow implements XMsgUpdate{
     public [% name %]Actions actions = null;
     
     public $name(AssetManager manager, Skin skin, float width, float height) {
-        super(skin.get("default", XWindowStyle.class), width, height);
+        super(skin, width, height);
         this.skin = skin;
         this.manager = manager;
 

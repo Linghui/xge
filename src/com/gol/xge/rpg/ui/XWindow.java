@@ -22,15 +22,18 @@ public class XWindow extends Table {
     private String TAG = "CoreWindow";
     
     private XWindowStyle style;
-    private float padding = 5;
+    private int padding = 5;
     private Image closeImage = null;
     private Image titleImage = null;
     private Label titleLabel = null;
     
     String title = null;
+    
+    private Skin skin = null;
 
     public XWindow(Skin skin, float width, float height) {
         this(skin.get("default", XWindowStyle.class), width, height);
+        this.skin = skin;
     }
     
     public XWindow(XWindowStyle style, float width, float height){
@@ -88,6 +91,10 @@ public class XWindow extends Table {
         this.addActor(titleImage);
     }
     
+    public void setTitle(String title){
+        this.setTitle(title, this.skin.get("default", LabelStyle.class), padding);
+    }
+    
     public void setTitle(String title, LabelStyle style, int titlePadding){
         this.title = title;
         if(style != null){
@@ -98,7 +105,7 @@ public class XWindow extends Table {
         }
     }
     
-    public void setClosePad(float padding){
+    public void setPadding(int padding){
         this.padding = padding;
         resetClosePosition();
     }
