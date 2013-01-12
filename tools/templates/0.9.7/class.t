@@ -29,7 +29,7 @@ import com.gol.xge.rpg.ui.NumericBar;
 import com.gol.xge.socket.listener.GMessageProcessInterface;
 import com.gol.xge.socket.listener.InOutPutInterface;
 
-public class $class_name extends $parent implements GMessageProcessInterface{
+public class $class_name extends $parent implements PBMessageProcessInterface{
 
     private String TAG = "$class_name";
     
@@ -183,17 +183,11 @@ $init_liners
 $actions
     
     @Override
-    public boolean processMessage(byte[] message) {
-        Gdx.app.log(TAG, "processMessage "+new String(message));
+    public boolean processMessage(XMsg message) {
+        Gdx.app.log(TAG, "processMessage " + message);
         return false;
     }
 
-    @Override
-    public void sendMessage(byte[] message) {
-        if(this.game instanceof InOutPutInterface){
-            ((InOutPutInterface)this.game).onWrite(message);
-        }
-    }
     
     @Override
     public void dispose() {
