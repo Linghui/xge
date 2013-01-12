@@ -226,7 +226,7 @@ public abstract class CoreScreen implements Screen, InputProcessor {
         
         if(keycode == 4  // back button
                 || keycode == 29){ // button a , for testing
-//            this.closeGame();
+            this.callBack();
             return false;
         }
         if(!rootStage.keyDown(keycode)){
@@ -234,6 +234,10 @@ public abstract class CoreScreen implements Screen, InputProcessor {
         }
         
         return true;
+    }
+
+    protected void callBack() {
+        
     }
 
     @Override
