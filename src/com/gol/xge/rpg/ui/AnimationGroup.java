@@ -17,7 +17,7 @@ public class AnimationGroup{
 
 	private float currentFrameTime = 0f;
 	private float timeOut = 0f;
-	private float defaultSpeed = 0.15f;
+	private float defaultSpeed = 0.1f;
 	// for better performance on Android made it public instead of getter and setter, 
 	// but *do not* try to modify this outside of this class
 	public boolean isDone = false; 
