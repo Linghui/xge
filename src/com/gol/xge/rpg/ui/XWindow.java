@@ -34,6 +34,7 @@ public class XWindow extends Table {
     public XWindow(Skin skin, float width, float height) {
         this(skin.get("default", XWindowStyle.class), width, height);
         this.skin = skin;
+        this.setSkin(skin);
     }
     
     public XWindow(XWindowStyle style, float width, float height){
