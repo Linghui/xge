@@ -1,0 +1,1 @@
+{"name":"EquipComparePane","type":0,"width":400.0,"height":320.0,"text_buttons":[],"labels":[],"panels":[{"name":"t1","x":0.0,"y":0.0,"width":180.0,"height":300.0,"class_name":"EquipInfoPane","layout":{"p":{},"np":[]}},{"name":"t2","x":0.0,"y":0.0,"width":180.0,"height":300.0,"class_name":"EquipInfoPane","layout":{"p":{},"np":[]}}],"row":["t1","t2"]}

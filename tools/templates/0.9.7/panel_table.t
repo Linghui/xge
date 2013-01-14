@@ -32,6 +32,8 @@ public class $name extends Table {
         actions = new [% name %]Actions(manager, skin, this);
         
         init();
+        
+        this.setTouchable(Touchable.enabled);
 
     }
     
