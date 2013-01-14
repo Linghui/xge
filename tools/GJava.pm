@@ -621,7 +621,7 @@ sub generate_window(){
     
     &reset_actions();
     
-    my @layouts = ();
+#    my @layouts = ();
     
     my $vars = {
         $NAME => $window_config->{$NAME},
@@ -634,12 +634,12 @@ sub generate_window(){
     
     if( defined($window_config->{$TEXT_BUTTONS_KEY}) ){
         $text_buttons_config = $window_config->{$TEXT_BUTTONS_KEY};
-        push @layouts, @$text_buttons_config;
+#        push @layouts, @$text_buttons_config;
     }
     
     if( defined($window_config->{$IMAGE_BUTTONS_KEY}) ){
         $image_buttons_config = $window_config->{$IMAGE_BUTTONS_KEY};
-        push @layouts, @$image_buttons_config;
+#        push @layouts, @$image_buttons_config;
     }
     
     my $init_buttons_value = $self->get_init_buttons_value($text_buttons_config
@@ -655,7 +655,7 @@ sub generate_window(){
     
     if( defined($window_config->{$LABELS_KEY}) ){
         $label_config = $window_config->{$LABELS_KEY};
-        push @layouts, @$label_config;
+#        push @layouts, @$label_config;
     }
     
     my $init_labels_value  = $self->get_init_labels_value($label_config, $MEANINGLESS_ADD);
@@ -667,7 +667,7 @@ sub generate_window(){
     
     if( defined($window_config->{$TEXT_FIELDS_KEY}) ){
         $textfield_config = $window_config->{$TEXT_FIELDS_KEY};
-        push @layouts, @$textfield_config;
+#        push @layouts, @$textfield_config;
     }
     
     my $init_textfields_value = $self->get_init_textfileds_value($textfield_config, $MEANINGLESS_ADD);
@@ -678,13 +678,14 @@ sub generate_window(){
     my $panel_config = [];
     if( defined($window_config->{$PANELS_KEY}) ){
         $panel_config = $window_config->{$PANELS_KEY};
-        push @layouts, @$panel_config;
+#        push @layouts, @$panel_config;
     }
     
     my $init_panels_value  = $self->get_init_panels_value($panel_config);
     $vars->{$INIT_PANELS} = $init_panels_value;
     # panel ends
     
+    my @layouts = @{$window_config->{$ROW_KEY}};
     
     my $layout = &get_layouts(@layouts);
     
@@ -882,6 +883,19 @@ sub generate_panel_table(){
         my @temp = @$xcell_config;
 #        push @layouts, @temp[ 1 .. $#temp ];
     }
+    
+    
+    
+    # all the panels
+    my $panel_config_list = [];
+    if( defined($panel_config->{$PANELS_KEY}) ){
+        $panel_config_list = $panel_config->{$PANELS_KEY};
+    }
+    
+    my $init_panels_value  = $self->get_init_panels_value($panel_config_list);
+    $vars->{$INIT_PANELS} = $init_panels_value;
+    # panel ends
+    
     
     my $init_xcells_value  = $self->get_init_xcells_value($xcell_config, $MEANINGLESS_ADD);
     $vars->{$INIT_XCELLS} = $init_xcells_value;

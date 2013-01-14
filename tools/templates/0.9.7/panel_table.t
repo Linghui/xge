@@ -44,6 +44,8 @@ $init_labels
 
 $init_xcells
 
+$init_panels
+
         // manage your layout here, sorry wo do not support layout configuration now
         // but we will do the support in the future
 $init_layout
