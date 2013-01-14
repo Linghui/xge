@@ -31,6 +31,8 @@ public class XTab extends Group {
     private LineActors tabs = new LineActors();
     private int totalTabNumber = 0;
     
+    private TabChangeListener listener = null;
+    
     public XTab(Skin skin, NinePatch background, float width, float height, Array<String> tabNames){
         totalTabNumber = tabNames.size;
         this.skin = skin;
@@ -162,6 +164,10 @@ public class XTab extends Group {
         
         hideAllTabs();
         
+        if( listener != null ){
+            listener.tabTo(pageNumber);    
+        }
+        
         Actor actor = this.findActor(panelPreffix + pageNumber);
         actor.setVisible(true);
         actor.toFront();
@@ -173,5 +179,13 @@ public class XTab extends Group {
             Actor actor = this.findActor(panelPreffix + index);
             actor.setVisible(false);
         }
+    }
+
+    public TabChangeListener getListener() {
+        return listener;
+    }
+
+    public void setListener(TabChangeListener listener) {
+        this.listener = listener;
     }
 }
