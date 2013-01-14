@@ -33,6 +33,15 @@ public class $name {
     }
 
     
+    public void open(){
+        table.setVisible(true);
+    }
+    
+    
+    public void close(){
+        table.setVisible(false);
+    }
+    
 $actions
 
 

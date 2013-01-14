@@ -71,4 +71,13 @@ $init_layout
         // ingnore this, just for avoiding some history implement problem
         
     }
+
+    public void open(){
+        actions.open();
+    }
+    
+    
+    public void close(){
+        actions.close();
+    }
 }

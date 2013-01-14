@@ -57,5 +57,13 @@ $init_layout
         
     }
 
+    public void open(){
+        actions.open();
+    }
+    
+    
+    public void close(){
+        actions.close();
+    }
 
 }
