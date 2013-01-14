@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.SnapshotArray;
 
 /*
  * the same with Table, just add PickListener
@@ -58,5 +59,15 @@ public class XTable extends Table{
 
     public void setListener(PickListener listener) {
         this.listener = listener;
+    }
+    
+    public void cleanAllXCell(){
+        SnapshotArray<Actor> actors = this.getChildren();
+        for( Actor one : actors ){
+            if( one instanceof XCell ){
+                XCell cell = (XCell)one;
+                cell.removeContent();
+            }
+        }
     }
 }
