@@ -10,10 +10,10 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonReader;
 
-public class JsonLoader extends AsynchronousAssetLoader<Array, JsonLoader.parameter> {
+public class JsonArrayLoader extends AsynchronousAssetLoader<Array, JsonArrayLoader.parameter> {
 
     private Array json = null;
-    public JsonLoader(FileHandleResolver resolver) {
+    public JsonArrayLoader(FileHandleResolver resolver) {
         super(resolver);
     }
 
