@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.gol.xge.rpg.ui.XCell;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 
 
 public class $name extends Table {
