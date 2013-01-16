@@ -1,5 +1,6 @@
 package com.gol.xge.rpg.ui;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -64,9 +65,14 @@ public class XTable extends Table{
     public void cleanAllXCell(){
         SnapshotArray<Actor> actors = this.getChildren();
         for( Actor one : actors ){
+            Gdx.app.log("XTable", " one " + one.getClass().getSimpleName());
             if( one instanceof XCell ){
                 XCell cell = (XCell)one;
                 cell.removeContent();
+            } else if ( one instanceof XTable){
+                ( (XTable)one ).cleanAllXCell();
+            } else {
+                
             }
         }
     }
