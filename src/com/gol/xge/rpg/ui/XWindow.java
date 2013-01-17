@@ -81,7 +81,7 @@ public class XWindow extends Table {
             } 
         });
         this.setTouchable(Touchable.enabled);
-        this.close();
+        this.setVisible(false);
     }
     
     public void setTitle(TextureRegion title){

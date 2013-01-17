@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputEvent.Type;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -32,9 +31,6 @@ public class XTab extends Group {
     
     private TabChangeListener listener = null;
     
-    private Array<String> tabNames = null;
-    private NinePatch background = null;
-
     private int position = Align.top;
 
     private int tabDirection = LineActors.DIRECTION_RIGHT;
@@ -45,8 +41,6 @@ public class XTab extends Group {
     public XTab(Skin skin, NinePatch background, float width, float height, Array<String> tabNames){
         totalTabNumber = tabNames.size;
         this.skin = skin;
-        this.background = background;
-        this.tabNames = tabNames;
         
         this.setWidth(width);
         this.setHeight(height);
