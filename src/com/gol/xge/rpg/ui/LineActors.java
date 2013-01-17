@@ -219,7 +219,6 @@ public class LineActors extends Group {
                 ((Checkable) child).setChecked(check);
             }
         }
-        Gdx.app.log(TAG, "test + " + check);
     }
 
     public PickListener getListener() {
@@ -239,11 +238,8 @@ public class LineActors extends Group {
         this.linerDirection = linerDirection;
         
         Actor[] allActors = this.getChildren().toArray();
-        Gdx.app.log(TAG, "setLinerDirection size before" + allActors.length);
         this.clear();
-        Gdx.app.log(TAG, "setLinerDirection size after" + allActors.length);
         for( Actor actor : allActors){
-            Gdx.app.log(TAG, "setLinerDirection " + actor);
             this.addActor(actor);
         }
     }
