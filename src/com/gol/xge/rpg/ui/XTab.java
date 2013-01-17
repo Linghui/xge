@@ -19,8 +19,6 @@ public class XTab extends Group {
     private String TAG = "XTab";
 
     private Skin skin = null;
-    private final static int TOP_LEFT = 1;
-    private int type = TOP_LEFT;
     
     private final String panelPreffix = "panel";
     private final String tabButtonPreffix = "tB";
@@ -110,34 +108,6 @@ public class XTab extends Group {
             e.printStackTrace();
         }
         
-        switch(this.type){
-        case TOP_LEFT:
-
-            // 标签位置
-            tabs.setY(this.getHeight() - tabs.getHeight());
-//            
-//            float backgroundWidth = this.getWidth();
-//            float backgroundHeight = this.getHeight() - tabs.getHeight();
-//            
-//            // 调整所有面板宽高 位置
-//            for(int index = 0; index < totalTabNumber; index++){
-//                Group tabGroup = ((Group)this.findActor(panelPreffix + index));
-//                tabGroup.setWidth(backgroundWidth);
-//                tabGroup.setHeight(backgroundHeight);
-//                
-//                Actor backgroudActor = tabGroup.findActor(backgroundName);
-//                if( backgroudActor != null ){
-//
-//                    backgroudActor.setWidth(backgroundWidth);
-//                    backgroudActor.setHeight(backgroundHeight);   
-//                }
-//            }
-            
-            break;
-        default:
-            break;
-        }
-        
         showTab(0);
     }
     
@@ -185,13 +155,13 @@ public class XTab extends Group {
                 backgroundX = tabs.getWidth();
                 backgroundY = 0;
                 tabsX = 0;
-                tabsY = backgroundHeight;
+                tabsY = backgroundHeight - tabs.getChildren().get(0).getHeight();
                 break;
             case Align.right:
                 backgroundX = 0;
                 backgroundY = 0;
                 tabsX = backgroundWidth;
-                tabsY = 0;
+                tabsY = backgroundHeight - tabs.getChildren().get(0).getHeight();
                 break;
             default:
                 throw new Exception("when tab set to left or right, position only can be set to top or bottom");
@@ -220,10 +190,9 @@ public class XTab extends Group {
                 
             }
         }
-        Gdx.app.log(TAG, "backgroundX " + backgroundX + " backgroundY " + backgroundY);
-        Gdx.app.log(TAG, "tabsX " + tabsX + " tabsY " + tabsY);
         tabs.setX(tabsX);
         tabs.setY(tabsY);
+        tabs.toFront();
     }
 
     /*
