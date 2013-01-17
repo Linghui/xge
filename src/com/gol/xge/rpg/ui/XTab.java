@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
+import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.utils.Array;
 
 public class XTab extends Group {
@@ -33,14 +34,26 @@ public class XTab extends Group {
     
     private TabChangeListener listener = null;
     
+    private Array<String> tabNames = null;
+    private NinePatch background = null;
+
+    private int position = Align.top;
+
+    private int tabDirection = LineActors.DIRECTION_RIGHT;
+
+    private int align = Align.left;
+    
+    
     public XTab(Skin skin, NinePatch background, float width, float height, Array<String> tabNames){
         totalTabNumber = tabNames.size;
         this.skin = skin;
+        this.background = background;
+        this.tabNames = tabNames;
         
         this.setWidth(width);
         this.setHeight(height);
         
-        tabs.setLinerDirection(LineActors.DIRECTION_RIGHT);
+        tabs.setLinerDirection(tabDirection);
         this.addActor(tabs);
         
         for(int index = 0; index < this.totalTabNumber; index++){
@@ -88,34 +101,148 @@ public class XTab extends Group {
      *  
      */
     private void pack() {
+        
+        tabs.setLinerDirection(this.tabDirection);
+
+        try {
+            resetBackground();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
         switch(this.type){
         case TOP_LEFT:
 
             // 标签位置
             tabs.setY(this.getHeight() - tabs.getHeight());
+//            
+//            float backgroundWidth = this.getWidth();
+//            float backgroundHeight = this.getHeight() - tabs.getHeight();
+//            
+//            // 调整所有面板宽高 位置
+//            for(int index = 0; index < totalTabNumber; index++){
+//                Group tabGroup = ((Group)this.findActor(panelPreffix + index));
+//                tabGroup.setWidth(backgroundWidth);
+//                tabGroup.setHeight(backgroundHeight);
+//                
+//                Actor backgroudActor = tabGroup.findActor(backgroundName);
+//                if( backgroudActor != null ){
+//
+//                    backgroudActor.setWidth(backgroundWidth);
+//                    backgroudActor.setHeight(backgroundHeight);   
+//                }
+//            }
             
-            float backgroundWidth = this.getWidth();
-            float backgroundHeight = this.getHeight() - tabs.getHeight();
-            
-            // 调整所有面板宽高 位置
-            for(int index = 0; index < totalTabNumber; index++){
-                Group tabGroup = ((Group)this.findActor(panelPreffix + index));
-                tabGroup.setWidth(backgroundWidth);
-                tabGroup.setHeight(backgroundHeight);
-                
-                Actor backgroudActor = tabGroup.findActor(backgroundName);
-                if( backgroudActor != null ){
-
-                    backgroudActor.setWidth(backgroundWidth);
-                    backgroudActor.setHeight(backgroundHeight);   
-                }
-            }
-            showTab(0);
             break;
         default:
             break;
         }
         
+        showTab(0);
+    }
+    
+    private void resetBackground() throws Exception {
+        float backgroundWidth = 0; 
+        float backgroundHeight = 0;
+        float backgroundX = 0;
+        float backgroundY = 0;
+        float tabsX = 0;
+        float tabsY = 0;
+        
+        switch(this.tabDirection){
+        case LineActors.DIRECTION_LEFT:
+        case LineActors.DIRECTION_RIGHT:
+            
+            backgroundWidth = this.getWidth();
+            backgroundHeight = this.getHeight() - tabs.getHeight();
+            
+            switch(this.position){
+            case Align.top:
+                backgroundX = 0;
+                backgroundY = 0;
+                tabsX = 0;
+                tabsY = backgroundHeight;
+                break;
+            case Align.bottom:
+                backgroundX = 0;
+                backgroundY = tabs.getHeight();
+                tabsX = 0;
+                tabsY = 0;
+                break;
+            default:
+                throw new Exception("when tab set to left or right, position only can be set to top or bottom");
+            }
+            
+            break;
+        case LineActors.DIRECTION_DOWN:
+        case LineActors.DIRECTION_UP:
+
+            backgroundWidth = this.getWidth() - tabs.getWidth();
+            backgroundHeight = this.getHeight();
+            
+            switch(this.position){
+            case Align.left:
+                backgroundX = tabs.getWidth();
+                backgroundY = 0;
+                tabsX = 0;
+                tabsY = backgroundHeight;
+                break;
+            case Align.right:
+                backgroundX = 0;
+                backgroundY = 0;
+                tabsX = backgroundWidth;
+                tabsY = 0;
+                break;
+            default:
+                throw new Exception("when tab set to left or right, position only can be set to top or bottom");
+            }
+            
+            break;
+        default:
+            throw new Exception("value of this.tabDirection is wrong " + this.tabDirection);
+        }
+
+        // reset size and position
+        for(int index = 0; index < totalTabNumber; index++){
+            Group tabGroup = ((Group)this.findActor(panelPreffix + index));
+            tabGroup.setWidth(backgroundWidth);
+            tabGroup.setHeight(backgroundHeight);
+              
+            Actor backgroudActor = tabGroup.findActor(backgroundName);
+            if( backgroudActor != null ){
+
+                backgroudActor.setWidth(backgroundWidth);
+                backgroudActor.setHeight(backgroundHeight);
+                
+                backgroudActor.setX(backgroundX);
+                backgroudActor.setY(backgroundY);
+                
+                
+            }
+        }
+        Gdx.app.log(TAG, "backgroundX " + backgroundX + " backgroundY " + backgroundY);
+        Gdx.app.log(TAG, "tabsX " + tabsX + " tabsY " + tabsY);
+        tabs.setX(tabsX);
+        tabs.setY(tabsY);
+    }
+
+    /*
+     * position : this position of tap by content
+     *          Align.top, Align.bottom, Align.left, Align.right
+     * tabDirection : 
+     *              LineActors.DIRECTION_UP LineActors.DIRECTION_DOWN
+     *              , LineActors.DIRECTION_LEFT, LineActors.DIRECTION_RIGHT
+     * TODO:K do not implement yet for now
+     * align    : after position set, 
+     *          Align.top, Align.bottom, Align.left, Align.right, Align.center
+     */
+    
+    // TODO:K there is still little bug, but not big deal for now. 
+    public void setTabPosition(int position, int tabDirection, int align){
+        this.position = position;
+        this.tabDirection = tabDirection;
+        this.align = align;
+        this.pack();
     }
     
     public void addActorToTab(int tabNumber, Actor actor) {

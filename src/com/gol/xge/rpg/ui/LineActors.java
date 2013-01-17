@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.SnapshotArray;
 
 public class LineActors extends Group {
 
@@ -68,6 +69,7 @@ public class LineActors extends Group {
             Actor lastActor = actors.get(actors.size - 1);
             int xNext = (int) (lastActor.getX() - actor.getWidth() - space - spaceAdjust);
             actor.setX(xNext);
+            actor.setY(0);
             this.setWidth(this.getWidth() + actor.getWidth() + space) ;
         } else {
             this.setWidth(actor.getWidth());
@@ -85,6 +87,7 @@ public class LineActors extends Group {
             Actor lastActor = actors.get(actors.size - 1);
             int xNext = (int) (lastActor.getX() + lastActor.getWidth() + space + spaceAdjust);
             actor.setX(xNext);
+            actor.setY(0);
             this.setWidth(this.getWidth() + actor.getWidth() + space);
         } else {
             this.setWidth(actor.getWidth());
@@ -102,6 +105,7 @@ public class LineActors extends Group {
             Actor lastActor = actors.get(actors.size - 1);
             int yNext = (int) (lastActor.getY() + lastActor.getHeight() + space + spaceAdjust);
             actor.setY(yNext);
+            actor.setX(0);
             this.setHeight(this.getHeight() + actor.getHeight() + space);
         } else {
             this.setWidth(actor.getWidth());
@@ -119,6 +123,7 @@ public class LineActors extends Group {
             Actor lastActor = actors.get(actors.size - 1);
             int yNext = (int) (lastActor.getY() - lastActor.getHeight() - space - spaceAdjust);
             actor.setY(yNext);
+            actor.setX(0);
             this.setHeight(this.getHeight() + actor.getHeight() + space) ;
             if(this.getWidth() < actor.getWidth()){
                 this.setWidth(actor.getWidth());
@@ -232,6 +237,15 @@ public class LineActors extends Group {
 
     public void setLinerDirection(int linerDirection) {
         this.linerDirection = linerDirection;
+        
+        Actor[] allActors = this.getChildren().toArray();
+        Gdx.app.log(TAG, "setLinerDirection size before" + allActors.length);
+        this.clear();
+        Gdx.app.log(TAG, "setLinerDirection size after" + allActors.length);
+        for( Actor actor : allActors){
+            Gdx.app.log(TAG, "setLinerDirection " + actor);
+            this.addActor(actor);
+        }
     }
 
 }
