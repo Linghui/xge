@@ -65,7 +65,6 @@ public class XTable extends Table{
     public void cleanAllXCell(){
         SnapshotArray<Actor> actors = this.getChildren();
         for( Actor one : actors ){
-            Gdx.app.log("XTable", " one " + one.getClass().getSimpleName());
             if( one instanceof XCell ){
                 XCell cell = (XCell)one;
                 cell.removeContent();
