@@ -125,7 +125,7 @@ public class XTab extends Group {
         case LineActors.DIRECTION_RIGHT:
             
             backgroundWidth = this.getWidth();
-            backgroundHeight = this.getHeight() - tabs.getHeight();
+            backgroundHeight = this.getHeight();
             
             switch(this.position){
             case Align.top:
@@ -147,7 +147,7 @@ public class XTab extends Group {
             break;
         case LineActors.DIRECTION_DOWN:
 
-            backgroundWidth = this.getWidth() - tabs.getWidth();
+            backgroundWidth = this.getWidth();
             backgroundHeight = this.getHeight();
             
             switch(this.position){
