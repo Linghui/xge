@@ -35,7 +35,9 @@ public class XTab extends Group {
 
     private int tabDirection = LineActors.DIRECTION_RIGHT;
 
-    private int align = Align.left;
+    private int disToHead = 0;
+
+    private int disToPane = 0;
     
     public XTab(Skin skin, float width, float height, Array<String> tabNames){
         this(skin, null, width, height, tabNames);
@@ -120,7 +122,6 @@ public class XTab extends Group {
         float tabsY = 0;
         
         switch(this.tabDirection){
-        case LineActors.DIRECTION_LEFT:
         case LineActors.DIRECTION_RIGHT:
             
             backgroundWidth = this.getWidth();
@@ -130,22 +131,21 @@ public class XTab extends Group {
             case Align.top:
                 backgroundX = 0;
                 backgroundY = 0;
-                tabsX = 0;
-                tabsY = backgroundHeight;
+                tabsX = this.disToHead;
+                tabsY = backgroundHeight + disToPane;
                 break;
             case Align.bottom:
                 backgroundX = 0;
                 backgroundY = tabs.getHeight();
-                tabsX = 0;
-                tabsY = 0;
+                tabsX = this.disToHead;
+                tabsY = 0 + disToPane;
                 break;
             default:
-                throw new Exception("when tab set to left or right, position only can be set to top or bottom");
+                throw new Exception("when tab set to left , position only can be set to top or bottom");
             }
             
             break;
         case LineActors.DIRECTION_DOWN:
-        case LineActors.DIRECTION_UP:
 
             backgroundWidth = this.getWidth() - tabs.getWidth();
             backgroundHeight = this.getHeight();
@@ -154,17 +154,17 @@ public class XTab extends Group {
             case Align.left:
                 backgroundX = tabs.getWidth();
                 backgroundY = 0;
-                tabsX = 0;
-                tabsY = backgroundHeight - tabs.getChildren().get(0).getHeight();
+                tabsX = + disToPane;
+                tabsY = backgroundHeight - tabs.getChildren().get(0).getHeight() - this.disToHead;
                 break;
             case Align.right:
                 backgroundX = 0;
                 backgroundY = 0;
-                tabsX = backgroundWidth;
-                tabsY = backgroundHeight - tabs.getChildren().get(0).getHeight();
+                tabsX = backgroundWidth + disToPane;
+                tabsY = backgroundHeight - tabs.getChildren().get(0).getHeight() - this.disToHead;
                 break;
             default:
-                throw new Exception("when tab set to left or right, position only can be set to top or bottom");
+                throw new Exception("when tab set to down, position only can be set to left or right");
             }
             
             break;
@@ -199,18 +199,25 @@ public class XTab extends Group {
      * position : this position of tap by content
      *          Align.top, Align.bottom, Align.left, Align.right
      * tabDirection : 
-     *              LineActors.DIRECTION_UP LineActors.DIRECTION_DOWN
-     *              , LineActors.DIRECTION_LEFT, LineActors.DIRECTION_RIGHT
+     *               LineActors.DIRECTION_DOWN
+     *              , LineActors.DIRECTION_RIGHT
      * TODO:K do not implement yet for now
-     * align    : after position set, 
-     *          Align.top, Align.bottom, Align.left, Align.right, Align.center
+     * align    : distance to head, 
+     *      head means when tabDirection set to left or right, it's to left
+     *      when tabDirection set to up or down, it's to top
      */
     
     // TODO:K there is still little bug, but not big deal for now. 
-    public void setTabPosition(int position, int tabDirection, int align){
+    
+    public void setTabPosition(int position, int tabDirection){
+        this.setTabPosition(position, tabDirection, 0, 0);
+    }
+    
+    public void setTabPosition(int position, int tabDirection, int disToHead, int disToPane){
         this.position = position;
         this.tabDirection = tabDirection;
-        this.align = align;
+        this.disToHead = disToHead;
+        this.disToPane  = disToPane;
         this.pack();
     }
     
@@ -276,7 +283,7 @@ public class XTab extends Group {
             actor.setVisible(false);
         }
     }
-
+    
     public TabChangeListener getListener() {
         return listener;
     }
