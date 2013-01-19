@@ -37,6 +37,9 @@ public class XTab extends Group {
 
     private int align = Align.left;
     
+    public XTab(Skin skin, float width, float height, Array<String> tabNames){
+        this(skin, null, width, height, tabNames);
+    }
     
     public XTab(Skin skin, NinePatch background, float width, float height, Array<String> tabNames){
         totalTabNumber = tabNames.size;
@@ -59,9 +62,12 @@ public class XTab extends Group {
             final Group panelGroup = new Group();
             panelGroup.setName(panelPreffix + index);
             
-            Image panelBackground = new Image(background);
-            panelBackground.setName(backgroundName);
-            panelGroup.addActor(panelBackground);
+            if( background != null){
+                Image panelBackground = new Image(background);
+                panelBackground.setName(backgroundName);
+                panelGroup.addActor(panelBackground);    
+            }
+            
             
 //            // for debug
 //            TextButton debugB = new TextButton("t"+ index, skin);
