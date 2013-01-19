@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -23,7 +24,7 @@ public class XWindow extends Table {
     
     private XWindowStyle style;
     
-    private Image closeImage = null;
+    private ImageButton closeImage = null;
     private Image titleImage = null;
     private Label titleLabel = null;
     
@@ -53,19 +54,12 @@ public class XWindow extends Table {
         if(style.hasClose){
 
             // implement touchDown and touchUp for change the down/up image
-            closeImage = new Image(style.closeImg);
+            closeImage = new ImageButton(style.closeImg, style.closeImgDown);
 
             // for for close click
-            closeImage.addListener(new InputListener(){
+            closeImage.addListener(new ClickListener(){
                 @Override
-                public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                    closeImage.setDrawable(XWindow.this.style.closeImgDown);
-                    return true;
-                }
-                
-                @Override
-                public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                    closeImage.setDrawable(XWindow.this.style.closeImg);
+                public void clicked (InputEvent event, float x, float y) {
                     close();
                 }
             });
