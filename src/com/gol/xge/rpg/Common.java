@@ -94,8 +94,23 @@ public class Common {
         return keyValues;
     }
     
+    public static HashMap<String, Animation> readAnimationResource(
 
-    public static HashMap<String, Animation> readAnimationResource(String jsonFile, boolean flipX, boolean flipY, TextureAtlas atlas){
+            String jsonFile
+            , boolean flipX
+            , boolean flipY
+            , TextureAtlas atlas
+            ){
+                return readAnimationResource(jsonFile, flipX, flipY, atlas, 0.1f);
+
+    }
+
+    public static HashMap<String, Animation> readAnimationResource(
+            String jsonFile
+            , boolean flipX
+            , boolean flipY
+            , TextureAtlas atlas
+            , float speed){
         HashMap<String, Animation> animationHash = new HashMap<String, Animation>();
 //        Gdx.app.log(TAG, "jsonFile -- " + jsonFile );
         FileHandle jsonFileHandle = getFileHandle(jsonFile);
@@ -149,7 +164,7 @@ public class Common {
             for(int index = 0 ; index < actionAnimation.size(); index++){
                 regions[index] = actionAnimation.get(index);
             }
-            Animation animation = new Animation(0.1f, regions);
+            Animation animation = new Animation(speed, regions);
             animationHash.put(actionName, animation);
 //            Gdx.app.log(TAG, "done actionName ||||||||||| ''" + actionName);
         }

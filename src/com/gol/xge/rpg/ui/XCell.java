@@ -23,6 +23,7 @@ public class XCell<T> extends Group implements Checkable{
     private Image frame = null;
     private Image icon = null;
     private T object = null;
+    public static final String backgroundName = "imgB";
     
     public XCell(NinePatch background){
         this(background, background.getTotalWidth(), background.getTotalHeight(),  null);
@@ -35,12 +36,13 @@ public class XCell<T> extends Group implements Checkable{
     
     public XCell(NinePatch background, float width, float height, TextureAtlas alats){
         imgB = new Image(background);
+        imgB.setName("imgB");
         imgB.setWidth(width);
         imgB.setHeight(height);
         this.setWidth(width);
         this.setHeight(height);
         this.addActor(imgB);
-        this.setAlats(alats);
+        this.setAtlas(alats);
     }
 //    
 //    public XCell(TextureRegion background){
@@ -53,8 +55,12 @@ public class XCell<T> extends Group implements Checkable{
 //        this.setAlats(alats);
 //    }
     
-    public void setAlats(TextureAtlas alats) {
-        this.alats = alats;
+    public void setAtlas(TextureAtlas atlas) {
+        this.alats = atlas;
+    }
+    
+    public TextureAtlas getAtlas(){
+        return this.alats;
     }
     
     public void removeIcon(){
