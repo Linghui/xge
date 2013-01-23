@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 public class XCell<T> extends Group implements Checkable{
@@ -103,12 +104,22 @@ public class XCell<T> extends Group implements Checkable{
     }
     
     public void setChooseFrame(NinePatch patch){
-        frame = new Image(patch);
-        resetChooseFrame();
+        setChooseFrame( new NinePatchDrawable(patch) );
     }
     
     public void setChooseFrame( Drawable drawable ){
-        frame = new Image(drawable);
+        if( frame == null ) {
+            frame = new Image(drawable);    
+        }
+        
+        if( drawable == null){
+            if( frame != null){
+                frame.remove();
+            }
+            frame = null;
+            return;
+        }
+        
         resetChooseFrame();
     }
     
