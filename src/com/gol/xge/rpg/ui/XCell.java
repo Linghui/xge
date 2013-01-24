@@ -25,6 +25,8 @@ public class XCell<T> extends Group implements Checkable{
     private Image icon = null;
     private T object = null;
     public static final String backgroundName = "imgB";
+
+    private final int defaultPad = 1;
     
     public XCell(NinePatch background){
         this(background, background.getTotalWidth(), background.getTotalHeight(),  null);
@@ -107,7 +109,16 @@ public class XCell<T> extends Group implements Checkable{
         setChooseFrame( new NinePatchDrawable(patch) );
     }
     
+    public void setChooseFrame(NinePatch patch, int pad){
+        setChooseFrame( new NinePatchDrawable(patch), pad);
+    }
+    
     public void setChooseFrame( Drawable drawable ){
+        setChooseFrame(drawable, defaultPad);
+    }
+    
+    public void setChooseFrame( Drawable drawable, int pad ){
+
         if( frame == null ) {
             frame = new Image(drawable);    
         }
@@ -120,15 +131,15 @@ public class XCell<T> extends Group implements Checkable{
             return;
         }
         
-        resetChooseFrame();
+        resetChooseFrame(pad);
     }
     
-    private void resetChooseFrame(){
+    private void resetChooseFrame(int pad){
 
-        frame.setWidth(this.getWidth() + 2);
-        frame.setHeight(this.getHeight() + 2);
-        frame.setX(-1);
-        frame.setY(-1);
+        frame.setWidth(this.getWidth() + pad * 2);
+        frame.setHeight(this.getHeight() + pad * 2);
+        frame.setX(-pad);
+        frame.setY(-pad);
         this.addActor(frame);
         frame.toFront();
         frame.setVisible(false);
