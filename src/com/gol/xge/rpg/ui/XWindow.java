@@ -38,6 +38,9 @@ public class XWindow extends Table {
     private float yp = padding;
 
 
+    public XWindow(){
+        
+    }
 
     public XWindow(Skin skin, float width, float height) {
         this(skin.get("default", XWindowStyle.class), width, height);
@@ -154,7 +157,7 @@ public class XWindow extends Table {
     @Override
     public void addActor (Actor actor) {
         super.addActor(actor);
-        if(style.hasClose&& this.getChildren().size > 1){
+        if( style != null && style.hasClose && this.getChildren().size > 1){
             this.removeActor(closeImage);
             super.addActor(closeImage);
         } 
