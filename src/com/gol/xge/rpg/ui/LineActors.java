@@ -6,10 +6,11 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.WidgetGroup;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.SnapshotArray;
 
-public class LineActors extends Group {
+public class LineActors extends WidgetGroup {
 
     private String TAG = "LineActors";
     
@@ -154,6 +155,14 @@ public class LineActors extends Group {
         default:
             break;
         }
+    }
+    
+    public float getPrefWidth (){
+        return this.getWidth();
+    }
+    
+    public float getPreHeight(){
+        return this.getHeight();
     }
     
     public int getSize(){
