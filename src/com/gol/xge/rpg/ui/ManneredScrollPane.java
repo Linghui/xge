@@ -12,10 +12,6 @@ public class ManneredScrollPane extends ScrollPane {
 
     private String TAG = "ManneredScrollPane";
 
-    private float distance = 0f;
-    private float flag = 1; // 1 or -1
-    private float moved = 1f;
-    
     private int pageSize = 1;           // pageSize 是一个窗口现实几个actor
     private LineActors lineActors = null;
     private boolean horizontal = false;// by default, add items to bottom, if set to true then add item to the right
@@ -26,7 +22,9 @@ public class ManneredScrollPane extends ScrollPane {
 
     private float cellSizeHeight;
     
-    private float speed = 1;
+    private InputListener listener = null;
+
+    private boolean touched = false;
     
     public ManneredScrollPane(int pageSize, boolean isHorizontal) {
         super(null);
@@ -44,66 +42,57 @@ public class ManneredScrollPane extends ScrollPane {
         this.setHeight(200);
         this.pageSize = pageSize;
         this.horizontal = isHorizontal;
-        this.setFlingTime(0);
-//        Gdx.app.log(TAG, " xxxx " + this.addListener(movingListener));
-        
+        this.setFlingTime(0.3f);
+        this.setClamp(true);
+        this.setSmoothScrolling(true);
+        listener = new InputListener(){
+            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                return true;
+            }
+            
+            public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+                touched = true;
+            }
+        };
+        this.addListener(listener);
     }
 
 
     private void homing(float distance) {
-        this.distance  = distance;
-        flag = distance/Math.abs(distance);
-//        Gdx.app.log(TAG, "homing targetP " + distance + " flag " + flag);
+//        Gdx.app.log(TAG, "homing targetP " + distance);
+        if( this.horizontal ){
+            this.scrollTo(distance, 0, this.getWidth(), this.getHeight());
+        } else {
+            distance = distance - cellSizeHeight * (this.pageSize - 1);
+//            Gdx.app.log(TAG, "distance " + distance);
+            this.scrollTo(0, distance , this.getWidth(), this.getHeight());
+        }
+        
     }
-   
-    private boolean touched = false;
+
     @Override
     public void act (float delta) {
         super.act(delta);
-        if( !this.isVisible() ){
-            return;
-        }
-        if( Gdx.input.isTouched() ){
-//            Gdx.app.log(TAG, "isTouched");
-            touched = true;
-        } else if ( touched ){
-//            Gdx.app.log(TAG, "touched up");
+        if( !Gdx.input.isTouched() 
+                && touched
+                && !this.isFlinging() ){
             touched = false;
-            int index = 0;
-            float nowP = 0f;
-           
-            if(horizontal){
-                nowP = ManneredScrollPane.this.getScrollX();
-                index = (int) Math.rint(nowP/cellSizeWidth);
-            } else {
-                nowP = ManneredScrollPane.this.getScrollY();
-                index = (int) Math.rint(nowP/cellSizeHeight);
-            }
-//            Gdx.app.log(TAG, "homing index " + index);
-            currentPage = index + 1;
-            float targetP  = getIndexPosition(index);
-//            Gdx.app.log(TAG, "homing targetP " + targetP);
-            homing(targetP - nowP);
-        }
-        if(distance != 0  ){
-            if(horizontal){
-                this.setScrollX(this.getScrollX() + speed * flag);   
-            } else {
-                this.setScrollY(this.getScrollY() + speed * flag);
-            }
-            
-           
-            moved += speed;
-            if(moved >= Math.abs(distance)){
-//                Gdx.app.log(TAG, "done");
-                if(horizontal){
-                    this.setScrollX( (currentPage - 1) * cellSizeWidth );   
-                } else {
-                    this.setScrollY( (currentPage - 1) * cellSizeHeight );
-                }
-                moved = 0f;
-                distance = 0f;
-            }
+            Gdx.app.log(TAG, "listener touched " + touched);
+
+          int index = 0;
+          float nowP = 0f;
+         
+          if(horizontal){
+              nowP = ManneredScrollPane.this.getScrollX();
+              index = (int) Math.rint(nowP/cellSizeWidth);
+          } else {
+              nowP = ManneredScrollPane.this.getScrollY();
+              index = (int) Math.rint(nowP/cellSizeHeight);
+          }
+//          Gdx.app.log(TAG, "homing index " + index);
+          currentPage = index + 1;
+          float targetP  = getIndexPosition(index);
+          homing(targetP);
         }
     }
     private float getIndexPosition(int index){
@@ -126,14 +115,12 @@ public class ManneredScrollPane extends ScrollPane {
                 cellSizeWidth = actor.getWidth();
                 cellSizeHeight = actor.getHeight();
                 
-                speed = cellSizeWidth/32;
                 this.setWidth(cellSizeWidth * this.pageSize);
                 this.setHeight(cellSizeHeight);
             } else {
                 cellSizeWidth = actor.getWidth();
                 cellSizeHeight = actor.getHeight();
                 
-                speed = cellSizeHeight/32;
                 this.setWidth(cellSizeWidth);
                 this.setHeight(cellSizeHeight * this.pageSize);
             }
@@ -142,5 +129,5 @@ public class ManneredScrollPane extends ScrollPane {
        
         lineActors.addActor(actor);
     }
-    
+   
 }
