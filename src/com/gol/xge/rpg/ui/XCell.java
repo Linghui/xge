@@ -22,7 +22,7 @@ public class XCell<T> extends Group implements Checkable{
     private TextureAtlas alats = null;
     private Image imgB = null;
     private Image frame = null;
-    private Image icon = null;
+    protected Image icon = null;
     private T object = null;
     public static final String backgroundName = "imgB";
 
