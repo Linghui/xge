@@ -10,7 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.WidgetGroup;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.SnapshotArray;
 
-public class LineActors extends WidgetGroup {
+public class LineActors extends Group {
 
     private String TAG = "LineActors";
     
@@ -121,14 +121,25 @@ public class LineActors extends WidgetGroup {
         Array<Actor> actors = this.getChildren();
         // do not need to set the first actor.x 
         if(actors.size >= 1){
-            Actor lastActor = actors.get(actors.size - 1);
-            int yNext = (int) (lastActor.getY() - lastActor.getHeight() - space - spaceAdjust);
-            actor.setY(yNext);
-            actor.setX(0);
-            this.setHeight(this.getHeight() + actor.getHeight() + space) ;
-            if(this.getWidth() < actor.getWidth()){
-                this.setWidth(actor.getWidth());
+            
+            // two ways to do this, still do not know which is better
+            //1. move appended actor to -y
+//            Actor lastActor = actors.get(actors.size - 1);
+//            int yNext = (int) (lastActor.getY() - lastActor.getHeight() - space - spaceAdjust);
+//            actor.setY(yNext);
+//            actor.setX(0);
+//            this.setHeight(this.getHeight() + actor.getHeight() + space) ;
+//            if(this.getWidth() < actor.getWidth()){
+//                this.setWidth(actor.getWidth());
+//            }
+            // 2. move all the actor added before up
+            for(Actor one : actors){
+                one.setY( one.getY() + actor.getHeight() + space + spaceAdjust);
             }
+            this.setY( this.getY() - actor.getHeight() - space - spaceAdjust);
+            this.setHeight(this.getHeight() + actor.getHeight() + space + spaceAdjust);
+            actor.setX(0);
+            actor.setY(0);
         } else {
             this.setWidth(actor.getWidth());
             this.setHeight(actor.getHeight());
