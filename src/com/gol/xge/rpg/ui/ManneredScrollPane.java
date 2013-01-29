@@ -90,6 +90,14 @@ public class ManneredScrollPane extends ScrollPane {
               index = (int) Math.rint(nowP/cellSizeHeight);
           }
 //          Gdx.app.log(TAG, "homing index " + index);
+          
+          // avoid out of bounds of array
+          if( index < 0 ){
+              index = 0;
+          } else if( index > lineActors.getChildren().size - 1 ) {
+              index = lineActors.getChildren().size - 1;
+          }
+          
           currentPage = index + 1;
           float targetP  = getIndexPosition(index);
           homing(targetP);
