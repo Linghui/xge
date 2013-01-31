@@ -77,7 +77,7 @@ public class ManneredScrollPane extends ScrollPane {
                 && touched
                 && !this.isFlinging() ){
             touched = false;
-            Gdx.app.log(TAG, "listener touched " + touched);
+//            Gdx.app.log(TAG, "listener touched " + touched);
 
           int index = 0;
           float nowP = 0f;
