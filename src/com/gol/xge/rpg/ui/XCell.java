@@ -87,17 +87,7 @@ public class XCell<T> extends Group implements Checkable{
         AtlasRegion region = alats.findRegion(name);
         if(icon == null){
             icon = new Image(region);
-            
-            if( this.getWidth() > icon.getWidth()){
-
-                icon.setX( (this.getWidth() - icon.getWidth())/2 );
-                icon.setY( (this.getHeight() - icon.getHeight())/2 );   
-            } else {
-                this.setWidth(icon.getWidth());
-                this.setHeight(icon.getHeight());
-                imgB.setWidth(getWidth());
-                imgB.setHeight(getHeight());
-            }
+            resetIconPosition();
             this.addActor(icon);
             icon.toFront();
         } else {
@@ -105,6 +95,22 @@ public class XCell<T> extends Group implements Checkable{
         }
     }
     
+    private void resetIconPosition() {
+
+        if( icon == null ){
+            return;
+        }
+        if( this.getWidth() > icon.getWidth()){
+
+            icon.setX( (this.getWidth() - icon.getWidth())/2 );
+            icon.setY( (this.getHeight() - icon.getHeight())/2 );   
+        } else {
+            this.setWidth(icon.getWidth());
+            this.setHeight(icon.getHeight());
+        }        
+    }
+
+
     public void setChooseFrame(NinePatch patch){
         setChooseFrame( new NinePatchDrawable(patch) );
     }
@@ -134,12 +140,21 @@ public class XCell<T> extends Group implements Checkable{
         resetChooseFrame(pad);
     }
     
-    private void resetChooseFrame(int pad){
+    public void resetChooseFrame(int pad){
 
-        frame.setWidth(this.getWidth() + pad * 2);
-        frame.setHeight(this.getHeight() + pad * 2);
-        frame.setX(-pad);
-        frame.setY(-pad);
+        this.setWidth( imgB.getWidth() + pad * 2);
+        this.setHeight( imgB.getHeight() + pad * 2);
+
+        frame.setWidth(imgB.getWidth() + pad * 2);
+        frame.setHeight(imgB.getHeight() + pad * 2);
+        frame.setX(0);
+        frame.setY(0);
+        
+        imgB.setX( pad );
+        imgB.setY( pad );
+
+        resetIconPosition();
+        
         this.addActor(frame);
         frame.toFront();
         frame.setVisible(false);
