@@ -1,5 +1,8 @@
 package com.gol.xge.rpg.ui;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -7,8 +10,9 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.utils.ActorGestureListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.SnapshotArray;
 
-public class ManneredScrollPane extends ScrollPane {
+public class ManneredScrollPane extends ScrollPane implements PageOperateListener{
 
     private String TAG = "ManneredScrollPane";
 
@@ -16,20 +20,29 @@ public class ManneredScrollPane extends ScrollPane {
     private LineActors lineActors = null;
     private boolean horizontal = false;// by default, add items to bottom, if set to true then add item to the right
     
-    private int currentPage = 1;
+    private int pad = 0;
+    private int currentPage = 0;
     
     private float cellSizeWidth;
 
     private float cellSizeHeight;
     
     private InputListener listener = null;
+    
+    private List<PageUpdateListener> pageListener = new ArrayList<PageUpdateListener>();
 
     private boolean touched = false;
     
     public ManneredScrollPane(int pageSize, boolean isHorizontal) {
+        this(pageSize, isHorizontal, 0);
+    }
+    
+    public ManneredScrollPane(int pageSize, boolean isHorizontal, int pad) {
         super(null);
         
-        lineActors = new LineActors();
+        this.pad = pad;
+        
+        lineActors = new LineActors(this.pad);
         
         if( isHorizontal ){
             lineActors.setLinerDirection(LineActors.DIRECTION_RIGHT);
@@ -98,9 +111,8 @@ public class ManneredScrollPane extends ScrollPane {
               index = lineActors.getChildren().size - 1;
           }
           
-          currentPage = index + 1;
-          float targetP  = getIndexPosition(index);
-          homing(targetP);
+          currentPage = index;
+          gotoPage(currentPage);
         }
     }
     private float getIndexPosition(int index){
@@ -118,24 +130,76 @@ public class ManneredScrollPane extends ScrollPane {
             return;
         }
        
-        if(lineActors.getSize() == 0){                              
+        if(lineActors.getSize() == 0){        
+            cellSizeWidth = actor.getWidth();
+            cellSizeHeight = actor.getHeight();                      
             if(horizontal){
-                cellSizeWidth = actor.getWidth();
-                cellSizeHeight = actor.getHeight();
-                
+                cellSizeWidth += pad;
                 this.setWidth(cellSizeWidth * this.pageSize);
                 this.setHeight(cellSizeHeight);
             } else {
-                cellSizeWidth = actor.getWidth();
-                cellSizeHeight = actor.getHeight();
-                
+                cellSizeHeight += pad;
                 this.setWidth(cellSizeWidth);
                 this.setHeight(cellSizeHeight * this.pageSize);
             }
             
         }
-       
+
         lineActors.addActor(actor);
+        if(horizontal){
+            lineActors.setWidth( lineActors.getWidth() + pad);
+        } else {
+            lineActors.setHeight( lineActors.getHeight() + pad);
+        }
+        triggerPageListener();
+    }
+    
+    public void addPageListener(PageUpdateListener listener){
+        pageListener.add(listener);
+        triggerPageListener();
+    }
+    
+    private void triggerPageListener(){
+        if( pageListener.size() > 0){
+            for(PageUpdateListener one : pageListener){
+                one.update(currentPage, pageSize, getSize());    
+            }
+            
+        }
+    }
+    
+    public int getSize(){
+        return lineActors.getSize();
+    }
+    
+    public Actor getChild(int index){
+        return lineActors.getChildren().get(index);
+    }
+    
+    public SnapshotArray<Actor> getChildren(){
+        return lineActors.getChildren();
+    }
+
+    @Override
+    public void goFrontPage() {
+        gotoPage( this.currentPage - 1);
+    }
+
+    @Override
+    public void goNextPage() {
+        gotoPage( this.currentPage + 1);        
+    }
+
+    @Override
+    public void gotoPage(int page) {
+        if( page < 0
+                || page > getSize() + 1){
+            return;
+        }
+        this.currentPage = page;
+        float targetP  = this.getIndexPosition(page);
+        this.homing(targetP);
+        triggerPageListener();
     }
    
 }
