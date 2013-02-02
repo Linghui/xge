@@ -30,10 +30,12 @@ public class XTable extends Table{
 
     public void click(float x, float y) {
         Actor actor = hit(x, y, true);
-        setAllCellCheck(false);
+        
         if( actor instanceof Checkable){
+            setAllCellCheck(false);
             ((Checkable)actor).setChecked(true);
         } else if(actor instanceof Button){
+            setAllCellCheck(false);
             ((Button)actor).setChecked(true);
         }
         
