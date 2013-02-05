@@ -50,10 +50,12 @@ public class LineActors extends Group {
     
     public void click(float x, float y) {
         Actor actor = hit(x, y, true);
-        setAllButtonsCheck(false);
+        
         if( actor instanceof Checkable){
+            setAllButtonsCheck(false);
             ((Checkable)actor).setChecked(true);
         } else if(actor instanceof Button){
+            setAllButtonsCheck(false);
             ((Button)actor).setChecked(true);
         }
         
@@ -204,8 +206,10 @@ public class LineActors extends Group {
         Actor actor = this.getChildren().get(index);
         if(actor != null){
             if((actor instanceof Button)){
+                setAllButtonsCheck(false);
                 ((Button) actor).setChecked(check);
             } else if(actor instanceof Checkable){
+                setAllButtonsCheck(false);
                 ((Checkable) actor).setChecked(check);
             }
         }

@@ -201,5 +201,8 @@ public class ManneredScrollPane extends ScrollPane implements PageOperateListene
         this.homing(targetP);
         triggerPageListener();
     }
-   
+
+    public LineActors getLineActors() {
+        return lineActors;
+    }
 }
