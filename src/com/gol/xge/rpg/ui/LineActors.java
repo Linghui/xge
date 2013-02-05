@@ -50,12 +50,14 @@ public class LineActors extends Group {
     
     public void click(float x, float y) {
         Actor actor = hit(x, y, true);
-        
+        Gdx.app.log(TAG, " actor " + actor);
+        if( actor == this ){
+            return;
+        }
+        setAllButtonsCheck(false);
         if( actor instanceof Checkable){
-            setAllButtonsCheck(false);
             ((Checkable)actor).setChecked(true);
         } else if(actor instanceof Button){
-            setAllButtonsCheck(false);
             ((Button)actor).setChecked(true);
         }
         
