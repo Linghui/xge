@@ -15,7 +15,7 @@ public class LineActors extends Group {
     private String TAG = "LineActors";
     
     private int space = 0;
-    
+
     private int spaceAdjust = 0;
     
     private PickListener listener = null;
@@ -264,4 +264,8 @@ public class LineActors extends Group {
         }
     }
 
+    public int getSpace() {
+        return space;
+    }
+    
 }
