@@ -18,6 +18,7 @@ import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.ObjectMap.Entry;
 import com.badlogic.gdx.utils.SerializationException;
+import com.gol.xge.rpg.ui.AnimationGroup;
 import com.gol.xge.rpg.ui.AnimationResource;
 
 
@@ -94,18 +95,18 @@ public class Common {
         return keyValues;
     }
     
-    public static HashMap<String, Animation> readAnimationResource(
+    public static AnimationGroup readAnimationGroup(
 
             String jsonFile
             , boolean flipX
             , boolean flipY
             , TextureAtlas atlas
             ){
-                return readAnimationResource(jsonFile, flipX, flipY, atlas, 0.1f);
+                return readAnimationGroup(jsonFile, flipX, flipY, atlas, 0.1f);
 
     }
 
-    public static HashMap<String, Animation> readAnimationResource(
+    public static AnimationGroup readAnimationGroup(
             String jsonFile
             , boolean flipX
             , boolean flipY
@@ -114,15 +115,12 @@ public class Common {
         HashMap<String, Animation> animationHash = new HashMap<String, Animation>();
 //        Gdx.app.log(TAG, "jsonFile -- " + jsonFile );
         FileHandle jsonFileHandle = getFileHandle(jsonFile);
-        String content = jsonFileHandle.readString();
-//        String path = jsonFile.substring(0, jsonFile.lastIndexOf("/"));
         
         Json json = new Json();
         json.setSerializer(AnimationResource.class, new Serializer<AnimationResource>() {
         	public AnimationResource read (Json json, Object jsonData, Class type) {
 				ObjectMap<String, String[]> map = (ObjectMap<String, String []>)jsonData;
-				String url = json.readValue("url", String.class, "", jsonData);
-				return new AnimationResource(url, map);
+				return new AnimationResource(map);
         	}
 
 			@Override
@@ -135,11 +133,9 @@ public class Common {
 		});
         AnimationResource ar = json.fromJson(AnimationResource.class, jsonFileHandle);
         
-        JsonReader jsonParser = new JsonReader();
         ObjectMap actionsObj = ar.getResourceMap();
 //        Gdx.app.log(TAG, "content -- " + content );
         
-        actionsObj.remove("url");
         Iterator<Entry<String, Array<String>>> iter = actionsObj.entries().iterator();
         String defaultActionName = "";
         
@@ -168,7 +164,7 @@ public class Common {
             animationHash.put(actionName, animation);
 //            Gdx.app.log(TAG, "done actionName ||||||||||| ''" + actionName);
         }
-        return animationHash;
+        return new AnimationGroup(animationHash);
     }
     
     public static FileHandle getFileHandle(String uri){
