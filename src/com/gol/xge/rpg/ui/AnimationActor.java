@@ -21,20 +21,12 @@ public class AnimationActor extends Group implements AnimationActionInterface{
     AnimationGroup animationGroup;
     TextureRegion frame;
     
-    private float offsetX;
-    private float offsetY;
-
     public AnimationActor(AnimationGroup animationGroup){
         this(null, animationGroup);
     }
     
     public AnimationActor(String name, AnimationGroup animationGroup){
-        this(name, animationGroup, 0f, 0f);
-    }
-    public AnimationActor(String name, AnimationGroup animationGroup, float offsetX, float offsetY){
         this.setName(name);
-        this.offsetX = offsetX;
-        this.offsetY = offsetY;
         this.animationGroup = animationGroup;
         frame = animationGroup.getKeyFrame(0f);
         this.setWidth(Math.abs(animationGroup.getKeyFrame(0).getRegionWidth()));
@@ -64,7 +56,7 @@ public class AnimationActor extends Group implements AnimationActionInterface{
     public void draw(SpriteBatch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
         batch.setColor(this.getColor().r, this.getColor().g, this.getColor().b, this.getColor().a);
-        batch.draw(frame, this.getX() - offsetX, this.getY() -  offsetY, 
+        batch.draw(frame, this.getX() - animationGroup.getOffsetX(), this.getY() -  animationGroup.getOffsetY(), 
                 this.getOriginX(), this.getOriginY()
                 , this.getWidth(), this.getHeight()
                 , this.getScaleX(), this.getScaleY(), this.getRotation());

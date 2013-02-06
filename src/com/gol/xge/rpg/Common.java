@@ -13,6 +13,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.OrderedMap;
 import com.badlogic.gdx.utils.Json.Serializer;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.ObjectMap;
@@ -119,8 +120,12 @@ public class Common {
         Json json = new Json();
         json.setSerializer(AnimationResource.class, new Serializer<AnimationResource>() {
         	public AnimationResource read (Json json, Object jsonData, Class type) {
+                Float offsetX = json.readValue("offsetX", Float.class, 0f, jsonData);
+                ((OrderedMap)jsonData).remove("offsetX");
+                Float offsetY = json.readValue("offsetY", Float.class, 0f, jsonData);
+                ((OrderedMap)jsonData).remove("offsetY");
 				ObjectMap<String, String[]> map = (ObjectMap<String, String []>)jsonData;
-				return new AnimationResource(map);
+				return new AnimationResource(map, offsetX, offsetY);
         	}
 
 			@Override
@@ -164,7 +169,13 @@ public class Common {
             animationHash.put(actionName, animation);
 //            Gdx.app.log(TAG, "done actionName ||||||||||| ''" + actionName);
         }
-        return new AnimationGroup(animationHash);
+        
+        AnimationGroup group = new AnimationGroup(
+                animationHash
+                , ar.getOffsetX()
+                , ar.getOffsetY()
+                , flipX, flipY);
+        return group;
     }
     
     public static FileHandle getFileHandle(String uri){

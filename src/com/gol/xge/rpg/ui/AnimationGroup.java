@@ -6,7 +6,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.gol.xge.dragonBones.objects.SkeletonAndTextureAtlasData;
@@ -31,10 +30,34 @@ public class AnimationGroup{
 	private TextureRegion keyFrame = null;;
 	public  boolean loop = true;
 	private boolean animationStop = false;
+	
+	private float offsetX = 0f;
+	private float offsetY = 0f;
 
 	public AnimationGroup(HashMap<String, Animation> animationHash){
-	    init(animationHash);
+	    this(animationHash, 0, 0);
 	}
+	
+	public AnimationGroup(HashMap<String, Animation> animationHash, float offsetX, float offsetY){
+	    this(animationHash, offsetX, offsetY, false, false);
+	}
+
+    public AnimationGroup(HashMap<String, Animation> animationHash,
+            float offsetX, float offsetY, boolean flipX, boolean flipY) {
+        init(animationHash);
+        if( flipX ){
+            this.offsetX = this.currentAnimation.getKeyFrame(0).getRegionWidth() - offsetX;
+        } else {
+            this.offsetX = offsetX;    
+        }
+        
+        if( flipY ){
+            this.offsetY = this.currentAnimation.getKeyFrame(0).getRegionHeight() - offsetY;    
+        } else {
+            this.offsetY = offsetY;    
+        }
+        
+    }
 	
 	public AnimationGroup(SkeletonAndTextureAtlasData data) {
 	    
@@ -112,5 +135,21 @@ public class AnimationGroup{
 	public boolean getLoop(){
 		return loop;
 	}
+
+    public float getOffsetX() {
+        return offsetX;
+    }
+
+    public void setOffsetX(float offsetX) {
+        this.offsetX = offsetX;
+    }
+
+    public float getOffsetY() {
+        return offsetY;
+    }
+
+    public void setOffsetY(float offsetY) {
+        this.offsetY = offsetY;
+    }
 
 }
