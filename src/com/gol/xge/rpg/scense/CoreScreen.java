@@ -58,12 +58,12 @@ public abstract class CoreScreen implements Screen, InputProcessor {
         CoreScreen.width = width;
         CoreScreen.height = height;
         
-        rootStage = new Stage(CoreScreen.width, CoreScreen.height, false);
+        rootStage = new Stage(CoreScreen.width, CoreScreen.height, true);
         
         topGroup = new Group();
         rootStage.addActor(topGroup);
         
-        backgroundStage = new Stage(CoreScreen.width, CoreScreen.height, false);
+        backgroundStage = new Stage(CoreScreen.width, CoreScreen.height, true);
     }
     
 
@@ -80,6 +80,11 @@ public abstract class CoreScreen implements Screen, InputProcessor {
         cam = (OrthographicCamera) this.getCamera();
         cam.position.x = CoreScreen.width/2;
         cam.position.y = CoreScreen.height/2;
+        
+        rootStage.getCamera().position.x = CoreScreen.width/2;
+        rootStage.getCamera().position.y = CoreScreen.height/2;
+//        cam.viewportWidth = rootStage.getWidth() - rootStage.getGutterWidth()*2;
+//        cam.viewportHeight = rootStage.getHeight() - rootStage.getGutterHeight() * 2;
     }
     
     public Vector2 toBackgroudStageCoordinates(int x, int y){
