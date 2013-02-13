@@ -33,6 +33,9 @@ public class ManneredScrollPane extends ScrollPane implements PageOperateListene
 
     private boolean touched = false;
     
+    private float realY = 0f;
+    private float adjustY = 0f;
+    
     public ManneredScrollPane(int pageSize, boolean isHorizontal) {
         this(pageSize, isHorizontal, 0);
     }
@@ -150,10 +153,40 @@ public class ManneredScrollPane extends ScrollPane implements PageOperateListene
             lineActors.setWidth( lineActors.getWidth() + pad);
         } else {
             lineActors.setHeight( lineActors.getHeight() + pad);
+            if( lineActors.getChildren().size < this.pageSize ){
+                int dis = this.pageSize - lineActors.getChildren().size;
+                adjustY = ( cellSizeHeight * dis ) + pad * ( dis - 1);
+            } else {
+                adjustY = 0f;
+            }
+            super.setY( realY );
         }
         triggerPageListener();
     }
     
+    @Override
+    public void setY( float y ){
+        super.setY(y);
+        if( horizontal ){
+            super.setY(y);
+        } else {
+            if( realY == 0f )
+                realY = y;
+            super.setY( realY + adjustY );
+        }
+    }
+    
+//    @Override
+//    public void validate () {
+//        super.validate();
+//        Gdx.app.log(TAG, "validate");
+//        if( this.getChildren().size < this.pageSize ){
+//            lineActors.setY( 200 );
+//        } else {
+//            lineActors.setY( 0 );
+//        }
+//    }
+//    
     public void addPageListener(PageUpdateListener listener){
         pageListener.add(listener);
         triggerPageListener();

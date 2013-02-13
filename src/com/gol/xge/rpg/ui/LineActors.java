@@ -50,7 +50,7 @@ public class LineActors extends Group {
     
     public void click(float x, float y) {
         Actor actor = hit(x, y, true);
-        Gdx.app.log(TAG, " actor " + actor);
+//        Gdx.app.log(TAG, " actor " + actor);
         if( actor == this ){
             return;
         }
