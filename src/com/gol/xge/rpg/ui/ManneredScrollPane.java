@@ -155,25 +155,46 @@ public class ManneredScrollPane extends ScrollPane implements PageOperateListene
             lineActors.setHeight( lineActors.getHeight() + pad);
             if( lineActors.getChildren().size < this.pageSize ){
                 int dis = this.pageSize - lineActors.getChildren().size;
+                Gdx.app.log(TAG, "dis " + dis + " cellSizeHeight " + cellSizeHeight);
                 adjustY = ( cellSizeHeight * dis ) + pad * ( dis - 1);
+                Gdx.app.log(TAG, "adjustY " + adjustY);
             } else {
                 adjustY = 0f;
             }
-            super.setY( realY );
         }
         triggerPageListener();
     }
     
+    public void setRealY( float y ){
+        this.realY = y;
+        this.setY(realY);
+    }
+    
+    /*
+     * (non-Javadoc)
+     * @see com.badlogic.gdx.scenes.scene2d.Actor#setY(float)
+     * 这里使用方法特殊，当滚动设置为上下滚动，并且元素数量少于每页显示数量的时候，一定要显示给定一个》0的y值
+     * 否则坐标计算会出现误差, 或者当坐标出现误差后，使用setRealY来进行调整
+     */
     @Override
     public void setY( float y ){
-        super.setY(y);
         if( horizontal ){
             super.setY(y);
         } else {
-            if( realY == 0f )
-                realY = y;
-            super.setY( realY + adjustY );
+            if( lineActors.getChildren().size < this.pageSize ){
+                if( realY == 0 ){
+                    realY = y;
+                }
+                super.setY( realY + adjustY );
+            } else {
+                super.setY(y);
+            }
         }
+    }
+    
+    @Override
+    public void clear(){
+        lineActors.clear();
     }
     
 //    @Override
