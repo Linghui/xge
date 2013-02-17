@@ -1,5 +1,5 @@
 #!/usr/bin/perl -w
-# for generate XPanel children
+# 去重复字
 
 use strict;
 use warnings;
