@@ -6,24 +6,43 @@ use warnings;
 
 use Encode;
 use Encode::CN;
-my %hash = ();
 
-my @all_lines = ();
-
-while(<>){
-    chomp;
-    push @all_lines, $_;
+if( scalar(@ARGV) <= 0 ){
+    die "Error: Need File Name input\n";
 }
 
-for my $line (@all_lines){
-    Encode::_utf8_on($line); 
-    for( my $index = 0; $index < length $line; $index++ ){
-        my $one = substr $line, $index, 1;
-        $hash{$one}++;
+for(@ARGV){
+    &process_one($_);
+}
+
+
+sub process_one(){
+    
+    my $file_name = shift;
+    
+    open RED, "$file_name" or die "Error: open file error $@";
+    my @all_lines = <RED>;
+    chomp @all_lines;
+    close RED;
+    my %hash = ();
+
+    
+    for my $line (@all_lines){
+        Encode::_utf8_on($line);
+        for( my $index = 0; $index < length $line; $index++ ){
+            my $one = substr $line, $index, 1;
+            $hash{$one}++;
+        }
     }
-}
+    
+    my $output_file_name = $file_name;
+    $output_file_name =~ s/\./_res\./g;
+    
+    open WRT, ">$output_file_name" or die "Error: open file error $@";
+    print WRT keys %hash;    
+    close WRT;
 
-print keys %hash;
-print "\n";
-print STDERR scalar( keys %hash );
-print "\n";
+    print "\n";
+    print STDERR "$file_name : ", scalar( keys %hash );
+    print "\n";
+}
