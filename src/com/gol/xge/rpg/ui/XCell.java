@@ -23,7 +23,7 @@ public class XCell<T> extends Group implements Checkable{
     private Image imgB = null;
     private Image frame = null;
     protected Image icon = null;
-    private T object = null;
+    protected T object = null;
     public static final String backgroundName = "imgB";
 
     private final int defaultPad = 1;
