@@ -193,6 +193,21 @@ public class ManneredScrollPane extends ScrollPane implements PageOperateListene
     }
     
     @Override
+    public void setWidth (float width) {
+        super.setWidth(width);
+        if( lineActors != null)
+            lineActors.setWidth(width);
+    }
+    
+    @Override
+    public void setHeight (float height) {
+        super.setHeight(height);
+        if( lineActors != null)
+            lineActors.setHeight(height);
+    }
+    
+    
+    @Override
     public void clear(){
         lineActors.clear();
     }
