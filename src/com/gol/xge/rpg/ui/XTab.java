@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -55,7 +56,12 @@ public class XTab extends Group {
         
         for(int index = 0; index < this.totalTabNumber; index++){
             TextButton tabButton = new TextButton(tabNames.get(index)
-                    , skin.get("toggle", TextButtonStyle.class));
+                    , skin.get("toggle", TextButtonStyle.class)){
+                
+                public Actor hit (float x, float y, boolean touchable) {
+                    return x >= 0 && x < this.getWidth() && y >= 0 && y < this.getHeight() ? this : null;
+                }
+            };
             tabButton.setName(tabButtonPreffix + index);
             
             tabs.addActor(tabButton);
@@ -77,9 +83,13 @@ public class XTab extends Group {
 //            panelGroup.addActor(debugB);
             
             this.addActor(panelGroup);
+            Gdx.app.log(TAG, " tabButton " + tabButton.getListeners().size );
+            
+            // we do not need its origin listener anymore
+            // it can involve some defect which make two tab can be choosed in the same time.
+            tabButton.removeListener(tabButton.getListeners().get(0)); 
             
             final int page = index;
-            
             tabButton.addListener(new InputListener(){
                 public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
                     showTab(page);
