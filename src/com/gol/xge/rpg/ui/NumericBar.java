@@ -248,9 +248,11 @@ public class NumericBar extends Group{
         if(topRegion != null){
             topRegion.setRegion(topRegion, 0, 0, (int)width, topRegion.getRegionHeight());
         } 
+        if( width < topBar.getDrawable().getMinWidth() ){
+            width = topBar.getDrawable().getMinWidth();
+        }
         topBar.setWidth(width);
         topBar.layout();
-
         
         for( Image cover : this.topCovers){
             cover.setWidth(topBar.getWidth());
