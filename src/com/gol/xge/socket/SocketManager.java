@@ -30,7 +30,7 @@ public class SocketManager {
 	private InOutPutInterface inOutPutInterface = null;
 
 	public SocketManager(String HOST, int PORT) {
-	    worldSocket = connectToServer(HOST, PORT);
+	    connectToServer(HOST, PORT);
 	}
 	
 	public SocketManager() {
@@ -104,18 +104,17 @@ public class SocketManager {
 	    this.inOutPutInterface = inOutPutInterface;
 	}
 
-	private Socket connectToServer(String HOST, int PORT) {
+	private void connectToServer(String HOST, int PORT) {
 
 		sendListener = null;
 		System.out.println(TAG + ": ConnectToServer start !");
-		Socket socket = null;
 		try {
-		    socket = new Socket(HOST, PORT);
+		    worldSocket = new Socket(HOST, PORT);
 			System.out.println(TAG + ": Connected ToServer " + HOST);
 
 			// if world listener is not running, start it
 			if (sendListener == null) {
-				sendListener = new ServerListener(socket);
+				sendListener = new ServerListener(worldSocket);
 				new Thread(sendListener).start();
 				System.out.println(TAG + ":serverListener start !");
 			}
@@ -125,7 +124,13 @@ public class SocketManager {
 
 		System.out.println(TAG + ": ConnectToServer end !");
 
-		return socket;
+	}
+	
+	public boolean status(){
+	    if( worldSocket == null ){
+	        return false;
+	    }
+	    return worldSocket.isConnected();
 	}
 
 	public void disConnectToWorldServer() {
