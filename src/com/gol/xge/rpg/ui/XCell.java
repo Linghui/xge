@@ -20,7 +20,7 @@ public class XCell<T> extends Group implements Checkable{
     private String TAG = "XCell";
     
     private TextureAtlas alats = null;
-    private Image imgB = null;
+    protected Image imgB = null;
     private Image frame = null;
     protected Image icon = null;
     protected T object = null;
