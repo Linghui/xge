@@ -7,6 +7,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -18,6 +19,7 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.utils.Disposable;
 import com.gol.xge.rpg.ui.AnimationActor;
 import com.gol.xge.rpg.ui.AnimationGroup;
@@ -179,6 +181,46 @@ public abstract class CoreScreen implements Screen, InputProcessor {
     
     public Game getGame(){
         return game;
+    }
+    
+    public float getRootWidth(){
+        return rootStage.getWidth();
+    }
+    
+    public float getRootHeight(){
+        return rootStage.getHeight();
+    }
+    
+    public void setCover(Drawable patch){
+        float gutterWidth = rootStage.getGutterWidth();
+        if( gutterWidth != 0){
+            Image leftGutter = new Image(patch);
+            leftGutter.setWidth(gutterWidth);
+            leftGutter.setHeight(rootStage.getHeight());
+            leftGutter.setX( - gutterWidth );
+            rootStage.addActor(leftGutter);
+
+            Image rightGutter = new Image(patch);
+            rightGutter.setWidth(gutterWidth);
+            rightGutter.setHeight(rootStage.getHeight());
+            rightGutter.setX( rootStage.getWidth() - gutterWidth * 2  );
+            rootStage.addActor(rightGutter);
+        }
+        float gutterHeight = rootStage.getGutterHeight();
+        
+        if( gutterHeight != 0 ){
+            Image bottomGutter = new Image(patch);
+            bottomGutter.setWidth(rootStage.getWidth());
+            bottomGutter.setHeight(gutterHeight);
+            bottomGutter.setY(-gutterHeight);
+            rootStage.addActor(bottomGutter);
+
+            Image topGutter = new Image(patch);
+            topGutter.setWidth(rootStage.getWidth());
+            topGutter.setHeight(gutterHeight);
+            topGutter.setY( rootStage.getHeight() - gutterHeight * 2 );
+            rootStage.addActor(topGutter);
+        }
     }
 
     @Override
