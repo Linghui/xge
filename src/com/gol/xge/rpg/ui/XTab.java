@@ -284,6 +284,8 @@ public class XTab extends Group {
         Actor actor = this.findActor(panelPreffix + pageNumber);
         actor.setVisible(true);
         actor.toFront();
+        
+        tabs.setButtonCheck(pageNumber, true);
     }   
     
     public void hideAllTabs(){
