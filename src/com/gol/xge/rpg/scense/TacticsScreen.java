@@ -190,7 +190,7 @@ public class NPC extends AnimationActor {
             }
         }
         last.set(x, y, 0);
-        return false;
+        return true;
     }
 
 
