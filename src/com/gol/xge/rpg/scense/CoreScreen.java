@@ -316,6 +316,10 @@ public abstract class CoreScreen implements Screen, InputProcessor {
         this.lockEvent = false;
     }
     
+    public boolean isEventLock(){
+        return this.lockEvent;
+    }
+    
     @Override
     public boolean touchDown(int x, int y, int pointer, int button) {
         if( lockEvent){
