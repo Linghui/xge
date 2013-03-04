@@ -47,6 +47,8 @@ public abstract class CoreScreen implements Screen, InputProcessor {
     private   Group topGroup;
 
     private   Stage backgroundStage; // stage for background, like tiled map,  
+    
+    private boolean lockEvent = false;
 
     // all value below is usd to deal with view and leading role movement
     protected OrthographicCamera cam;
@@ -306,9 +308,20 @@ public abstract class CoreScreen implements Screen, InputProcessor {
         return true;
     }
 
+    public void disableEvent(){
+        this.lockEvent = true;
+    }
+    
+    public void enableEvent(){
+        this.lockEvent = false;
+    }
     
     @Override
     public boolean touchDown(int x, int y, int pointer, int button) {
+        if( lockEvent){
+            return true;
+        }
+        
 //        Gdx.app.log(TAG, "x - " + x + " : y - " + y);
         if(!rootStage.touchDown(x, y, pointer, button)){
             if(!this.backgroundStage.touchDown(x, y, pointer, button)){
@@ -321,6 +334,10 @@ public abstract class CoreScreen implements Screen, InputProcessor {
 
     @Override
     public boolean touchUp(int x, int y, int pointer, int button) {
+        if( lockEvent){
+            return true;
+        }
+        
         if(!rootStage.touchUp(x, y, pointer, button)){
             return backgroundStage.touchUp(x, y, pointer, button);
         }
@@ -330,6 +347,10 @@ public abstract class CoreScreen implements Screen, InputProcessor {
 
     @Override
     public boolean touchDragged(int x, int y, int pointer) {
+        if( lockEvent){
+            return true;
+        }
+        
         if( ! rootStage.touchDragged(x, y, pointer) ){
             backgroundStage.touchDragged(x, y, pointer);
             return false;
