@@ -76,6 +76,7 @@ public class SocketManager {
 				    }
 				    byte[] message = inOutPutInterface.getNextMessage();
 					if (message != null) {
+					    System.out.print("SocketManager write message " + message);
 					    output.write(message);
 					    output.flush();
 					}
