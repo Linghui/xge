@@ -173,7 +173,7 @@ public class NPC extends AnimationActor {
             delta.sub(curr);
             cam.position.add(delta.x, delta.y, 0);
             
-            if( this.getBackgroundWidth() > CoreScreen.width){
+            if( this.getBackgroundWidth() >= CoreScreen.width){
                 if(cam.position.x < CoreScreen.width/2){
                     cam.position.x = CoreScreen.width/2;
                 } else if ( cam.position.x > this.getBackgroundWidth() - CoreScreen.width/2){
@@ -181,7 +181,7 @@ public class NPC extends AnimationActor {
                 }
             }
             
-            if( this.getBackgroundHeight() > CoreScreen.height ){
+            if( this.getBackgroundHeight() >= CoreScreen.height ){
                 if( cam.position.y < CoreScreen.height/2 ){
                     cam.position.y = CoreScreen.height/2;
                 } else if( cam.position.y > this.getBackgroundHeight() - CoreScreen.height/2 ) {
