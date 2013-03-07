@@ -83,7 +83,7 @@ public class SocketManager {
 					if (new InputStreamReader(input).ready()) {
 					    inOutPutInterface.onRead(input);
 					}
-					Thread.sleep(100);
+					Thread.sleep(10);
 
 				}
 
