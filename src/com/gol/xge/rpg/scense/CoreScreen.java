@@ -7,24 +7,16 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Event;
-import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.utils.Disposable;
-import com.gol.xge.rpg.ui.AnimationActor;
-import com.gol.xge.rpg.ui.AnimationGroup;
-import com.gol.xge.socket.listener.InOutPutInterface;
 
 /*
  * 横版类游戏父类
@@ -59,7 +51,7 @@ public abstract class CoreScreen implements Screen, InputProcessor {
     }
     
     public CoreScreen(Game game, int width, int height){
-        this.game = game;
+        CoreScreen.game = game;
         CoreScreen.width = width;
         CoreScreen.height = height;
         
@@ -318,6 +310,14 @@ public abstract class CoreScreen implements Screen, InputProcessor {
             return this.backgroundStage.keyTyped(character);
         }
         return true;
+    }
+    
+    public void disableBackground(){
+        this.backgroundStage.getRoot().setTouchable(Touchable.disabled);
+    }
+    
+    public void enableBackground(){
+        this.backgroundStage.getRoot().setTouchable(Touchable.enabled);
     }
 
     public void disableEvent(){
