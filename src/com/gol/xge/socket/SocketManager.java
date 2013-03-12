@@ -28,6 +28,8 @@ public class SocketManager {
 	private ServerListener sendListener = null;
 	
 	private InOutPutInterface inOutPutInterface = null;
+	
+	private final int socketSleepTime = 50;
 
 	public SocketManager(String HOST, int PORT) {
 	    connectToServer(HOST, PORT);
@@ -78,7 +80,7 @@ public class SocketManager {
 					if (new InputStreamReader(input).ready()) {
 					    inOutPutInterface.onRead(input);
 					}
-					Thread.sleep(10);
+					Thread.sleep(socketSleepTime);
 
 				}
 
