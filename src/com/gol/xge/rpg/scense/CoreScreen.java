@@ -7,23 +7,16 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Event;
-import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.utils.Disposable;
-import com.gol.xge.rpg.ui.AnimationActor;
-import com.gol.xge.rpg.ui.AnimationGroup;
-import com.gol.xge.socket.listener.InOutPutInterface;
 
 /*
  * 横版类游戏父类
@@ -44,7 +37,7 @@ public abstract class CoreScreen implements Screen, InputProcessor {
     
     private   Stage rootStage;       // stage for things controlled by user, like player, menu, control button
                                      // which are relative static with screen
-    private   Group topGroup;
+    private   Group bottom;
 
     private   Stage backgroundStage; // stage for background, like tiled map,  
     
@@ -58,14 +51,14 @@ public abstract class CoreScreen implements Screen, InputProcessor {
     }
     
     public CoreScreen(Game game, int width, int height){
-        this.game = game;
+        CoreScreen.game = game;
         CoreScreen.width = width;
         CoreScreen.height = height;
         
         rootStage = new Stage(CoreScreen.width, CoreScreen.height, true);
         
-        topGroup = new Group();
-        rootStage.addActor(topGroup);
+        bottom = new Group();
+        rootStage.addActor(bottom);
         
         backgroundStage = new Stage(CoreScreen.width, CoreScreen.height, true);
     }
@@ -139,19 +132,30 @@ public abstract class CoreScreen implements Screen, InputProcessor {
         Gdx.app.log(TAG, "!!!!!x - " + x + " : y - " + y);
     }
     
+    // ui like alert dialog added to this layer
     public void addActorTop(Actor actor){
-        this.topGroup.addActor(actor);
-        topGroup.toFront();
+        this.rootStage.addActor(actor);
+        bottom.toBack();
     }
     
+    // most of the main ui added to this layer
     public void addActorBottom(Actor actor){
-        this.rootStage.addActor(actor);
-        topGroup.toFront();
+        this.bottom.addActor(actor);
+        bottom.toBack();
     }
     
     public void addActorBackground(Actor actor){
         this.backgroundStage.addActor(actor);
     }
+    
+    public void setBottomTouchable(Touchable touchable){
+        bottom.setTouchable(touchable);
+    }
+    
+    public void setBackgroundTouchable(Touchable touchable){
+        backgroundStage.getRoot().setTouchable(touchable);
+    }
+    
     
     public Actor findActorBackground(int id){
         return this.findActorBackground(id + "");
@@ -306,6 +310,14 @@ public abstract class CoreScreen implements Screen, InputProcessor {
             return this.backgroundStage.keyTyped(character);
         }
         return true;
+    }
+    
+    public void disableBackground(){
+        this.backgroundStage.getRoot().setTouchable(Touchable.disabled);
+    }
+    
+    public void enableBackground(){
+        this.backgroundStage.getRoot().setTouchable(Touchable.enabled);
     }
 
     public void disableEvent(){
