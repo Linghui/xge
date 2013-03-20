@@ -52,14 +52,15 @@ public class AnimationActor extends Group implements AnimationActionInterface{
         
         frame = animationGroup.getKeyFrame(delta);
     }
+    
     @Override
     public void draw(SpriteBatch batch, float parentAlpha) {
-        super.draw(batch, parentAlpha);
         batch.setColor(this.getColor().r, this.getColor().g, this.getColor().b, this.getColor().a);
         batch.draw(frame, this.getX() - animationGroup.getOffsetX(), this.getY() -  animationGroup.getOffsetY(), 
                 this.getOriginX(), this.getOriginY()
                 , this.getWidth(), this.getHeight()
                 , this.getScaleX(), this.getScaleY(), this.getRotation());
+        super.draw(batch, parentAlpha);
     }
     
     @Override
