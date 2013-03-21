@@ -37,25 +37,12 @@ public class AnimationGroup{
 	public AnimationGroup(HashMap<String, Animation> animationHash){
 	    this(animationHash, 0, 0);
 	}
-	
-	public AnimationGroup(HashMap<String, Animation> animationHash, float offsetX, float offsetY){
-	    this(animationHash, offsetX, offsetY, false, false);
-	}
 
     public AnimationGroup(HashMap<String, Animation> animationHash,
-            float offsetX, float offsetY, boolean flipX, boolean flipY) {
+            float offsetX, float offsetY) {
         init(animationHash);
-        if( flipX ){
-            this.offsetX = this.currentAnimation.getKeyFrame(0).getRegionWidth() - offsetX;
-        } else {
-            this.offsetX = offsetX;    
-        }
-        
-        if( flipY ){
-            this.offsetY = this.currentAnimation.getKeyFrame(0).getRegionHeight() - offsetY;    
-        } else {
-            this.offsetY = offsetY;    
-        }
+        this.offsetX = offsetX;    
+        this.offsetY = offsetY;    
         
     }
 	
