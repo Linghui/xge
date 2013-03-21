@@ -83,6 +83,10 @@ public class AnimationActor extends Group implements AnimationActionInterface{
         return x > 0 && x < this.getWidth() && y > 0 && y < this.getHeight() ? this : null;
     }
     
+    public boolean getFlipX(){
+        return this.flipX;
+    }
+    
     public void setFlipX( boolean flipX ){
         this.flipX = flipX;
     }
