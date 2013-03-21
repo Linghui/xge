@@ -21,13 +21,17 @@ public class AnimationActor extends Group implements AnimationActionInterface{
     AnimationGroup animationGroup;
     TextureRegion frame;
     
+    private boolean flipX = false;
+    
     public AnimationActor(AnimationGroup animationGroup){
-        this(null, animationGroup);
+        this(null, animationGroup, false);
     }
     
-    public AnimationActor(String name, AnimationGroup animationGroup){
+    public AnimationActor(String name, AnimationGroup animationGroup, boolean flipX){
         this.setName(name);
         this.animationGroup = animationGroup;
+        this.flipX = flipX;
+        
         frame = animationGroup.getKeyFrame(0f);
         this.setWidth(Math.abs(animationGroup.getKeyFrame(0).getRegionWidth()));
         this.setHeight(Math.abs(animationGroup.getKeyFrame(0).getRegionHeight()));
@@ -51,6 +55,17 @@ public class AnimationActor extends Group implements AnimationActionInterface{
         super.act(delta);
         
         frame = animationGroup.getKeyFrame(delta);
+        
+        if( flipX ){
+            if( ! frame.isFlipX() ){
+                frame.flip(true, false);
+            }
+        } else {
+            if( frame.isFlipX() ){
+                frame.flip(true, false);
+            }
+        }
+        
     }
     
     @Override
@@ -66,6 +81,10 @@ public class AnimationActor extends Group implements AnimationActionInterface{
     @Override
     public Actor hit (float x, float y, boolean touchable) {
         return x > 0 && x < this.getWidth() && y > 0 && y < this.getHeight() ? this : null;
+    }
+    
+    public void setFlipX( boolean flipX ){
+        this.flipX = flipX;
     }
     
     public void setAction(String actionName){

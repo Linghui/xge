@@ -99,18 +99,14 @@ public class Common {
     public static AnimationGroup readAnimationGroup(
 
             String jsonFile
-            , boolean flipX
-            , boolean flipY
             , TextureAtlas atlas
             ){
-                return readAnimationGroup(jsonFile, flipX, flipY, atlas, 0.1f);
+                return readAnimationGroup(jsonFile, atlas, 0.1f);
 
     }
 
     public static AnimationGroup readAnimationGroup(
             String jsonFile
-            , boolean flipX
-            , boolean flipY
             , TextureAtlas atlas
             , float speed){
         HashMap<String, Animation> animationHash = new HashMap<String, Animation>();
@@ -158,7 +154,6 @@ public class Common {
                 String id = element;
 //                Gdx.app.log(TAG, "getting ||||||||||| 'id'" + id);
                 TextureRegion one = atlas.createSprite(id);
-                one.flip(flipX, flipY);
                 actionAnimation.add(one);
             }
             TextureRegion[] regions = new TextureRegion[actionAnimation.size()];
@@ -173,8 +168,7 @@ public class Common {
         AnimationGroup group = new AnimationGroup(
                 animationHash
                 , ar.getOffsetX()
-                , ar.getOffsetY()
-                , flipX, flipY);
+                , ar.getOffsetY());
         return group;
     }
     
