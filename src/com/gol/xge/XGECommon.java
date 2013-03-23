@@ -18,6 +18,6 @@ public class XGECommon {
         if( fh == null ){
             return null;
         }
-        return fh.readString();
+        return fh.readString("UTF-8");
     }
 }
