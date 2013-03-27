@@ -25,6 +25,7 @@ public class XCell<T> extends Group implements Checkable{
     protected Image icon = null;
     protected T object = null;
     public static final String backgroundName = "imgB";
+    public final String iconName = "icon";
 
     private final int defaultPad = 1;
     
@@ -87,6 +88,7 @@ public class XCell<T> extends Group implements Checkable{
         AtlasRegion region = alats.findRegion(name);
         if(icon == null){
             icon = new Image(region);
+            icon.setName(iconName);
             resetIconPosition();
             this.addActor(icon);
             icon.toFront();
