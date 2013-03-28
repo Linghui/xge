@@ -108,7 +108,7 @@ public class AnimationGroup{
 	        keyFrame = currentAnimation.getKeyFrame(currentFrameTime, loop);
 	    }
 //	    Gdx.app.log("group", "loop = " + loop + " currentFrameTime = " + currentFrameTime + " timeOut = " + timeOut);
-	    if(loop == false && currentFrameTime > timeOut && timeOut != 0f){
+	    if(loop == false && currentFrameTime >= timeOut && timeOut != 0f){
 	        timeOut = 0f;
             isDone = true;
 	    }

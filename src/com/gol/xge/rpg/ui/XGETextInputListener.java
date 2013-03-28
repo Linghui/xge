@@ -30,7 +30,7 @@ public class XGETextInputListener extends InputListener {
                 
             }
             
-        }, title, "");
+        }, title + "(点击输入)", "");
         return true;
     }
 }
