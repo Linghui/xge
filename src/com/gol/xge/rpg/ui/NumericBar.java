@@ -21,12 +21,16 @@ public class NumericBar extends Group{
     private int baseNum   = 0;
     private int statusNum = 0;
     private float topBarMaxWidth = 0;
+    private float padXPix = 0f;
+    private float padYPix = 0f;
     
     private TextureRegion topRegion;
     private boolean isPersent = false;;
     
     private final static float DEFAULT_X_PIX = 2;
     private final static float DEFAULT_Y_PIX = 2;
+    
+    private boolean left = true;
     
     private Array<Image> topCovers = new Array<Image>();
     
@@ -89,7 +93,6 @@ public class NumericBar extends Group{
 //            label.setAlignment(Align.CENTER, Align.CENTER);
             label.setAlignment(Align.center);
             this.addActor(label);
-            
         }
     }
     
@@ -130,6 +133,15 @@ public class NumericBar extends Group{
         this.setStatusNum(statusNum);
         
         this.setSize(backgroundBar.getWidth(), backgroundBar.getHeight());
+    }
+    
+    public void setAlignment( boolean isLeft ){
+        this.left = isLeft;
+        setTopBarWid(topBar.getWidth());
+    }
+    
+    public void backToTop(){
+        backgroundBar.toFront();
     }
     
 //    public void set
@@ -254,9 +266,16 @@ public class NumericBar extends Group{
         topBar.setWidth(width);
         topBar.layout();
         
+        if( this.left ){
+            topBar.setX(padXPix); 
+        } else {
+            topBar.setX(this.getWidth() - topBar.getWidth() - padXPix);
+        }
+        
         for( Image cover : this.topCovers){
             cover.setWidth(topBar.getWidth());
             cover.layout();
+            cover.setX(topBar.getX()); 
         }
     }
     
@@ -274,6 +293,8 @@ public class NumericBar extends Group{
         backgroundBar.setHeight(height);
         backgroundBar.layout();
         
+        this.padXPix = padXPix;
+        this.padYPix = padYPix;
         topBar.setX(padXPix); 
         topBar.setY(padYPix); 
         topBarMaxWidth  =  width - padXPix * 2;
