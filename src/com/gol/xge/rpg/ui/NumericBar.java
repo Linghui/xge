@@ -18,8 +18,8 @@ public class NumericBar extends Group{
     private Image topBar;
     private Label label;
     
-    private int baseNum   = 0;
-    private int statusNum = 0;
+    private long baseNum   = 0;
+    private long statusNum = 0;
     private float topBarMaxWidth = 0;
     private float padXPix = 0f;
     private float padYPix = 0f;
@@ -39,12 +39,12 @@ public class NumericBar extends Group{
     }
 
     public NumericBar(NinePatch background, NinePatch top, int width, int height,
-            int statusNum, int baseNum){
+    		long statusNum, long baseNum){
         this(background, top, width, height, statusNum, baseNum, null);
     }
 
     public NumericBar(NinePatch background, NinePatch top, int width, int height, 
-            int statusNum, int baseNum, LabelStyle style){
+    		long statusNum, long baseNum, LabelStyle style){
 
         backgroundBar = new Image(background);
         topBar = new Image(top);
@@ -66,10 +66,10 @@ public class NumericBar extends Group{
             
         }
     }
-    public NumericBar(TextureRegion backgroupRegion, TextureRegion topRegion,int statusNum, int baseNum){
+    public NumericBar(TextureRegion backgroupRegion, TextureRegion topRegion,long statusNum, long baseNum){
         this(backgroupRegion,topRegion,statusNum,baseNum,null);
     }
-    public NumericBar(TextureRegion backgroupRegion, TextureRegion topRegion,int statusNum, int baseNum, LabelStyle style){
+    public NumericBar(TextureRegion backgroupRegion, TextureRegion topRegion,long statusNum, long baseNum, LabelStyle style){
         this.topRegion = topRegion;
         
         backgroundBar = new Image(backgroupRegion);
@@ -101,19 +101,19 @@ public class NumericBar extends Group{
     }
     
     public NumericBar(Drawable background, Drawable top
-            , int statusNum, int baseNum){
+            , long statusNum, long baseNum){
         this(background, top, statusNum, baseNum, DEFAULT_X_PIX, DEFAULT_Y_PIX);
     }
 
     public NumericBar(Drawable background, Drawable top
-            , int statusNum, int baseNum
+            , long statusNum, long baseNum
             , float padXPix, float padYPix){
         this(background, top, 0, 0, statusNum, baseNum, padXPix, padYPix);
     }
     
     public NumericBar(Drawable background, Drawable top
             , int width, int height
-            , int statusNum, int baseNum
+            , long statusNum, long baseNum
             , float padXPix, float padYPix){
 
         backgroundBar = new Image(background);
@@ -198,7 +198,7 @@ public class NumericBar extends Group{
         
     }
 
-    public void setStatusNum(int statusNum){
+    public void setStatusNum(long statusNum){
         //Gdx.app.log(TAG, "statusNum - " + statusNum);
         if(baseNum <= 0 ){
             // TODO: error 
@@ -223,11 +223,11 @@ public class NumericBar extends Group{
         
     }
 
-    public int getStatusNum(){
+    public long getStatusNum(){
         return this.statusNum;
     }
     
-    public void setBaseNum(int baseNum){
+    public void setBaseNum(long baseNum){
         if(baseNum < 0){
             // TODO: error 
             Gdx.app.log(TAG, "setBaseNum error ");
@@ -237,7 +237,7 @@ public class NumericBar extends Group{
         this.baseNum = baseNum;
     }
     
-    public int getBaseNum(){
+    public long getBaseNum(){
         return this.baseNum;
     }
     
