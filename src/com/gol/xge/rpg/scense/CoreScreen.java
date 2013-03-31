@@ -276,12 +276,6 @@ public abstract class CoreScreen implements Screen, InputProcessor {
 
     @Override
     public boolean keyDown(int keycode) {
-        
-        if(keycode == 4  // back button
-                || keycode == 29){ // button a , for testing
-            this.callBack();
-            return false;
-        }
         if(!rootStage.keyDown(keycode)){
             return this.backgroundStage.keyDown(keycode);
         }
