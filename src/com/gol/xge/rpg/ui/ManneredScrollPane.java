@@ -8,13 +8,11 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
-import com.badlogic.gdx.scenes.scene2d.utils.ActorGestureListener;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.SnapshotArray;
 
 public class ManneredScrollPane extends ScrollPane implements PageOperateListener{
 
-    private String TAG = "ManneredScrollPane";
+//    private String TAG = "ManneredScrollPane";
 
     private int pageSize = 1;           // pageSize 是一个窗口现实几个actor
     private LineActors lineActors = null;
@@ -155,12 +153,12 @@ public class ManneredScrollPane extends ScrollPane implements PageOperateListene
             lineActors.setHeight( lineActors.getHeight() + pad);
             if( lineActors.getChildren().size < this.pageSize ){
                 int dis = this.pageSize - lineActors.getChildren().size;
-                Gdx.app.log(TAG, "dis " + dis + " cellSizeHeight " + cellSizeHeight);
+//                Gdx.app.log(TAG, "dis " + dis + " cellSizeHeight " + cellSizeHeight);
                 adjustY = ( cellSizeHeight * dis ) + pad * ( dis - 1);
-                Gdx.app.log(TAG, "adjustY " + adjustY);
             } else {
                 adjustY = 0f;
             }
+//            Gdx.app.log(TAG, "adjustY " + adjustY);
         }
         triggerPageListener();
     }
@@ -173,7 +171,8 @@ public class ManneredScrollPane extends ScrollPane implements PageOperateListene
     /*
      * (non-Javadoc)
      * @see com.badlogic.gdx.scenes.scene2d.Actor#setY(float)
-     * 这里使用方法特殊，当滚动设置为上下滚动，并且元素数量少于每页显示数量的时候，一定要显示给定一个》0的y值
+     * 这里使用方法特殊，当滚动设置为上下滚动，并且元素数量少于每页显示数量的时候，
+     * 调整完页面内元素个数后，一定要显示给定一个》0的y值
      * 否则坐标计算会出现误差, 或者当坐标出现误差后，使用setRealY来进行调整
      */
     @Override
