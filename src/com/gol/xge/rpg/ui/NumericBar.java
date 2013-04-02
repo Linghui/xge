@@ -241,6 +241,11 @@ public class NumericBar extends Group{
         return this.baseNum;
     }
     
+    public void setStatusAndBase(long status, long base){
+        this.setBaseNum(base);
+        this.setStatusNum(status);
+    }
+    
     public void addTopCover(Drawable topCover){
         Image cover = new Image(topCover);
         cover.setX(topBar.getX());
