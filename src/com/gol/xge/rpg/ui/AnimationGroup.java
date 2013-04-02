@@ -80,6 +80,11 @@ public class AnimationGroup{
 			Animation animation = animationHash.get(actionName); 
 			timeOut = animation.animationDuration;
 			currentAnimation = animation;
+			if(loop){
+			    currentAnimation.setPlayMode(Animation.LOOP);
+			} else {
+			    currentAnimation.setPlayMode(Animation.NORMAL);
+			}
 			this.loop = loop;
 			return true;
 		}
