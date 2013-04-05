@@ -97,7 +97,9 @@ public class XWindow extends Table {
     }
     
     public void setTitle(String title){
-        this.setTitle(title, this.skin.get("default", LabelStyle.class), padding);
+        if( titleLabel != null ){
+            titleLabel.setText(title);
+        }
     }
     
     public void setTitle(String title, LabelStyle style, int titlePadding){
