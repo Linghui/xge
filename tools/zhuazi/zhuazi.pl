@@ -7,6 +7,11 @@ use warnings;
 use Encode;
 use Encode::CN;
 
+use utf8;
+binmode(STDIN, ':encoding(utf8)');
+binmode(STDOUT, ':encoding(utf8)');
+binmode(STDERR, ':encoding(utf8)');
+
 if( scalar(@ARGV) <= 0 ){
     die "Error: Need File Name input\n";
 }
@@ -39,6 +44,7 @@ sub process_one(){
     $output_file_name =~ s/\./_res\./g;
     
     open WRT, ">$output_file_name" or die "Error: open file error $@";
+    binmode(WRT, ':encoding(utf8)');
     print WRT keys %hash;    
     close WRT;
 
