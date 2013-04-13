@@ -116,6 +116,9 @@ public class AnimationActor extends Group implements AnimationActionInterface{
     public void setAnimationGroup(AnimationGroup animationGroup){
         this.animationGroup = animationGroup;
 
+        if( animationGroup == null ){
+            return;
+        }
         
         frame = animationGroup.getKeyFrame(0f);
         this.setWidth(Math.abs(animationGroup.getKeyFrame(0).getRegionWidth()));
