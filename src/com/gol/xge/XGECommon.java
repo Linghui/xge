@@ -20,4 +20,9 @@ public class XGECommon {
         }
         return fh.readString("UTF-8");
     }
+
+    public static void writeFile(String userconfigjson, String json) {
+        FileHandle fh = Gdx.files.external(userconfigjson);
+        fh.writeString(json, false);
+    }
 }

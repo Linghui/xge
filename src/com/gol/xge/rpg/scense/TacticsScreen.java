@@ -150,7 +150,13 @@ public class NPC extends AnimationActor {
     private float camShakingInterval = 0.06f;
     
     public void shakeCam(float seconds){
+        shakeCam(seconds, 4f);
+    }
+    
+    public void shakeCam(float seconds, float range ){
+
         cmaShakingLeftSeconds = seconds;
+        this.camShakingRange = range;
         camXbeforeShaking = cam.position.x;
         camYbeforeShaking = cam.position.y;
     }
