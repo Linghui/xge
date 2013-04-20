@@ -35,8 +35,9 @@ public class AnimationLabel extends Group {
     private void init(String text, LabelStyle style) {
         for(int index = 0; index < text.length(); index++){
             String word = text.substring(index, index + 1);
+            Gdx.app.log(TAG, "word " + word);
             Label l = new Label(word, style);
-            l.setY(index * - 20);
+            l.setY(index * - l.getTextBounds().height + 5);
             this.addActor(l);
             labels.add(l);
         }
