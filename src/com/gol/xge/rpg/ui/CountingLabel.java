@@ -51,21 +51,20 @@ public class CountingLabel extends Group {
         
         // animation number showing
         float per = (float)numJumpCounter/ totalMicSec;
-        Gdx.app.log("111", "perl " + per);
         int temp = (int) (per * numAddOn);
-        Gdx.app.log("111", "temp " + temp);
         num.setText("" + (showNum+=temp));
         numJumpCounter = 0f;
     }
     
     public void addOnNum( int num ){
-        this.addOnNum(num, 1f);
+        this.addOnNum(num, 0.5f);
     }
     
     public void addOnNum( int num, float seconds ){
-        if( seconds < 1){
-            seconds = 1;
+        if( seconds < 0.5){
+            seconds = 0.5f;
         }
+        actingTime = 0f;
         // record this to colulate how much time passed, so how many number add on on every act(delta)
         totalMicSec = seconds;
         float temp = seconds / 30;
@@ -73,6 +72,6 @@ public class CountingLabel extends Group {
         
         numAddOn = num;
         showNum = totalNum;
-        totalNum += numAddOn;
+        totalNum += num;
     }
 }
