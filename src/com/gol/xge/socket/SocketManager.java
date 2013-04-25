@@ -4,13 +4,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.net.Socket;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Map;
-import java.util.Queue;
 
-import com.gol.javaconcurrent.Java6Arrays;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Net.Protocol;
+import com.badlogic.gdx.net.Socket;
+import com.badlogic.gdx.net.SocketHints;
 import com.gol.xge.socket.listener.InOutPutInterface;
 
 /*
@@ -55,13 +53,8 @@ public class SocketManager {
 //			System.out.println(TAG + ":new Client Socket listening port : "
 //					+ listeningSocket.getPort());
 
-            try {
-                output = inSocket.getOutputStream();
-                input = inSocket.getInputStream();
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
+            output = inSocket.getOutputStream();
+            input = inSocket.getInputStream();
             
 			// set this value to false to stop listener
 			isRunnable = true;
@@ -107,7 +100,7 @@ public class SocketManager {
 		sendListener = null;
 		System.out.println(TAG + ": ConnectToServer start !");
 		try {
-		    worldSocket = new Socket(HOST, PORT);
+		    worldSocket = Gdx.net.newClientSocket(Protocol.TCP, HOST, PORT, new SocketHints());
 			System.out.println(TAG + ": Connected ToServer " + HOST);
 
 			// if world listener is not running, start it
@@ -137,14 +130,10 @@ public class SocketManager {
 		if (sendListener != null) {
 			sendListener.stopListener();
 		}
-		try {
-			if (worldSocket != null) {
-				// authSocket.finishConnect();
-				worldSocket.close();
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		if (worldSocket != null) {
+        	// authSocket.finishConnect();
+            worldSocket.dispose();
+        }
 
 		System.out.println(TAG + ":disConnectToWorldServer END !");
 	}

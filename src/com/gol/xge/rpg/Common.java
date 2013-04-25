@@ -1,6 +1,5 @@
 package com.gol.xge.rpg;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -15,10 +14,8 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.OrderedMap;
 import com.badlogic.gdx.utils.Json.Serializer;
-import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.ObjectMap.Entry;
-import com.badlogic.gdx.utils.SerializationException;
 import com.gol.xge.rpg.ui.AnimationGroup;
 import com.gol.xge.rpg.ui.AnimationResource;
 
@@ -187,8 +184,6 @@ public class Common {
     
     // tag reminds you something
     public static void timeStamp(String tag){
-        Timestamp ts = new Timestamp(System.currentTimeMillis());
-        String dateStr1 = ts.toString();
-        System.out.println("time stamp " + tag + " : "+dateStr1);
+        System.out.println("time stamp " + tag + " : "+ System.currentTimeMillis());
     }
 }
