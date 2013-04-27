@@ -1,28 +1,28 @@
 package com.gol.xge.rpg.ui;
 
-import com.badlogic.gdx.utils.ObjectMap;
+import com.badlogic.gdx.utils.JsonValue;
 
 public class AnimationResource {
-	private ObjectMap<String, String[]> resourceMap;
+	private JsonValue resourceMap;
 	private float offsetX;
 	private float offsetY;
 
-	public AnimationResource(ObjectMap<String, String[]> map) {
+	public AnimationResource(JsonValue map) {
 		this.resourceMap = map;
 	}
 
-	public AnimationResource(ObjectMap<String, String[]> map, Float offsetX,
+	public AnimationResource(JsonValue jsonData, Float offsetX,
             Float offsetY) {
-	    this.resourceMap = map;
+	    this.resourceMap = jsonData;
 	    this.offsetX = offsetX;
 	    this.offsetY = offsetY;
     }
 
-    public ObjectMap<String, String[]> getResourceMap() {
+    public JsonValue getResourceMap() {
 		return resourceMap;
 	}
 
-	public void setResourceMap(ObjectMap<String, String[]> resourceMap) {
+	public void setResourceMap(JsonValue resourceMap) {
 		this.resourceMap = resourceMap;
 	}
 

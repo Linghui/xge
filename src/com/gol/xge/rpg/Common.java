@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonValue;
 import com.badlogic.gdx.utils.OrderedMap;
 import com.badlogic.gdx.utils.Json.Serializer;
 import com.badlogic.gdx.utils.ObjectMap;
@@ -112,13 +113,12 @@ public class Common {
         
         Json json = new Json();
         json.setSerializer(AnimationResource.class, new Serializer<AnimationResource>() {
-        	public AnimationResource read (Json json, Object jsonData, Class type) {
-                Float offsetX = json.readValue("offsetX", Float.class, 0f, jsonData);
-                ((OrderedMap)jsonData).remove("offsetX");
-                Float offsetY = json.readValue("offsetY", Float.class, 0f, jsonData);
-                ((OrderedMap)jsonData).remove("offsetY");
-				ObjectMap<String, String[]> map = (ObjectMap<String, String []>)jsonData;
-				return new AnimationResource(map, offsetX, offsetY);
+        	public AnimationResource read (Json json, JsonValue jsonData, Class type) {
+                Float offsetX = jsonData.getFloat("offsetX", 0f);
+                jsonData.remove("offsetX");
+                Float offsetY = jsonData.getFloat("offsetY", 0f);
+                jsonData.remove("offsetY");
+				return new AnimationResource(jsonData, offsetX, offsetY);
         	}
 
 			@Override
@@ -131,24 +131,24 @@ public class Common {
 		});
         AnimationResource ar = json.fromJson(AnimationResource.class, jsonFileHandle);
         
-        ObjectMap actionsObj = ar.getResourceMap();
+        JsonValue actionsObj = ar.getResourceMap();
 //        Gdx.app.log(TAG, "content -- " + content );
         
-        Iterator<Entry<String, Array<String>>> iter = actionsObj.entries().iterator();
         String defaultActionName = "";
         
 //        TextureAtlas atlas = getTextureAtlasByFile(packFile);
-        while(iter.hasNext()){
-            Entry<String, Array<String>> entry = iter.next();
-            String actionName = entry.key;
-//            Gdx.app.log(TAG, "actionName -====== " + actionName);
+        for(JsonValue action = actionsObj.child(); action != null; action = action.next()){
+            String actionName = action.name();
+//          Gdx.app.log(TAG, "actionName -====== " + actionName);
             if( "".equals(defaultActionName) ){
                 defaultActionName = actionName;
             }
-            Array<String> texIds = entry.value;
+            
             List<TextureRegion> actionAnimation = new ArrayList<TextureRegion>();
-            for( String element : texIds){
-                String id = element;
+            
+            for(JsonValue texIds = action.child(); texIds != null; texIds = texIds.next()){
+
+                String id = texIds.asString();
 //                Gdx.app.log(TAG, "getting ||||||||||| 'id'" + id);
                 TextureRegion one = atlas.createSprite(id);
                 actionAnimation.add(one);
