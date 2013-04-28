@@ -15,7 +15,7 @@ public class XGECommon {
     
     public static String readFile(String fileName){
         FileHandle fh = openFile(fileName);
-        if( fh == null ){
+        if( !fh.exists() ){
             return null;
         }
         return fh.readString("UTF-8");
