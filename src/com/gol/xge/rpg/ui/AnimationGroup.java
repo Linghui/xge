@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -24,7 +25,11 @@ public class AnimationGroup{
 	
 	// for hash made
 	private HashMap<String, Animation> animationHash = new HashMap<String, Animation>();
-	private List<String> actionNames = new ArrayList<String>();
+	public HashMap<String, Animation> getAnimationHash() {
+        return animationHash;
+    }
+
+    private List<String> actionNames = new ArrayList<String>();
 
 	private Animation currentAnimation = null;
 	private TextureRegion keyFrame = null;;
@@ -61,6 +66,26 @@ public class AnimationGroup{
             this.setAction(actionName);
         }
 	}
+    
+    // if there is same action already, over write it.
+    public void mergeOverWrite( AnimationGroup group ){
+        Iterator<Entry<String, Animation>> iter = group.getAnimationHash().entrySet().iterator();
+        while ( iter.hasNext() ){
+            Entry<String, Animation> entry = iter.next();
+            this.animationHash.put(entry.getKey(), entry.getValue());
+        }
+    }
+
+    // if there is same action already, do not add it with the new one.
+    public void mergeCombine( AnimationGroup group ){
+        Iterator<Entry<String, Animation>> iter = group.getAnimationHash().entrySet().iterator();
+        while ( iter.hasNext() ){
+            Entry<String, Animation> entry = iter.next();
+            if( ! this.animationHash.containsKey(entry.getKey())){
+                this.animationHash.put(entry.getKey(), entry.getValue());    
+            }
+        }
+    }
 	
 	public boolean setAction(String actionName){
 		return setAction(actionName, defaultSpeed , true);

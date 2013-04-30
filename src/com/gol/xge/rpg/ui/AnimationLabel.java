@@ -3,7 +3,6 @@ package com.gol.xge.rpg.ui;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
@@ -11,14 +10,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
-import com.badlogic.gdx.scenes.scene2d.Action;
 
 public class AnimationLabel extends Group {
-    private String TAG  = "AnimationLabel";
+//    private String TAG  = "AnimationLabel";
 
     public static final int DIR_VER = 1;
     
-    private int direction = DIR_VER;
     private float delay = 0.3f;
     
     List<Label> labels = new ArrayList<Label>();
@@ -35,7 +32,7 @@ public class AnimationLabel extends Group {
     private void init(String text, LabelStyle style) {
         for(int index = 0; index < text.length(); index++){
             String word = text.substring(index, index + 1);
-            Gdx.app.log(TAG, "word " + word);
+//            Gdx.app.log(TAG, "word " + word);
             Label l = new Label(word, style);
             l.setY(index * - l.getTextBounds().height + 5);
             this.addActor(l);
@@ -59,7 +56,7 @@ public class AnimationLabel extends Group {
             SequenceAction sqaction = sequence(delay(delay * index), moveTo(moveToX, moveToY, duration));
             if(index == labels.size() - 1 
                     && doneAction != null){
-                Gdx.app.log(TAG, "set up success");
+//                Gdx.app.log(TAG, "set up success");
                 sqaction.addAction(doneAction);
             }
             l.addAction(sqaction);
@@ -80,14 +77,14 @@ public class AnimationLabel extends Group {
 //        super.action(action);
         int index = 0;
         super.addAction(sequence(delay(delay*index), action));
-        for(Label l: labels){
+//        for(Label l: labels){
 ////            if(action instanceof MoveToAction.class){
 //                l.addAction(sequence(delay(delay*index), action));
 //                l.action(Sequence.$(Delay.$(delay * index), action.copy()));
 //                index++;
 ////            }
 //            
-        }
+//        }
     }
     
     public void setDelay(float delay){
