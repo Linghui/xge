@@ -156,6 +156,11 @@ public abstract class CoreScreen implements Screen, InputProcessor {
         backgroundStage.getRoot().setTouchable(touchable);
     }
     
+    public void setScreenTouchable(Touchable touchable){
+        rootStage.getRoot().setTouchable(touchable);
+        backgroundStage.getRoot().setTouchable(touchable);
+    }
+    
     
     public Actor findActorBackground(int id){
         return this.findActorBackground(id + "");
