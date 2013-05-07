@@ -33,7 +33,7 @@ public class AnimationGroup{
 
 	private Animation currentAnimation = null;
 	private TextureRegion keyFrame = null;;
-	public  boolean loop = true;
+	public  int playMode;
 	private boolean animationStop = false;
 	
 	private float offsetX = 0f;
@@ -88,15 +88,25 @@ public class AnimationGroup{
     }
 	
 	public boolean setAction(String actionName){
-		return setAction(actionName, defaultSpeed , true);
+		return setAction(actionName, defaultSpeed , Animation.LOOP);
 	}
 	
 	public boolean setAction(String actionName, boolean loop){
-		return setAction(actionName, defaultSpeed , loop);
+	    int playMode = 0;
+	    if( loop ){
+	        playMode = Animation.LOOP;
+	    } else {
+	        playMode = Animation.NORMAL;
+	    }
+		return setAction(actionName, defaultSpeed , playMode);
+	}
+	
+	public boolean setAction(String actionName, int  playMode){
+	    return setAction(actionName, defaultSpeed, playMode);
 	}
 
 	// set action to change the showing animation , for hash made
-	public boolean setAction(String actionName, float speed,  boolean loop){
+	public boolean setAction(String actionName, float speed,  int playMode){
 	    isDone = false;
 	    currentFrameTime = 0f; // always start animation for the first frame 
 	    animationStop = false;
@@ -105,12 +115,8 @@ public class AnimationGroup{
 			Animation animation = animationHash.get(actionName); 
 			timeOut = animation.animationDuration;
 			currentAnimation = animation;
-			if(loop){
-			    currentAnimation.setPlayMode(Animation.LOOP);
-			} else {
-			    currentAnimation.setPlayMode(Animation.NORMAL);
-			}
-			this.loop = loop;
+			currentAnimation.setPlayMode(playMode);
+			this.playMode = playMode;
 			return true;
 		}
 		// there is no animation for this action name, there is something wrong
@@ -135,10 +141,10 @@ public class AnimationGroup{
 	    currentFrameTime += stateTime;
 	    
 	    if( currentAnimation != null && animationStop == false){
-	        keyFrame = currentAnimation.getKeyFrame(currentFrameTime, loop);
+	        keyFrame = currentAnimation.getKeyFrame(currentFrameTime);
 	    }
 //	    Gdx.app.log("group", "loop = " + loop + " currentFrameTime = " + currentFrameTime + " timeOut = " + timeOut);
-	    if(loop == false && currentFrameTime >= timeOut && timeOut != 0f){
+	    if(playMode == Animation.NORMAL && currentFrameTime >= timeOut && timeOut != 0f){
 	        timeOut = 0f;
             isDone = true;
 	    }
@@ -149,8 +155,8 @@ public class AnimationGroup{
 	    animationStop = true;
 	}
 	
-	public boolean getLoop(){
-		return loop;
+	public int getPlayMode(){
+		return playMode;
 	}
 
     public float getOffsetX() {
