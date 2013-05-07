@@ -112,6 +112,16 @@ public class AnimationActor extends Group implements AnimationActionInterface{
         this.animationGroup.setAction(actionName, loop);
     }
 
+    
+    public void setAction(String actionName, int  playMode){
+        this.animationGroup.setAction(actionName, playMode);
+    }
+    
+
+    public void setAction(String actionName, float speed, int  playMode){
+        this.animationGroup.setAction(actionName, speed, playMode);
+    }
+    
     public void setAnimationGroup(AnimationGroup animationGroup){
         this.animationGroup = animationGroup;
 

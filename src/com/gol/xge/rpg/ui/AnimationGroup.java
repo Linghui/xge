@@ -18,6 +18,7 @@ public class AnimationGroup{
 	private float currentFrameTime = 0f;
 	private float timeOut = 0f;
 	private float defaultSpeed = 0.1f;
+	private float speedPower = 1;
 	// for better performance on Android made it public instead of getter and setter, 
 	// but *do not* try to modify this outside of this class
 	public boolean isDone = false; 
@@ -110,6 +111,7 @@ public class AnimationGroup{
 	    isDone = false;
 	    currentFrameTime = 0f; // always start animation for the first frame 
 	    animationStop = false;
+	    
 		if(animationHash.containsKey(actionName)){
 //			Gdx.app.log("group", " setAction - actionName : " + actionName + " loop " + loop);
 			Animation animation = animationHash.get(actionName); 
@@ -117,6 +119,12 @@ public class AnimationGroup{
 			currentAnimation = animation;
 			currentAnimation.setPlayMode(playMode);
 			this.playMode = playMode;
+			
+			if( speed <= 0 ){
+			    speed = this.defaultSpeed;
+			}
+			
+			speedPower = speed/animation.frameDuration;
 			return true;
 		}
 		// there is no animation for this action name, there is something wrong
@@ -138,7 +146,7 @@ public class AnimationGroup{
 	}
 	
 	public TextureRegion getKeyFrame(float stateTime){
-	    currentFrameTime += stateTime;
+	    currentFrameTime += (stateTime / speedPower);
 	    
 	    if( currentAnimation != null && animationStop == false){
 	        keyFrame = currentAnimation.getKeyFrame(currentFrameTime);
