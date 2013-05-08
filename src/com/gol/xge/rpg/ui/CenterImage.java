@@ -12,5 +12,9 @@ public class CenterImage extends Group {
         image.setY(-image.getHeight()/2);
         this.addActor(image);
     }
+
+    public void setFlipX(boolean flipX) {
+        
+    }
     
 }
