@@ -20,7 +20,7 @@ public class ManneredScrollPane extends ScrollPane implements PageOperateListene
     
     private int pad = 0;
     private int currentPage = 0;
-    
+
     private float cellSizeWidth;
 
     private float cellSizeHeight;
@@ -56,7 +56,7 @@ public class ManneredScrollPane extends ScrollPane implements PageOperateListene
         this.setHeight(200);
         this.pageSize = pageSize;
         this.horizontal = isHorizontal;
-        this.setFlingTime(0.3f);
+        this.setFlingTime(0.5f);
         this.setClamp(true);
         this.setSmoothScrolling(true);
         listener = new InputListener(){
@@ -272,5 +272,9 @@ public class ManneredScrollPane extends ScrollPane implements PageOperateListene
 
     public LineActors getLineActors() {
         return lineActors;
+    }
+    
+    public int getCurrentPage() {
+        return currentPage;
     }
 }
