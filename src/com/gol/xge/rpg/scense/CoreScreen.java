@@ -46,6 +46,8 @@ public abstract class CoreScreen implements Screen, InputProcessor {
     // all value below is usd to deal with view and leading role movement
     protected OrthographicCamera cam;
     
+    private boolean isHided = false;
+    
     public CoreScreen(Game game) {
         this(game, width, height);
     }
@@ -69,6 +71,7 @@ public abstract class CoreScreen implements Screen, InputProcessor {
         Gdx.input.setInputProcessor(this);
         rootStage.getRoot().setVisible(true);
         backgroundStage.getRoot().setVisible(true);
+        isHided = false;
     }
     
 
@@ -258,6 +261,7 @@ public abstract class CoreScreen implements Screen, InputProcessor {
     public void hide() {
         rootStage.getRoot().setVisible(false);
         backgroundStage.getRoot().setVisible(false);
+        isHided = true;
     }
 
     @Override
@@ -336,6 +340,10 @@ public abstract class CoreScreen implements Screen, InputProcessor {
     
     public boolean isEventLock(){
         return this.lockEvent;
+    }
+    
+    public boolean isHided(){
+        return this.isHided;
     }
     
     @Override
