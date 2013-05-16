@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ScissorStack;
 
 public class XGEScissor extends Group {
     private final Rectangle scissorBounds = new Rectangle();
+    private final Rectangle widgetAreaBounds = new Rectangle();
     
     public XGEScissor(){
         scissorBounds.set(0, 0, 200, 200);
@@ -17,6 +18,7 @@ public class XGEScissor extends Group {
     @Override
     public void draw (SpriteBatch batch, float parentAlpha) {
         // Enable scissors for widget area and draw the widget.
+        ScissorStack.calculateScissors(getStage().getCamera(), batch.getTransformMatrix(), widgetAreaBounds, scissorBounds);
         if (ScissorStack.pushScissors(scissorBounds)) {
             super.draw(batch, parentAlpha);
             ScissorStack.popScissors();
@@ -27,24 +29,28 @@ public class XGEScissor extends Group {
     public void setWidth (float width) {
         super.setWidth(width);
         scissorBounds.setWidth(width);
+        widgetAreaBounds.setWidth(width);
     }
     
     @Override
     public void setHeight (float height) {
         super.setHeight(height);
         scissorBounds.setHeight(height);
+        widgetAreaBounds.setHeight(height);
     }
     
     @Override
     public void setX (float x) {
         super.setX(x);
         scissorBounds.setX(x);
+        widgetAreaBounds.setX(x);
     }
     
     @Override
     public void setY (float y) {
         super.setY(y);
         scissorBounds.setY(y);
+        widgetAreaBounds.setY(y);
     }
     
 }
