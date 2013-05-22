@@ -24,7 +24,7 @@ public class XWindow extends Table {
     
     private XWindowStyle style;
     
-    private ImageButton closeImage = null;
+    protected ImageButton closeImage = null;
     private Image titleImage = null;
     private Label titleLabel = null;
     
