@@ -95,6 +95,10 @@ public class XCell<T> extends Group implements Checkable{
         } else {
             icon.setDrawable(new TextureRegionDrawable(region));    
         }
+        
+        if( frame != null ){
+            frame.toFront();
+        }
     }
     
     private void resetIconPosition() {
