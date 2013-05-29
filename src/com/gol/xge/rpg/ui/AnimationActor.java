@@ -80,7 +80,12 @@ public class AnimationActor extends Group implements AnimationActionInterface{
             return;
         }
         batch.setColor(this.getColor().r, this.getColor().g, this.getColor().b, this.getColor().a);
-        batch.draw(frame, this.getX() - animationGroup.getOffsetX(), this.getY() -  animationGroup.getOffsetY(), 
+        
+        float x = this.getX() - animationGroup.getOffsetX();
+        if( frame.isFlipX() ){
+            x = this.getX() - (this.getWidth() - animationGroup.getOffsetX());
+        }
+        batch.draw(frame, x, this.getY() -  animationGroup.getOffsetY(), 
                 this.getOriginX(), this.getOriginY()
                 , this.getWidth(), this.getHeight()
                 , this.getScaleX(), this.getScaleY(), this.getRotation());
