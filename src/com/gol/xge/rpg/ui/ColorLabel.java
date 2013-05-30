@@ -72,8 +72,10 @@ public class ColorLabel extends Group {
         setText(str);
     }
 
-    private void setText(String str) {
+    public void setText(String str) {
         this.str = str;
+        this.clear();
+        
         totalLength = 0;
         Gdx.app.log("ColorLabel", "one " + str);
         String[] pieces = str.split("\\" + splitS);
