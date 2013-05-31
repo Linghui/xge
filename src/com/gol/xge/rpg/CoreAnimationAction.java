@@ -1,6 +1,7 @@
 package com.gol.xge.rpg;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
@@ -11,6 +12,7 @@ public class CoreAnimationAction extends TemporalAction {
     private String TAG = "CoreAnimationAction";
 
     private String actionName = null;
+    private float speed = 0.1f;
 
     // actually only support AnimationActor here
     // do not try this action on other actors.
@@ -20,6 +22,12 @@ public class CoreAnimationAction extends TemporalAction {
         return action;
     }
     
+    public static CoreAnimationAction $ (String actionName, float speed) {
+        CoreAnimationAction action = Actions.action(CoreAnimationAction.class);
+        action.setActionName(actionName);
+        action.setSpeed(speed);
+        return action;
+    }
 
     @Override
     public void setActor(Actor actor) {
@@ -30,7 +38,7 @@ public class CoreAnimationAction extends TemporalAction {
             // throw out exception is better.
             return;
         }
-        ((AnimationActor)actor).getAnimationGroup().setAction(getActionName(), false);
+        ((AnimationActor)actor).getAnimationGroup().setAction(getActionName(), speed, Animation.NORMAL);
     }
 
     @Override
@@ -54,6 +62,10 @@ public class CoreAnimationAction extends TemporalAction {
 
     public void setActionName(String actionName) {
         this.actionName = actionName;
+    }
+
+    public void setSpeed(float speed) {
+        this.speed = speed;
     }
 
 }
