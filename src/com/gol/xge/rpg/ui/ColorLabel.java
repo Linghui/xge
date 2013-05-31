@@ -48,6 +48,9 @@ public class ColorLabel extends Group {
 
     public final static String purpleS = "p";
     public final static String purpleL = "purple";
+
+    public final static String goldS   = "o";
+    public final static String goldL   = "brown";
     
     public final static String splitS = "|";
     
@@ -68,6 +71,7 @@ public class ColorLabel extends Group {
         colorMap.put(blueS, blueL);
         colorMap.put(greenS, greenL);
         colorMap.put(purpleS, purpleL);
+        colorMap.put(goldS, goldL);
         
         setText(str);
     }
