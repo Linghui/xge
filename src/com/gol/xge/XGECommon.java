@@ -2,6 +2,7 @@ package com.gol.xge;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.utils.GdxRuntimeException;
 
 public class XGECommon {
 
@@ -23,6 +24,12 @@ public class XGECommon {
 
     public static void writeFile(String userconfigjson, String json) {
         FileHandle fh = Gdx.files.external(userconfigjson);
-        fh.writeString(json, false);
+        try{
+            fh.writeString(json, false);    
+        }
+        catch( GdxRuntimeException e){
+            e.printStackTrace();
+        }
+        
     }
 }
