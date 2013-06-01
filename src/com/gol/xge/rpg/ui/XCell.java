@@ -48,16 +48,6 @@ public class XCell<T> extends Group implements Checkable{
         this.addActor(imgB);
         this.setAtlas(alats);
     }
-//    
-//    public XCell(TextureRegion background){
-//        this(background, null);
-//    }
-//    
-//    public XCell(TextureRegion background, TextureAtlas alats){
-//        imgB = new Image(background);
-//        this.addActor(imgB);
-//        this.setAlats(alats);
-//    }
     
     public void setAtlas(TextureAtlas atlas) {
         this.alats = atlas;
