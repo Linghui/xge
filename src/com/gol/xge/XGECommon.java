@@ -7,11 +7,17 @@ import com.badlogic.gdx.utils.GdxRuntimeException;
 public class XGECommon {
 
     public static FileHandle openFile( String fileName ){
+        return openFile(fileName, null);
+    }
+    
+    public static FileHandle openFile( String fileName, String code ){
         FileHandle fh = Gdx.files.external(fileName);
         if(!fh.exists()){
             fh = Gdx.files.internal(fileName);
         }
-        return fh;
+        
+        DecodeFileHandle dfh = new DecodeFileHandle(fh, code);
+        return dfh;
     }
     
     public static String readFile(String fileName){
