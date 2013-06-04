@@ -26,6 +26,9 @@ public class DecodeFileHandle extends FileHandle {
         Gdx.app.log("DecodeFileHandle", "fh.type() " + fh.type());
         this.fh = fh;
         this.code = code;
+        if( this.code != null ){
+            this.code += addtionalKey;    
+        }
     }
 
     public DecodeFileHandle(File file, FileType type) {
@@ -38,7 +41,6 @@ public class DecodeFileHandle extends FileHandle {
         if( code == null ){
             return fh.readBytes();
         }
-        code += addtionalKey;
         
         int value = -1;
         InputStream is = fh.read();

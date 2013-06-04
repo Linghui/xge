@@ -290,6 +290,9 @@ public abstract class CoreScreen implements Screen, InputProcessor {
                 || keycode == 29){ // button a , for testing
             this.callBack();
             return false;
+        } else if ( keycode == 3 ){
+            this.callHome();
+            return false;
         }
 
         if(!rootStage.keyDown(keycode)){
@@ -297,6 +300,10 @@ public abstract class CoreScreen implements Screen, InputProcessor {
         }
         
         return true;
+    }
+
+    protected void callHome() {
+        
     }
 
     protected void callBack() {
