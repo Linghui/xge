@@ -24,7 +24,7 @@
       <resource>
         <directory>tools</directory>
         <excludes>
-          <exclude>**/*.java</exclude>
+          <exclude>**</exclude>
         </excludes>
       </resource>
     </resources>
