@@ -70,7 +70,7 @@ public class SocketManager {
 				        continue;
 				    }
 				    inOutPutInterface.onWrite(output);
-					if (new InputStreamReader(input).ready()) {
+					if (input.available() > 0 ) {
 					    inOutPutInterface.onRead(input);
 					}
 					Thread.sleep(socketSleepTime);
