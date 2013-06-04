@@ -100,7 +100,9 @@ public class SocketManager {
 		sendListener = null;
 		System.out.println(TAG + ": ConnectToServer start !");
 		try {
-		    worldSocket = Gdx.net.newClientSocket(Protocol.TCP, HOST, PORT, new SocketHints());
+		    SocketHints hints = new SocketHints();
+		    hints.connectTimeout = 500000;
+		    worldSocket = Gdx.net.newClientSocket(Protocol.TCP, HOST, PORT, hints);
 			System.out.println(TAG + ": Connected ToServer " + HOST);
 
 			// if world listener is not running, start it

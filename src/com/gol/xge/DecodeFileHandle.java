@@ -43,8 +43,8 @@ public class DecodeFileHandle extends FileHandle {
         int value = -1;
         InputStream is = fh.read();
         int cx = 0;
-        byte[] decodeBytes = new byte[(int) super.length()];
-        Gdx.app.log("DecodeFileHandle", " super.length() " + super.length() + " " + fh.name());
+        byte[] decodeBytes = new byte[(int) fh.length()];
+        Gdx.app.log("DecodeFileHandle", " fh.length() " + fh.length() + " " + fh.name());
         try {
             while ((value = is.read()) != -1) {
                 decodeBytes[cx] = (byte) (value ^ code.hashCode());
