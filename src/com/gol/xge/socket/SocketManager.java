@@ -101,7 +101,7 @@ public class SocketManager {
 		System.out.println(TAG + ": ConnectToServer start !");
 		try {
 		    SocketHints hints = new SocketHints();
-		    hints.connectTimeout = 500000;
+		    hints.connectTimeout = 1200000;
 		    worldSocket = Gdx.net.newClientSocket(Protocol.TCP, HOST, PORT, hints);
 			System.out.println(TAG + ": Connected ToServer " + HOST);
 
