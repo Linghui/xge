@@ -114,9 +114,10 @@ public class ColorLabel extends Group {
             Label chip = new Label(realWords, skin.get(labelStyleName, LabelStyle.class));
             chip.setX(totalLength);
             this.addActor(chip);
-            totalLength += chip.getWidth();
+            totalLength += chip.getTextBounds().width;
         }
-        this.setWidth(totalLength);
+        Gdx.app.log("ColorLabel", "totalLength " + totalLength);
+        computeSize();
     }
 
     public void setAlignment(int labelAlign) {
@@ -125,7 +126,7 @@ public class ColorLabel extends Group {
     }
     
     private void computeSize(){
-        
+        Gdx.app.log("ColorLabel", "computeSize ");
         // warp 没实现呢,需要了再说
         if( wrap && this.totalLength > this.getWidth() ){
             
@@ -150,6 +151,10 @@ public class ColorLabel extends Group {
     public void setWidth(float width){
         super.setWidth(width);
         computeSize();
+    }
+    
+    public float getTotalLength(){
+        return totalLength;
     }
     
     // for putting you own coloring rule into this
