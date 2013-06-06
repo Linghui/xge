@@ -356,6 +356,7 @@ public abstract class CoreScreen implements Screen, InputProcessor {
     @Override
     public boolean touchDown(int x, int y, int pointer, int button) {
         if( lockEvent){
+            Gdx.app.log(TAG, "touchDown  lockEvent");
             return true;
         }
         

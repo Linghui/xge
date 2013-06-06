@@ -21,7 +21,7 @@ public class XCell<T> extends Group implements Checkable{
     
     protected TextureAtlas alats = null;
     protected Image imgB = null;
-    private Image frame = null;
+    protected Image frame = null;
     protected Image icon = null;
     protected T object = null;
     public static final String backgroundName = "imgB";
