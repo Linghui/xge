@@ -116,6 +116,9 @@ public class ColorLabel extends Group {
             this.addActor(chip);
             totalLength += chip.getTextBounds().width;
         }
+        if( this.getWidth() <= 0 ){
+            this.setWidth(totalLength);
+        }
         Gdx.app.log("ColorLabel", "totalLength " + totalLength);
         computeSize();
     }
