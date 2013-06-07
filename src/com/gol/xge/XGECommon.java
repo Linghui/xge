@@ -15,7 +15,9 @@ public class XGECommon {
         if(!fh.exists()){
             fh = Gdx.files.internal(fileName);
         }
-        
+        if( code == null ){
+            return fh;
+        }
         DecodeFileHandle dfh = new DecodeFileHandle(fh, code);
         return dfh;
     }
