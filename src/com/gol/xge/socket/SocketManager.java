@@ -27,7 +27,7 @@ public class SocketManager {
 	
 	private InOutPutInterface inOutPutInterface = null;
 	
-	private final int socketSleepTime = 50;
+	private final int socketSleepTime = 100;
 
 	public SocketManager(String HOST, int PORT) {
 	    connectToServer(HOST, PORT);
@@ -69,11 +69,11 @@ public class SocketManager {
 				    if(inOutPutInterface == null){
 				        continue;
 				    }
+                    if (input.available() > 0 ) {
+                        inOutPutInterface.onRead(input);
+                    }
 				    inOutPutInterface.onWrite(output);
-					if (input.available() > 0 ) {
-					    inOutPutInterface.onRead(input);
-					}
-					Thread.sleep(socketSleepTime);
+//                    Thread.sleep(socketSleepTime);
 
 				}
 
