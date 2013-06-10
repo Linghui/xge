@@ -120,6 +120,13 @@ public abstract class CoreScreen implements Screen, InputProcessor {
         coords.y = y;
         return this.backgroundStage.screenToStageCoordinates(coords);
     }
+    
+    public Vector2 toTopStageCoordinates(int x, int y){
+        Vector2 coords = new Vector2();
+        coords.x = x;
+        coords.y = y;
+        return this.rootStage.screenToStageCoordinates(coords);
+    }
 
     // for just one screen background picture, this is easy to use
     public void setBackGround(TextureRegion background){
