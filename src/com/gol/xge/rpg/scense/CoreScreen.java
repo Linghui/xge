@@ -73,7 +73,34 @@ public abstract class CoreScreen implements Screen, InputProcessor {
         backgroundStage.getRoot().setVisible(true);
         isHided = false;
     }
+
+    @Override
+    public void resize(int width, int height) {
+        
+    }
+
+    public void setBackgroundVisible( boolean visible ){
+        backgroundStage.getRoot().setVisible(visible);
+    }
     
+    
+    @Override
+    public void hide() {
+        rootStage.getRoot().setVisible(false);
+        backgroundStage.getRoot().setVisible(false);
+        isHided = true;
+    }
+
+    @Override
+    public void pause() {
+        Gdx.app.log(TAG, "pause");
+    }
+
+    @Override
+    public void resume() {
+        Gdx.app.log(TAG, "resume");
+    }
+
 
     public void initCam(){
 
@@ -250,28 +277,6 @@ public abstract class CoreScreen implements Screen, InputProcessor {
 
     public void renderTableDebug(){
         Table.drawDebug(rootStage);
-    }
-
-    @Override
-    public void resize(int width, int height) {
-        
-    }
-
-    @Override
-    public void hide() {
-        rootStage.getRoot().setVisible(false);
-        backgroundStage.getRoot().setVisible(false);
-        isHided = true;
-    }
-
-    @Override
-    public void pause() {
-        Gdx.app.log(TAG, "pause");
-    }
-
-    @Override
-    public void resume() {
-        Gdx.app.log(TAG, "resume");
     }
 
     @Override
