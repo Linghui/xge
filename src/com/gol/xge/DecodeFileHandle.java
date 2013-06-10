@@ -15,19 +15,20 @@ public class DecodeFileHandle extends FileHandle {
 
     private FileHandle fh;
     private String code = "test";
-    static String addtionalKey = "test";//密码
+    static String key = "test";//密码
     
 
 //    private int code = 0;
     
     public DecodeFileHandle(FileHandle fh, String code) {
         super(fh.path(), fh.type());
-        Gdx.app.log("DecodeFileHandle", "fh.path() " + fh.path());
-        Gdx.app.log("DecodeFileHandle", "fh.type() " + fh.type());
+//        Gdx.app.log("DecodeFileHandle", "fh.path() " + fh.path());
+//        Gdx.app.log("DecodeFileHandle", "fh.type() " + fh.type());
         this.fh = fh;
         this.code = code;
+        
         if( this.code != null ){
-            this.code += addtionalKey;    
+            this.code += key;    
         }
     }
 
@@ -37,7 +38,7 @@ public class DecodeFileHandle extends FileHandle {
 
     @Override
     public byte[] readBytes () {
-        Gdx.app.log("DecodeFileHandle", "readBytes");
+//        Gdx.app.log("DecodeFileHandle", "readBytes");
         if( code == null ){
             return fh.readBytes();
         }
@@ -46,7 +47,7 @@ public class DecodeFileHandle extends FileHandle {
         InputStream is = fh.read();
         int cx = 0;
         byte[] decodeBytes = new byte[(int) fh.length()];
-        Gdx.app.log("DecodeFileHandle", " fh.length() " + fh.length() + " " + fh.name());
+//        Gdx.app.log("DecodeFileHandle", " fh.length() " + fh.length() + " " + fh.name());
         try {
             while ((value = is.read()) != -1) {
                 decodeBytes[cx] = (byte) (value ^ code.hashCode());
@@ -92,7 +93,7 @@ public class DecodeFileHandle extends FileHandle {
     
     @Override
     public FileHandle parent () {
-        Gdx.app.log("DecodeFileHandle ", "parent ");
+//        Gdx.app.log("DecodeFileHandle ", "parent ");
         File parent = file.getParentFile();
         if (parent == null) {
             if (type == FileType.Absolute)
@@ -105,7 +106,7 @@ public class DecodeFileHandle extends FileHandle {
     
     @Override
     public FileHandle child (String name) {
-        Gdx.app.log("DecodeFileHandle ", "child ");
+//        Gdx.app.log("DecodeFileHandle ", "child ");
         if (file.getPath().length() == 0) return new DecodeFileHandle(new File(name), fh.type());
         return new DecodeFileHandle(new File(file, name), type);
     }

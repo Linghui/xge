@@ -266,12 +266,12 @@ public abstract class CoreScreen implements Screen, InputProcessor {
 
     @Override
     public void pause() {
-        
+        Gdx.app.log(TAG, "pause");
     }
 
     @Override
     public void resume() {
-        
+        Gdx.app.log(TAG, "resume");
     }
 
     @Override
