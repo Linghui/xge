@@ -79,6 +79,10 @@ public class AnimationActor extends Group implements AnimationActionInterface{
         if( animationGroup == null ){
             return;
         }
+        if( !this.isVisible() ){
+            return;
+        }
+        
         batch.setColor(this.getColor().r, this.getColor().g, this.getColor().b, this.getColor().a);
         
         float x = this.getX() - animationGroup.getOffsetX();
