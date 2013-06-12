@@ -17,6 +17,10 @@ public class XGEScissor extends Group {
     
     @Override
     public void draw (SpriteBatch batch, float parentAlpha) {
+        if( ! this.isVisible() ){
+            return;
+        }
+        
         // Enable scissors for widget area and draw the widget.
         ScissorStack.calculateScissors(getStage().getCamera(), batch.getTransformMatrix(), widgetAreaBounds, scissorBounds);
         if (ScissorStack.pushScissors(scissorBounds)) {
