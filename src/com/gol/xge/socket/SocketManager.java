@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.net.SocketException;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Net.Protocol;
@@ -76,11 +77,20 @@ public class SocketManager {
 //                    Thread.sleep(socketSleepTime);
 
 				}
-
+				input.close();
+				output.close();
 			} catch (IOException e) {
 				e.printStackTrace();
 			} catch (Exception ex) {
 				ex.printStackTrace();
+			}
+			finally{
+			    try {
+                    input.close();
+                    output.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
 			}
 			System.out.println(TAG + ":listener run end !");
 		}
@@ -132,6 +142,7 @@ public class SocketManager {
 		if (sendListener != null) {
 			sendListener.stopListener();
 		}
+		
 		if (worldSocket != null) {
         	// authSocket.finishConnect();
             worldSocket.dispose();
