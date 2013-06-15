@@ -38,7 +38,7 @@ public class CoreAnimationAction extends TemporalAction {
             // throw out exception is better.
             return;
         }
-        ((AnimationActor)actor).getAnimationGroup().setAction(getActionName(), speed, Animation.NORMAL);
+        ((AnimationActor)actor).setAction(getActionName(), speed, Animation.NORMAL);
     }
 
     @Override

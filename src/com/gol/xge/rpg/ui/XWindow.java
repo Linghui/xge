@@ -57,7 +57,14 @@ public class XWindow extends Table {
         if(style.hasClose){
 
             // implement touchDown and touchUp for change the down/up image
-            closeImage = new ImageButton(style.closeImg, style.closeImgDown);
+            closeImage = new ImageButton(style.closeImg, style.closeImgDown){
+                private int overRegion = 20;
+
+                public Actor hit (float x, float y, boolean touchable) {
+                    if (touchable && this.getTouchable() != Touchable.enabled) return null;
+                    return x >= (0 - overRegion) && x < (this.getWidth() + overRegion) && y >= (0 - overRegion) && y < (this.getHeight() + overRegion) ? this : null;
+                }
+            };
 
             // for for close click
             closeImage.addListener(new ClickListener(){
