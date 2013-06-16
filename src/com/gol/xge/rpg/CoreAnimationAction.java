@@ -14,6 +14,8 @@ public class CoreAnimationAction extends TemporalAction {
     private String actionName = null;
     private float speed = 0.1f;
 
+    private int playMode = Animation.NORMAL;
+
     // actually only support AnimationActor here
     // do not try this action on other actors.
     public static CoreAnimationAction $ (String actionName) {
@@ -29,6 +31,20 @@ public class CoreAnimationAction extends TemporalAction {
         return action;
     }
 
+    
+    public static CoreAnimationAction $ (String actionName, float speed, int playMode) {
+
+        CoreAnimationAction action = Actions.action(CoreAnimationAction.class);
+        action.setActionName(actionName);
+        action.setSpeed(speed);
+        action.setPlayMode(playMode);
+        return action;
+    }
+    
+    private void setPlayMode(int playMode) {
+        this.playMode  = playMode;
+    }
+
     @Override
     public void setActor(Actor actor) {
         super.setActor(actor);
@@ -38,7 +54,7 @@ public class CoreAnimationAction extends TemporalAction {
             // throw out exception is better.
             return;
         }
-        ((AnimationActor)actor).setAction(getActionName(), speed, Animation.NORMAL);
+        ((AnimationActor)actor).setAction(getActionName(), speed, playMode);
     }
 
     @Override
