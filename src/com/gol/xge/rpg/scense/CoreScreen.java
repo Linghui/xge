@@ -374,9 +374,13 @@ public abstract class CoreScreen implements Screen, InputProcessor {
         
 //        Gdx.app.log(TAG, "x - " + x + " : y - " + y);
         if(!rootStage.touchDown(x, y, pointer, button)){
-            if(!this.backgroundStage.touchDown(x, y, pointer, button)){
-                
-                this.clickOnBackgroud(x,y);
+            
+            if( this.backgroundStage.getRoot().isVisible() ){
+
+                if(!this.backgroundStage.touchDown(x, y, pointer, button)){
+                    
+                    this.clickOnBackgroud(x,y);
+                }   
             }
         }
         return true;
