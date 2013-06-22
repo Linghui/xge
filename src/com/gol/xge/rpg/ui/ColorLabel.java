@@ -90,16 +90,16 @@ public class ColorLabel extends Group {
         }
         
         totalLength = 0;
-        Gdx.app.log("ColorLabel", "one " + str);
+//        Gdx.app.log("ColorLabel", "one " + str);
         String[] pieces = str.split("\\" + splitS);
         for(String one: pieces){
-            Gdx.app.log("ColorLabel", "one " + one);
+//            Gdx.app.log("ColorLabel", "one " + one);
             String labelStyleName;
             String realWords;
             
             String colorS = one.substring(0, 1); // probably
-            Gdx.app.log("ColorLabel", "one.substring(0, 1) " + one.substring(0, 1));
-            Gdx.app.log("ColorLabel", "one.substring(0, 1) " + one.substring(one.length() - 1));
+//            Gdx.app.log("ColorLabel", "one.substring(0, 1) " + one.substring(0, 1));
+//            Gdx.app.log("ColorLabel", "one.substring(0, 1) " + one.substring(one.length() - 1));
             
             // if it's given a color, at least it has 3 letters, like |cxc| without |
             if( one.length() >= 3
@@ -118,8 +118,8 @@ public class ColorLabel extends Group {
                 labelStyleName = colorMap.get(defaultS);
                 realWords = one;
             }
-            Gdx.app.log("ColorLabel", "labelStyleName " + labelStyleName);
-            Gdx.app.log("ColorLabel", "realWords " + realWords);
+//            Gdx.app.log("ColorLabel", "labelStyleName " + labelStyleName);
+//            Gdx.app.log("ColorLabel", "realWords " + realWords);
             Label chip = new Label(realWords, skin.get(labelStyleName, LabelStyle.class));
             chip.setX(totalLength);
             this.addActor(chip);
@@ -128,7 +128,7 @@ public class ColorLabel extends Group {
         if( this.getWidth() <= 0 ){
             this.setWidth(totalLength);
         }
-        Gdx.app.log("ColorLabel", "totalLength " + totalLength);
+//        Gdx.app.log("ColorLabel", "totalLength " + totalLength);
         computeSize();
     }
 
@@ -138,7 +138,7 @@ public class ColorLabel extends Group {
     }
     
     private void computeSize(){
-        Gdx.app.log("ColorLabel", "computeSize ");
+//        Gdx.app.log("ColorLabel", "computeSize ");
         // warp 没实现呢,需要了再说
         if( wrap && this.totalLength > this.getWidth() ){
             
