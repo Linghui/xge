@@ -239,6 +239,8 @@ public abstract class CoreScreen implements Screen, InputProcessor {
         return rootStage.getHeight();
     }
     
+    
+    // setCover 现在被重复调用可能会产生问题，不过目前没发现，再说
     public void setCover(Drawable patch){
         float gutterWidth = rootStage.getGutterWidth();
         if( gutterWidth != 0){
