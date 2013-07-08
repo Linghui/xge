@@ -37,6 +37,13 @@ public class ManneredXTable extends XTable {
         
         return cell;
     }
+    
+    @Override
+    public void reset () {
+        super.reset();
+        colNumber = 0;
+        rowNumber = 0;
+    }
 
     public Actor getActor(int rowIndex, int colIndex){
         
