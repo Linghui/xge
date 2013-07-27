@@ -146,7 +146,6 @@ public class XWindow extends Table {
 
     public void open() {
         this.setVisible(true);
-        this.toFront();
     }
 
     public void close() {
