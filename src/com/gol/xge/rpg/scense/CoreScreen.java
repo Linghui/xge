@@ -198,6 +198,15 @@ public abstract class CoreScreen implements Screen, InputProcessor {
         backgroundStage.getRoot().setTouchable(touchable);
     }
     
+    public boolean isScreenTouchable(){
+        if ( rootStage.getRoot().getTouchable() == Touchable.disabled
+                || backgroundStage.getRoot().getTouchable() == Touchable.disabled ){
+            return false;
+        } else {
+            return true;
+        }
+    }
+    
     
     public Actor findActorBackground(int id){
         return this.findActorBackground(id + "");
@@ -404,6 +413,7 @@ public abstract class CoreScreen implements Screen, InputProcessor {
     @Override
     public boolean touchDragged(int x, int y, int pointer) {
         if( lockEvent){
+            Gdx.app.log(TAG, "locking!!");
             return true;
         }
         
