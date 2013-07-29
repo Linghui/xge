@@ -8,6 +8,8 @@ public class AnimationResource {
 	private float offsetY;
 
 	public AnimationResource(JsonValue map) {
+	    offsetX = map.getFloat("offsetX");
+	    offsetY = map.getFloat("offsetY");
 		this.resourceMap = map;
 	}
 

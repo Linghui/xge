@@ -34,6 +34,7 @@ public class Common {
     final public static String paraSplit    = "&";
     final public static String valueSplit   = "=";
     
+    
     // get path pieces of link
     // example : 
     //  gol://map/20001?x=100 returns [map, 20001]
@@ -134,6 +135,13 @@ public class Common {
     }
     
     public static AnimationGroup readAnimationGroup(
+            JsonValue json,
+            TextureAtlas atlas){
+        AnimationResource ar = new AnimationResource(json);
+        return readAnimationGroup(ar, atlas, 0.1f);
+    }
+    
+    public static AnimationGroup readAnimationGroup(
             AnimationResource ar,
             TextureAtlas atlas,
             float speed){
@@ -148,6 +156,13 @@ public class Common {
 //        TextureAtlas atlas = getTextureAtlasByFile(packFile);
         for(JsonValue action = actionsObj.child(); action != null; action = action.next()){
             String actionName = action.name();
+            
+            if ( actionName.equals("offsetX")
+                    || actionName.equals("offsetY")) {
+                continue;
+            }
+            
+            
 //          Gdx.app.log(TAG, "actionName -====== " + actionName);
             if( "".equals(defaultActionName) ){
                 defaultActionName = actionName;
