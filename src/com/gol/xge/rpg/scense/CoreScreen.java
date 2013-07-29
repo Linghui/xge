@@ -283,6 +283,14 @@ public abstract class CoreScreen implements Screen, InputProcessor {
             rootStage.addActor(topGutter);
         }
     }
+    
+    public float getGutterWidth(){
+        return rootStage.getGutterWidth();
+    }
+    
+    public float getGutterHeight(){
+        return rootStage.getGutterHeight();
+    }
 
     @Override
     public void render(float delta) {
