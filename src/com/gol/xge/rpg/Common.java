@@ -107,7 +107,6 @@ public class Common {
             String jsonFile
             , TextureAtlas atlas
             , float speed){
-        HashMap<String, Animation> animationHash = new HashMap<String, Animation>();
 //        Gdx.app.log(TAG, "jsonFile -- " + jsonFile );
         FileHandle jsonFileHandle = getFileHandle(jsonFile);
         
@@ -130,6 +129,16 @@ public class Common {
 
 		});
         AnimationResource ar = json.fromJson(AnimationResource.class, jsonFileHandle);
+        
+        return readAnimationGroup(ar, atlas, speed);
+    }
+    
+    public static AnimationGroup readAnimationGroup(
+            AnimationResource ar,
+            TextureAtlas atlas,
+            float speed){
+
+        HashMap<String, Animation> animationHash = new HashMap<String, Animation>();
         
         JsonValue actionsObj = ar.getResourceMap();
 //        Gdx.app.log(TAG, "content -- " + content );
@@ -168,6 +177,7 @@ public class Common {
                 , ar.getOffsetY());
         return group;
     }
+            
     
     public static FileHandle getFileHandle(String uri){
 //      HeapMonitor.printHeap();
