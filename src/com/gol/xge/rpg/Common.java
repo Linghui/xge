@@ -1,6 +1,7 @@
 package com.gol.xge.rpg;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -209,6 +210,12 @@ public class Common {
     
     // tag reminds you something
     public static void timeStamp(String tag){
-        System.out.println("time stamp " + tag + " : "+ System.currentTimeMillis());
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        System.out.println("time stamp - "
+        + calendar.get(Calendar.MINUTE) + ":"
+        + calendar.get(Calendar.SECOND) + ":"
+        + calendar.get(Calendar.MILLISECOND ) 
+        + " -- " + tag );
     }
 }

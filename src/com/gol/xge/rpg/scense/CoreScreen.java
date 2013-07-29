@@ -196,11 +196,13 @@ public abstract class CoreScreen implements Screen, InputProcessor {
     public void setScreenTouchable(Touchable touchable){
         rootStage.getRoot().setTouchable(touchable);
         backgroundStage.getRoot().setTouchable(touchable);
+        bottom.setTouchable(touchable);
     }
     
     public boolean isScreenTouchable(){
-        if ( rootStage.getRoot().getTouchable() == Touchable.disabled
-                || backgroundStage.getRoot().getTouchable() == Touchable.disabled ){
+        if ( rootStage.getRoot().getTouchable() != Touchable.enabled
+                || backgroundStage.getRoot().getTouchable() != Touchable.enabled 
+                || bottom.getTouchable() != Touchable.enabled ){
             return false;
         } else {
             return true;
