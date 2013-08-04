@@ -13,6 +13,10 @@ public class XGECommon {
     public static FileHandle openFile( String fileName, String code ){
         FileHandle fh = Gdx.files.external(fileName);
         if(!fh.exists()){
+        	//uncommnet below for robovm
+//        	if(fileName.indexOf("data/") > 0)
+//        		fileName = fileName.substring(fileName.indexOf("data/"));
+
             fh = Gdx.files.internal(fileName);
         }
         if( code == null ){
