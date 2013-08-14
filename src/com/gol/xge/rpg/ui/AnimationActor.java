@@ -98,7 +98,7 @@ public class AnimationActor extends Group implements AnimationActionInterface{
     
     @Override
     public Actor hit (float x, float y, boolean touchable) {
-        return x > 0 && x < this.getWidth() && y > 0 && y < this.getHeight() ? this : null;
+        return x >= -this.getWidth()/2 && x <= this.getWidth()/2 && y >= -this.getHeight()/2 && y <= this.getHeight()/2 ? this : null;
     }
     
     public boolean getFlipX(){
