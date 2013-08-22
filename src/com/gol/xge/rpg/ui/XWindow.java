@@ -20,7 +20,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 //	1. add an optional close button
 //	2. add an optional image title
 public class XWindow extends Table {
-    private String TAG = "CoreWindow";
+    protected String TAG = this.getClass().getSimpleName();
     
     private XWindowStyle style;
     
