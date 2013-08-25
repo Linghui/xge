@@ -3,6 +3,7 @@ package com.gol.xge.rpg.ui;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
@@ -118,12 +119,18 @@ public class AnimationActor extends Group implements AnimationActionInterface{
         if( animationGroup == null ){
             return;
         }
-        this.animationGroup.setAction(actionName, loop);
+        int playMode = 0;
+        if( loop ){
+            playMode = Animation.LOOP;
+        } else {
+            playMode = Animation.NORMAL;
+        }
+        this.setAction(actionName, playMode);
     }
 
     
     public void setAction(String actionName, int  playMode){
-        this.animationGroup.setAction(actionName, playMode);
+        this.setAction(actionName, AnimationGroup.defaultSpeed , playMode);
     }
     
 
