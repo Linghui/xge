@@ -21,6 +21,8 @@ public class AnimationActor extends Group implements AnimationActionInterface{
     AnimationGroup animationGroup;
     TextureRegion frame;
     
+    private Group bottomLayer = new Group();
+    
     private boolean flipX = false;
     
     public AnimationActor(){
@@ -37,6 +39,11 @@ public class AnimationActor extends Group implements AnimationActionInterface{
         this.flipX = flipX;
         
         this.setAnimationGroup(animationGroup);
+//        this.addActor(bottomLayer);
+    }
+    
+    public void addBottomActor( Actor actor ){
+        bottomLayer.addActor(actor);
     }
 
     /*
@@ -56,7 +63,7 @@ public class AnimationActor extends Group implements AnimationActionInterface{
     @Override
     public void act(float delta) {
         super.act(delta);
-
+        bottomLayer.act(delta);
         if( animationGroup == null ){
             return;
         }
@@ -86,6 +93,11 @@ public class AnimationActor extends Group implements AnimationActionInterface{
         
         batch.setColor(this.getColor().r, this.getColor().g, this.getColor().b, this.getColor().a);
         
+        bottomLayer.setX(this.getX());
+        bottomLayer.setY(this.getY());
+        
+        bottomLayer.draw(batch, parentAlpha);
+        
         float x = this.getX() - animationGroup.getOffsetX();
         if( frame.isFlipX() ){
             x = this.getX() - (this.getWidth() - animationGroup.getOffsetX());
@@ -101,6 +113,7 @@ public class AnimationActor extends Group implements AnimationActionInterface{
     public Actor hit (float x, float y, boolean touchable) {
         return x >= -this.getWidth()/2 && x <= this.getWidth()/2 && y >= -this.getHeight()/2 && y <= this.getHeight()/2 ? this : null;
     }
+    
     
     public boolean getFlipX(){
         return this.flipX;
