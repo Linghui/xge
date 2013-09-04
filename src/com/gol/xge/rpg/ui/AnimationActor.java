@@ -97,6 +97,7 @@ public class AnimationActor extends Group implements AnimationActionInterface{
         bottomLayer.setY(this.getY());
         
         bottomLayer.draw(batch, parentAlpha);
+        batch.setColor(this.getColor().r, this.getColor().g, this.getColor().b, this.getColor().a);
         
         float x = this.getX() - animationGroup.getOffsetX();
         if( frame.isFlipX() ){
