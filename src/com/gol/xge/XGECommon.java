@@ -34,8 +34,8 @@ public class XGECommon {
         return fh.readString("UTF-8");
     }
 
-    public static void writeFile(String userconfigjson, String json) {
-        FileHandle fh = Gdx.files.external(userconfigjson);
+    public static void writeFile(String filePath, String json) {
+        FileHandle fh = Gdx.files.external(filePath);
         try{
             fh.writeString(json, false);    
         }
@@ -44,4 +44,15 @@ public class XGECommon {
         }
         
     }
+    public static void writeFileToAbs(String filePath, String json) {
+        FileHandle fh = Gdx.files.absolute(filePath);
+        try{
+            fh.writeString(json, false);    
+        }
+        catch( GdxRuntimeException e){
+            e.printStackTrace();
+        }
+        
+    }
+    
 }
