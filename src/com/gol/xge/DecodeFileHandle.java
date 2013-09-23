@@ -43,6 +43,13 @@ public class DecodeFileHandle extends FileHandle {
             return fh.readBytes();
         }
         
+
+        int base = 2;
+        int sqindex = 1;
+        int enIndex = base;
+        
+        int fileIndex = 0;
+        
         int value = -1;
         InputStream is = fh.read();
         int cx = 0;
@@ -50,8 +57,20 @@ public class DecodeFileHandle extends FileHandle {
 //        Gdx.app.log("DecodeFileHandle", " fh.length() " + fh.length() + " " + fh.name());
         try {
             while ((value = is.read()) != -1) {
-                decodeBytes[cx] = (byte) (value ^ code.hashCode());
+                
+                if( fileIndex == enIndex){
+
+                    decodeBytes[cx] = (byte) (value ^ code.hashCode());
+                    sqindex++;
+                    enIndex = (int) Math.pow(base, sqindex);
+                } else {
+
+                    decodeBytes[cx] = (byte) (value);
+                }
+                
+                
                 cx++;
+                fileIndex++;
             }
         } catch (IOException e) {
             e.printStackTrace();
