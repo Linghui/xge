@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.utils.Array;
@@ -33,6 +34,7 @@ public class NumericBar extends Group{
     private boolean left = true;
     
     private Array<Image> topCovers = new Array<Image>();
+    private Skin skin;
     
     public NumericBar(NinePatch background, NinePatch top, int width, int height){
         this(background, top, width, height, 0, 0, null);
@@ -292,7 +294,13 @@ public class NumericBar extends Group{
         setBarWidHei(this.getWidth(), height);
     }
     
+    public void setSkin( Skin skin ){
+        this.skin = skin;
+    }
     
+    public void setBackPatch( String drawableName ){
+        backgroundBar.setDrawable( skin.getDrawable(drawableName) );
+    }
     
     /*
      * 
