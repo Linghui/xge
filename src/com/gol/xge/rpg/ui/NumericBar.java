@@ -284,6 +284,16 @@ public class NumericBar extends Group{
         }
     }
     
+    public void setWidth (float width) {
+        setBarWidHei(width, this.getHeight());
+    }
+    
+    public void setHeight (float height) {
+        setBarWidHei(this.getWidth(), height);
+    }
+    
+    
+    
     /*
      * 
      */
@@ -292,8 +302,8 @@ public class NumericBar extends Group{
     }
     
     public void setBarWidHei(float width, float height, float padXPix, float padYPix){
-        this.setWidth(width);
-        this.setHeight(height);
+        super.setWidth(width);
+        super.setHeight(height);
         backgroundBar.setWidth(width);
         backgroundBar.setHeight(height);
         backgroundBar.layout();
