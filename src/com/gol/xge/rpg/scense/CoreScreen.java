@@ -387,6 +387,15 @@ public abstract class CoreScreen implements Screen, InputProcessor {
         return this.isHided;
     }
     
+    
+    public Stage getRootStage() {
+        return rootStage;
+    }
+
+    public Stage getBackgroundStage() {
+        return backgroundStage;
+    }
+
     @Override
     public boolean touchDown(int x, int y, int pointer, int button) {
         if( lockEvent){
