@@ -247,7 +247,7 @@ public class NumericBar extends Group {
     }
 
     public void setStatusNum(long statusNum) {
-         Gdx.app.log(TAG, "statusNum - " + statusNum);
+//         Gdx.app.log(TAG, "statusNum - " + statusNum);
         if (baseNum <= 0) {
             // TODO: error
             Gdx.app.log(TAG, "setStatusNum error ");
