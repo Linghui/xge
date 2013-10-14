@@ -36,6 +36,7 @@ public class NumericBar extends Group {
     private Array<Image> topCovers = new Array<Image>();
     private Skin skin;
     private float labelYPadding = 0f;
+    private Label tipLabel;
 
     public NumericBar(NinePatch background, NinePatch top, int width, int height) {
         this(background, top, width, height, 0, 0, null);
@@ -227,14 +228,18 @@ public class NumericBar extends Group {
         if (label == null) {
             return;
         }
-        Label tipLabel = new Label(tips, label.getStyle());
+        
+        if( tipLabel == null ){
 
-        tipLabel.setWidth(backgroundBar.getWidth());
-        tipLabel.setHeight(backgroundBar.getPrefHeight());
-        tipLabel.setAlignment(Align.center);
-        tipLabel.setY(yPadding);
-        this.addActor(tipLabel);
+            tipLabel = new Label(tips, label.getStyle());
 
+            tipLabel.setWidth(backgroundBar.getWidth());
+            tipLabel.setHeight(backgroundBar.getPrefHeight());
+            tipLabel.setAlignment(Align.center);
+            tipLabel.setY(yPadding);
+            this.addActor(tipLabel);
+        }
+        tipLabel.setText(tips);
     }
 
     public void setStatusNum(String statusNum) {
