@@ -52,9 +52,13 @@ public class XWindow extends Table {
         this.style = style;
         this.setWidth(width);
         this.setHeight(height);
-        this.setBackground(style.background);
+        if( style != null ){
+            this.setBackground(style.background);    
+        }
         
-        if(style.hasClose){
+        
+        if( style != null
+                && style.hasClose){
 
             // implement touchDown and touchUp for change the down/up image
             closeImage = new ImageButton(style.closeImg, style.closeImgDown){
