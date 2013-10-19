@@ -295,20 +295,22 @@ public abstract class CoreScreen implements Screen, InputProcessor {
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-        Gdx.gl.glEnable(GL10.GL_BLEND);
-        Gdx.gl.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA);
-        Gdx.gl20.glTexParameterf(GL20.GL_TEXTURE_2D,
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        Gdx.gl.glEnable(GL20.GL_BLEND);
+        Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+        Gdx.gl.glTexParameterf(GL20.GL_TEXTURE_2D,
                  GL20.GL_TEXTURE_MAG_FILTER,
                  GL20.GL_LINEAR);
         
-        Gdx.gl20.glTexParameterf(GL20.GL_TEXTURE_2D,
+        Gdx.gl.glTexParameterf(GL20.GL_TEXTURE_2D,
                  GL20.GL_TEXTURE_MIN_FILTER,
                  GL20.GL_LINEAR);
 
 
-        backgroundStage.act(delta);
-        rootStage.act(delta);
+//        backgroundStage.act(Math.min( Gdx.graphics.getDeltaTime(), (float)1/30 ) );
+//        rootStage.act(Math.min( Gdx.graphics.getDeltaTime(), (float)1/30 ));
+        backgroundStage.act();
+        rootStage.act();
         backgroundStage.draw();
         rootStage.draw();
     }
