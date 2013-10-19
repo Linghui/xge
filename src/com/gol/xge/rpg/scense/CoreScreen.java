@@ -307,10 +307,8 @@ public abstract class CoreScreen implements Screen, InputProcessor {
                  GL20.GL_LINEAR);
 
 
-//        backgroundStage.act(Math.min( Gdx.graphics.getDeltaTime(), (float)1/30 ) );
-//        rootStage.act(Math.min( Gdx.graphics.getDeltaTime(), (float)1/30 ));
-        backgroundStage.act();
-        rootStage.act();
+        backgroundStage.act(delta);
+        rootStage.act(delta);
         backgroundStage.draw();
         rootStage.draw();
     }
