@@ -71,7 +71,6 @@ public abstract class RPGScreen extends CoreScreen implements InputProcessor {
 
     public void initCam(){
         super.initCam();
-        cam = (OrthographicCamera) this.getCamera();
         camCurrentX = cam.position.x;
         camCurrentY = cam.position.y;
         camMoveToX  = cam.position.x;
