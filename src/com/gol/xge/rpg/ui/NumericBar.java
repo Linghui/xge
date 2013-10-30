@@ -128,11 +128,16 @@ public class NumericBar extends Group {
             this.setBarWidHei(width, height, padXPix, padYPix);
         } else {
             
-            if( width == 0 ){
+            if( width == 0 
+                    && height == 0 ){
 
+                this.setBarWidHei(backgroundBar.getWidth(),
+                        backgroundBar.getHeight(), padXPix, padYPix);
+            } else if ( width == 0 ){
                 this.setBarWidHei(backgroundBar.getWidth(),
                         height, padXPix, padYPix);
             } else {
+
                 this.setBarWidHei(width,
                         backgroundBar.getHeight(), padXPix, padYPix);
             }
