@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.GL20;
@@ -328,9 +329,9 @@ public abstract class CoreScreen implements Screen, InputProcessor {
 
     @Override
     public boolean keyDown(int keycode) {
-        
+        Gdx.app.log(TAG, "keycode " + keycode);
         if(keycode == 4  // back button
-//                || keycode == 29 // button a , for testing
+                || (keycode == 131 && Gdx.app.getType() == ApplicationType.Desktop) // button esc , for desktop back testing
                 ){ 
             this.callBack();
             return false;
