@@ -3,6 +3,9 @@ package com.gol.xge.rpg.ui;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL10;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -24,6 +27,7 @@ public class AnimationActor extends Group implements AnimationActionInterface {
     private Group bottomLayer = new Group();
 
     private boolean flipX = false;
+    private boolean addType = false;
 
     public AnimationActor() {
 
@@ -105,13 +109,26 @@ public class AnimationActor extends Group implements AnimationActionInterface {
             x = this.getX() - (this.getWidth() - animationGroup.getOffsetX());
         }
         
+        if( this.addType ){
+            batch.setBlendFunction(GL10.GL_ONE, GL10.GL_ONE);
+            
+        }
         batch.draw(frame, x, this.getY() - animationGroup.getOffsetY(),
                 this.getOriginX(), this.getOriginY(), this.getWidth(),
                 this.getHeight(), this.getScaleX(), this.getScaleY(),
                 this.getRotation());
+        
+        if( this.addType ){
+            batch.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+        }
+        
         super.draw(batch, parentAlpha);
     }
 
+    public void setAddType(boolean addType){
+        this.addType  = addType;
+    }
+    
     @Override
     public Actor hit(float x, float y, boolean touchable) {
         return x >= -this.getWidth() / 2 && x <= this.getWidth() / 2
