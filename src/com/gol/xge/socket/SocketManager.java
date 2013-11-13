@@ -68,6 +68,8 @@ public class SocketManager {
 
 				while (isRunnable ) {
 				    if(inOutPutInterface == null){
+				        System.out.println("inOutPutInterface null???????");
+				        Thread.sleep(socketSleepTime);
 				        continue;
 				    }
                     if (input.available() > 0 ) {
@@ -77,6 +79,7 @@ public class SocketManager {
 //                    Thread.sleep(socketSleepTime);
 
 				}
+				System.out.println(TAG + ":listener end!!!! !");
 				input.close();
 				output.close();
 			} catch (IOException e) {

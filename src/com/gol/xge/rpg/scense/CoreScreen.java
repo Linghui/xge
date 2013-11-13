@@ -329,7 +329,6 @@ public abstract class CoreScreen implements Screen, InputProcessor {
 
     @Override
     public boolean keyDown(int keycode) {
-        Gdx.app.log(TAG, "keycode " + keycode);
         if(keycode == 4  // back button
                 || (keycode == 131 && Gdx.app.getType() == ApplicationType.Desktop) // button esc , for desktop back testing
                 ){ 
