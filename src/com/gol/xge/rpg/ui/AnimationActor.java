@@ -73,6 +73,10 @@ public class AnimationActor extends Group implements AnimationActionInterface {
 
         frame = animationGroup.getKeyFrame(delta);
 
+        if( frame == null){
+            return;
+        }
+        
         if (flipX) {
             if (!frame.isFlipX()) {
                 frame.flip(true, false);
@@ -105,22 +109,25 @@ public class AnimationActor extends Group implements AnimationActionInterface {
                 this.getColor().a * parentAlpha);
 
         float x = this.getX() - animationGroup.getOffsetX();
-        if (frame.isFlipX()) {
-            x = this.getX() - (this.getWidth() - animationGroup.getOffsetX());
-        }
+        if( frame != null ){
 
-        if (this.addType) {
-            batch.setBlendFunction(GL10.GL_ONE, GL10.GL_ONE);
+            if (frame.isFlipX()) {
+                x = this.getX() - (this.getWidth() - animationGroup.getOffsetX());
+            }
 
-        }
-        batch.draw(frame, x, this.getY() - animationGroup.getOffsetY(),
-                this.getOriginX(), this.getOriginY(), this.getWidth(),
-                this.getHeight(), this.getScaleX(), this.getScaleY(),
-                this.getRotation());
+            if (this.addType) {
+                batch.setBlendFunction(GL10.GL_ONE, GL10.GL_ONE);
 
-        if (this.addType) {
-            batch.setBlendFunction(GL20.GL_SRC_ALPHA,
-                    GL20.GL_ONE_MINUS_SRC_ALPHA);
+            }
+            batch.draw(frame, x, this.getY() - animationGroup.getOffsetY(),
+                    this.getOriginX(), this.getOriginY(), this.getWidth(),
+                    this.getHeight(), this.getScaleX(), this.getScaleY(),
+                    this.getRotation());
+
+            if (this.addType) {
+                batch.setBlendFunction(GL20.GL_SRC_ALPHA,
+                        GL20.GL_ONE_MINUS_SRC_ALPHA);
+            }
         }
 
         super.draw(batch, parentAlpha);

@@ -72,11 +72,11 @@ public class SocketManager {
 				        Thread.sleep(socketSleepTime);
 				        continue;
 				    }
-                    if (input.available() > 0 ) {
+                    if (isRunnable && input.available() > 0 ) {
                         inOutPutInterface.onRead(input);
                     }
 				    inOutPutInterface.onWrite(output);
-//                    Thread.sleep(socketSleepTime);
+                    Thread.sleep(socketSleepTime);
 
 				}
 				System.out.println(TAG + ":listener end!!!! !");
