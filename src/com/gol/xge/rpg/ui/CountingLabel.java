@@ -74,4 +74,8 @@ public class CountingLabel extends Group {
         showNum = totalNum;
         totalNum += num;
     }
+    
+    public int getTotalNum(){
+        return totalNum;
+    }
 }

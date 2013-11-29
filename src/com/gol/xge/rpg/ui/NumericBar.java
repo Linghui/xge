@@ -261,15 +261,15 @@ public class NumericBar extends Group {
 
     public void setStatusNum(long statusNum) {
 //         Gdx.app.log(TAG, "statusNum - " + statusNum);
-        if (baseNum <= 0) {
+        if (statusNum <= 0) {
             // TODO: error
             Gdx.app.log(TAG, "setStatusNum error ");
-            return;
-        }
-        if (statusNum < 0) {
+            this.topBar.setVisible(false);
             statusNum = 0;
+        } else {
+            this.topBar.setVisible(true);
         }
-
+        
         if (statusNum > baseNum) {
             this.statusNum = baseNum;
         } else {
