@@ -263,7 +263,7 @@ public class NumericBar extends Group {
 //         Gdx.app.log(TAG, "statusNum - " + statusNum);
         if (statusNum <= 0) {
             // TODO: error
-            Gdx.app.log(TAG, "setStatusNum error ");
+//            Gdx.app.log(TAG, "setStatusNum error ");
             this.topBar.setVisible(false);
             statusNum = 0;
         } else {

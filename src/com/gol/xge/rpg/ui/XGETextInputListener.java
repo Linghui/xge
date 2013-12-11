@@ -10,6 +10,11 @@ public class XGETextInputListener extends InputListener {
 
     private TextField textField;
     private String title;
+    private XGETextInputCallbackListener listener;
+    
+    public XGETextInputListener(XGETextInputCallbackListener listener, String title){
+        this.listener = listener;
+    }
     
     public XGETextInputListener(TextField textField, String title){
         this.textField = textField;
@@ -21,7 +26,14 @@ public class XGETextInputListener extends InputListener {
 
             @Override
             public void input(String text) {
-                textField.setText(text);
+                if( textField != null ){
+                    textField.setText(text);    
+                }
+                
+                if(listener != null){
+                    listener.setText(text);
+                }
+                
             }
 
             @Override
