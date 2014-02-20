@@ -1,4 +1,4 @@
-package com.gol.xge.rpg;
+package com.gol.xge.assetsLoader;
 
 import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetLoaderParameters;

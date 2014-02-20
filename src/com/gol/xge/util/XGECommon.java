@@ -1,4 +1,4 @@
-package com.gol.xge;
+package com.gol.xge.util;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.JsonValue;
+import com.gol.xge.resolver.DecodeFileHandle;
 import com.gol.xge.rpg.ui.AnimationGroup;
 import com.gol.xge.rpg.ui.AnimationResource;
 

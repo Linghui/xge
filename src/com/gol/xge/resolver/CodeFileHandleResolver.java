@@ -1,8 +1,8 @@
-package com.gol.xge.rpg;
+package com.gol.xge.resolver;
 
 import com.badlogic.gdx.assets.loaders.FileHandleResolver;
 import com.badlogic.gdx.files.FileHandle;
-import com.gol.xge.XGECommon;
+import com.gol.xge.util.XGECommon;
 
 public class CodeFileHandleResolver implements FileHandleResolver {
 
