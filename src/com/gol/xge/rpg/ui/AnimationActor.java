@@ -3,8 +3,6 @@ package com.gol.xge.rpg.ui;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -116,7 +114,7 @@ public class AnimationActor extends Group implements AnimationActionInterface {
             }
 
             if (this.addType) {
-                batch.setBlendFunction(GL10.GL_ONE, GL10.GL_ONE);
+                batch.setBlendFunction(GL20.GL_ONE, GL20.GL_ONE);
 
             }
             batch.draw(frame, x, this.getY() - animationGroup.getOffsetY(),

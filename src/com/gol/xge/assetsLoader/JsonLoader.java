@@ -22,26 +22,30 @@ public class JsonLoader extends AsynchronousAssetLoader<JsonValue, JsonLoader.pa
 
     }
 
-    @Override
-    public void loadAsync(AssetManager manager, String fileName,
-            parameter parameter) {
-        FileHandle handle = resolve(fileName);
+
+	@Override
+	public void loadAsync(AssetManager arg0, String arg1, FileHandle arg2,
+			parameter arg3) {
+
+        FileHandle handle = resolve(arg1);
 
         String jsonStr = handle.readString("UTF-8");
 
-        json = new JsonReader().parse(jsonStr);
-    }
+        json = new JsonReader().parse(jsonStr);		
+	}
 
-    @Override
-    public JsonValue loadSync(AssetManager manager, String fileName,
-            parameter parameter) {
-        return json;
-    }
+	@Override
+	public JsonValue loadSync(AssetManager arg0, String arg1, FileHandle arg2,
+			parameter arg3) {
+		// TODO Auto-generated method stub
+		return json;
+	}
 
-    @Override
-    public Array<AssetDescriptor> getDependencies(String fileName,
-            parameter parameter) {
-        return null;
-    }
+	@Override
+	public Array<AssetDescriptor> getDependencies(String arg0, FileHandle arg1,
+			parameter arg2) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }

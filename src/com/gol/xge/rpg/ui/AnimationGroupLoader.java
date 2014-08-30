@@ -16,23 +16,23 @@ public class AnimationGroupLoader extends SynchronousAssetLoader<AnimationGroup,
         super(resolver);
     }
 
-    @Override
-    public AnimationGroup load(AssetManager assetManager, String fileName,
-            AnimationGroupParameter parameter) {
-        FileHandle handle = this.resolve(fileName);
-        TextureAtlas altas = new TextureAtlas(handle);
-        
-        return null;
-    }
-
-    @Override
-    public Array<AssetDescriptor> getDependencies(String fileName,
-            AnimationGroupParameter parameter) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
     public class AnimationGroupParameter extends AssetLoaderParameters<AnimationGroup>{
 
     }
+
+	@Override
+	public AnimationGroup load(AssetManager arg0, String fileName, FileHandle arg2,
+			AnimationGroupParameter arg3) {
+		// TODO Auto-generated method stub
+		FileHandle handle = this.resolve(fileName);
+        TextureAtlas altas = new TextureAtlas(handle);
+		return null;
+	}
+
+	@Override
+	public Array<AssetDescriptor> getDependencies(String arg0, FileHandle arg1,
+			AnimationGroupParameter arg2) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

@@ -22,25 +22,28 @@ public class StringLoader extends AsynchronousAssetLoader<String, StringLoader.p
 
     }
 
-    @Override
-    public void loadAsync(AssetManager manager, String fileName,
-            parameter parameter) {
+	@Override
+	public void loadAsync(AssetManager arg0, String fileName, FileHandle arg2,
+			parameter arg3) {
+		// TODO Auto-generated method stub
+
         FileHandle handle = resolve(fileName);
 
         content = handle.readString("UTF-8");
+	}
 
-    }
+	@Override
+	public String loadSync(AssetManager arg0, String arg1, FileHandle arg2,
+			parameter arg3) {
+		// TODO Auto-generated method stub
+		return content;
+	}
 
-    @Override
-    public String loadSync(AssetManager manager, String fileName,
-            parameter parameter) {
-        return content;
-    }
-
-    @Override
-    public Array<AssetDescriptor> getDependencies(String fileName,
-            parameter parameter) {
-        return null;
-    }
+	@Override
+	public Array<AssetDescriptor> getDependencies(String arg0, FileHandle arg1,
+			parameter arg2) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }

@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.gol.xge.dragonBones.objects.SkeletonAndTextureAtlasData;
@@ -113,7 +114,7 @@ public class AnimationGroup{
 	    animationStop = false;
 	    
 		if(animationHash.containsKey(actionName)){
-//			Gdx.app.log("group", " setAction - actionName : " + actionName + " loop " + loop);
+//			Gdx.app.log("group", " setAction - actionName : " + actionName + " playMode " + playMode);
 			Animation animation = animationHash.get(actionName); 
 			timeOut = animation.animationDuration;
 			currentAnimation = animation;
